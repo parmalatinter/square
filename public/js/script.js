@@ -102,8 +102,8 @@ var app = angular
 
         var StorageService = {
             storageRef: {},
-            baseUrl:'gs://project-3597707734440258770.appspot.com/'
-
+            baseUrl:'gs://project-3597707734440258770.appspot.com/',
+            urls:{}
         };
 
         var init = function() {
@@ -112,17 +112,12 @@ var app = angular
 
         init();
 
-        StorageService.getImageRef = function(fileName, isFullPath, isName){
-
-this.storageRef.child(fileName).getDownloadURL().then(function(url) {
-    console.log(url)
-    return url;
-  // Get the download URL for 'images/stars.jpg'
-  // This can be inserted into an <img> tag
-  // This can also be downloaded directly
-}).catch(function(error) {
-  // Handle any errors
-});
+        StorageService.getImageRef = function(fileName, key ){
+            this.storageRef.child(fileName).getDownloadURL().then(function(url) {
+                this.urls[key] = url
+            }).catch(function(error) {
+              // Handle any errors
+            });
         };
 
         return StorageService;

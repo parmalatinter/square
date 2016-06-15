@@ -7,7 +7,14 @@
         </md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <img ng-src="{{strage.getImageRef('lose/lose.png', true)}}" alt="{{strage.getImageRef('lose/lose.png', false, true)}}">
+        <img ng-init="strage.getImageRef('lose/lose.png', 'lose')"
+            ng-src="{{strage.url.lose}}"
+            width="100px"
+            alt="{{strage.getImageRef('lose/lose.png', false, true)}}">
+        <img ng-init="strage.getImageRef('lose/lose.png', 'win')"
+            ng-src="{{strage.url.win}}"
+            width="100px"
+            alt="{{strage.getImageRef('lose/lose.png', false, true)}}">
         <pre>
           {{game | json}}
         </pre>

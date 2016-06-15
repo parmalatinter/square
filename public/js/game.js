@@ -351,7 +351,7 @@ app
   .controller('GameSubCtrl', function($scope, $timeout, $mdDialog, $filter, GameService, AjaxService, StorageService) {
     $scope.game = GameService;
     $scope.auth = AjaxService;
-    $scope.strage = StorageService;
+    $scope.storage = StorageService;
     $scope.closeDialog = function() {
       $mdDialog.hide();
     };
@@ -366,7 +366,7 @@ app
       $state.go('index');
       $scope.game = GameService.getTeams().getItems().shuffle(true).update({}, true);
       $scope.auth = AjaxService;
-      $scope.strage = StorageService;
+      $scope.storage = StorageService;
       GameService.teamSituation = false;
       GameService.isFinished = false;
       GameService.setTeam(0);
@@ -388,19 +388,21 @@ app
       var stagePushedKey = AjaxService.getPushedKey('stage');
       var stage = AjaxService.getPushedResult('stage', stagePushedKey);
       var userPushedKey = AjaxService.getPushedKey('users');
-      if (!stage) return;
-      var teamId = stage.selectedTeam.teamId;
-      if (userPushedKey != stage.user) {
-        GameService.teamSituation = 'you';
-      } else {
-        GameService.teamSituation = 'other';
-      }
-      GameService.items = stage.items;
 
-      GameService.stage = stage;
+      if (stage) {
+        var teamId = stage.selectedTeam.teamId;
+        if (userPushedKey != stage.user) {
+          GameService.teamSituation = 'you';
+        } else {
+          GameService.teamSituation = 'other';
+        }
+        GameService.items = stage.items;
 
-      if(!$filter('inArray')(GameService.stage.users, userPushedKey) && stage.users){
-        GameService.stage.users.push(userPushedKey);
+        GameService.stage = stage;
+
+        if(!$filter('inArray')(GameService.stage.users, userPushedKey) && stage.users){
+          GameService.stage.users.push(userPushedKey);
+        }
       }
 
       if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {

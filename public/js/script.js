@@ -114,7 +114,8 @@ var app = angular
 
         StorageService.getImageRef = function(fileName, key ){
             this.storageRef.child(fileName).getDownloadURL().then(function(url) {
-                this.urls[key] = url
+                StorageService.urls[key] = url;
+                $rootScope.$broadcast('updated');
             }).catch(function(error) {
               // Handle any errors
             });

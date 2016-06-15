@@ -101,7 +101,9 @@ var app = angular
     .factory('StorageService', function($window, $filter, $rootScope) {
 
         var StorageService = {
-            storageRef: {}
+            storageRef: {},
+            baseUrl:'gs://project-3597707734440258770.appspot.com/'
+
         };
 
         var init = function() {
@@ -111,13 +113,15 @@ var app = angular
         init();
 
         StorageService.getImageRef = function(fileName, isFullPath, isName){
-          if(isFullPath){
-            return this.storageRef.child(fileName).fullPath;
-          }else if(isName){
-            return this.storageRef.child(fileName).name;
-          }else{
-            return this.storageRef.child(fileName);
-          }
+
+this.storageRef.child(fileName).getDownloadURL().then(function(url) {
+    return url;
+  // Get the download URL for 'images/stars.jpg'
+  // This can be inserted into an <img> tag
+  // This can also be downloaded directly
+}).catch(function(error) {
+  // Handle any errors
+});
         };
 
         return StorageService;

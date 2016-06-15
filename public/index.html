@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/animatecss/3.5.1/animate.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body ng-app="MyApp" layout="column" ng-cloak>
@@ -63,124 +63,6 @@
     </div>
   </div>
 
-  <script type="text/ng-template" id="bottomSheet.html">
-    <md-bottom-sheet class="md-list md-has-header">
-      <md-list>
-        <md-item ng-repeat="item in game.items">
-          <md-item-content md-ink-ripple flex class="inset">
-            <a flex aria-label="{{item.name}}" ng-click="listItemClick($index)"> <span class="md-inline-list-icon-label">{{ item.name }}</span> </a>
-          </md-item-content>
-        </md-item>
-      </md-list>
-    </md-bottom-sheet>
-  </script>
-
-  <script type="text/ng-template" id="help.html">
-    <md-dialog aria-label="Dialog">
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <h2>
-             <p>Help</p>
-          </h2>
-        </div>
-      </md-toolbar>
-      <md-dialog-content>
-        <div flex-xs flex-gt-xs="50" layout="column">
-          <md-card md-theme="dark-grey}" md-theme-watch>
-            <md-card-title>
-              <md-card-title-text>
-                <span class="md-headline">When your turn</span>
-                <span class="md-subhead">1. Select your item.</span>
-                <span class="md-subhead">2. Select enemy item or empty zoon in the around.</span>
-              </md-card-title-text>
-              <md-card-title-media>
-                <div class="md-media-lg card-media"></div>
-              </md-card-title-media>
-            </md-card-title>
-          </md-card>
-          <md-card md-theme="dark-grey}" md-theme-watch>
-            <md-card-title>
-              <md-card-title-text>
-                <span class="md-headline">When enemy turn</span>
-                <span class="md-subhead">1. Wait a minute.</span>
-              </md-card-title-text>
-              <md-card-title-media>
-                <div class="md-media-lg card-media"></div>
-              </md-card-title-media>
-            </md-card-title>
-          </md-card>
-        </div>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button ng-click="closeDialog()" class="md-warm">
-          Close Dialog
-        </md-button>
-        <md-button ng-click="closeDialog()" class="md-primary">
-          Close Dialog
-        </md-button>
-      </md-dialog-actions>
-    </md-dialog>
-  </script>
-  <script type="text/ng-template" id="dialog.html">
-    <md-dialog aria-label="Dialog">
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <h2>
-             <p>{{locals.title}}</p>
-          </h2>
-        </div>
-      </md-toolbar>
-      <md-dialog-content>
-        <h2>
-          <p>{{locals.message}}</p>
-        </h2>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button ng-click="closeDialog()" class="md-warm">
-          Close Dialog
-        </md-button>
-        <md-button ng-click="closeDialog()" class="md-primary">
-          Close Dialog
-        </md-button>
-      </md-dialog-actions>
-    </md-dialog>
-  </script>
-
-  <script type="text/ng-template" id="userList.html">
-    <md-dialog aria-label="Dialog" flex="90%">
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <h2>
-             <p>Users</p>
-          </h2>
-        </div>
-      </md-toolbar>
-      <md-dialog-content>
-        <h2>
-          {{res2.privateKey}}
-        </h2>
-        <md-list flex ng-repeat="(key, res2) in auth.arrayRef">
-          <md-subheader class="md-no-sticky">{{key}}</md-subheader>
-          <md-list-item class="md-3-line" ng-repeat="(key2, res3) in res2.result" ng-click="selectStage(key2, res3)">
-            <div class="md-list-item-text" layout="column">
-              <h4>ID :{{ key2 }}</h4>
-              <p>KEY :{{res3}}</p>
-            </div>
-          </md-list-item>
-        </md-list flex>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button ng-click="closeDialog()" class="md-warm">
-          Close Dialog
-        </md-button>
-        <md-button ng-click="closeDialog()" class="md-primary">
-          Close Dialog
-        </md-button>
-      </md-dialog-actions>
-    </md-dialog>
-  </script>
-
-
   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
   <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js'></script>
   <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js'></script>
@@ -193,10 +75,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
   <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/assets-cache.js'></script>
-  <script src="script.js"></script>
-  <script src="filters.js"></script>
-  <script src="directives.js"></script>
-  <script src="game.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+  <script src="js/game.js"></script>
 
 
 

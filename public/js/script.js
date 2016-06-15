@@ -20,15 +20,16 @@ var app = angular
       });
   })
   .config(function($stateProvider, $urlRouterProvider) {
+    var dir = 'templates/';
     $stateProvider
       .state('index', {
         url: "/",
         views: {
           "viewA": {
-            templateUrl: 'header.html',
+            templateUrl: dir + 'header.html',
           },
           "main": {
-            templateUrl: "start.html"
+            templateUrl: dir + "start.html"
           },
           "viewB": {
             template: "index.viewB"
@@ -39,13 +40,13 @@ var app = angular
         url: "/debug",
         views: {
           "viewA": {
-            templateUrl: "header.html"
+            templateUrl: dir + "header.html"
           },
           "main": {
-            templateUrl: "game.html"
+            templateUrl: dir + "game.html"
           },
           "viewB": {
-            templateUrl: "debug.html"
+            templateUrl: dir + "debug.html"
           }
         }
       })
@@ -53,10 +54,10 @@ var app = angular
         url: "/battle",
         views: {
           "viewA": {
-            templateUrl: "header.html"
+            templateUrl: dir + "header.html"
           },
           "main": {
-            templateUrl: "game.html"
+            templateUrl:dir + "game.html"
           },
           "viewB": {
             template: "route2.viewB"

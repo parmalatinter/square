@@ -1,0 +1,31 @@
+<md-dialog aria-label="Dialog" flex="90%">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>
+             <p>Users</p>
+          </h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <h2>
+          {{res2.privateKey}}
+        </h2>
+        <md-list flex ng-repeat="(key, res2) in auth.arrayRef">
+            <md-subheader class="md-no-sticky">{{key}}</md-subheader>
+            <md-list-item class="md-3-line" ng-repeat="(key2, res3) in res2.result" ng-click="selectStage(key2, res3)">
+                <div class="md-list-item-text" layout="column">
+                    <h4>ID :{{ key2 }}</h4>
+                    <p>KEY :{{res3}}</p>
+                </div>
+            </md-list-item>
+        </md-list flex>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="closeDialog()" class="md-warm">
+            Close Dialog
+        </md-button>
+        <md-button ng-click="closeDialog()" class="md-primary">
+            Close Dialog
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

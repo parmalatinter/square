@@ -227,7 +227,7 @@ app
       }
     };
 
-    GameService = {
+    var GameService = {
       isFinished: false,
       myTeam: {},
       selectedTeam: {},
@@ -257,7 +257,6 @@ app
       }
       return false;
     };
-
 
     GameService.getTeams = function() {
       GameService.teams = teams;
@@ -339,6 +338,11 @@ app
     GameService.selectStage = function(stage) {
       this.myTeam = this.teams[teamKey];
       this.selectedItem = {};
+      return this;
+    };
+
+    GameService.switchItem = function() {
+      switchItem();
       return this;
     };
 

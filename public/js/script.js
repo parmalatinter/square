@@ -115,6 +115,7 @@ var app = angular
         StorageService.getImageRef = function(fileName, isFullPath, isName){
 
 this.storageRef.child(fileName).getDownloadURL().then(function(url) {
+    console.log(url)
     return url;
   // Get the download URL for 'images/stars.jpg'
   // This can be inserted into an <img> tag

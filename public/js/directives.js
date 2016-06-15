@@ -99,14 +99,15 @@ app
     var setDialog = function(ev, setting) {
       var title = setting.title ? setting.title : '';
       var controller = setting.controller ? setting.controller : 'DialogCtrl';
-      var template = setting.template ? setting.template : 'dialog.html';
+      var dir = 'templates/';
+      var templateUrl = setting.templateUrl ? dir + setting.templateUrl : 'dialog.html';
       var message = setting.message ? setting.message : '';
       var ok = setting.ok ? setting.ok : 'OK';
       var parentEl = angular.element('#popupContainer');
       $mdDialog.show({
         controller: controller,
         controllerAs: 'ctrl',
-        templateUrl: template,
+        templateUrl: templateUrl,
         parent: parentEl,
         openFrom: parentEl,
         closeTo: parentEl,

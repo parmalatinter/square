@@ -1,44 +1,26 @@
-<md-dialog aria-label="Dialog">
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <h2>
-             <p>Help</p>
-          </h2>
-        </div>
-    </md-toolbar>
-    <md-dialog-content>
-        <div flex-xs flex-gt-xs="50" layout="column">
-            <md-card md-theme="dark-grey}" md-theme-watch>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">When your turn</span>
-                        <span class="md-subhead">1. Select your item.</span>
-                        <span class="md-subhead">2. Select enemy item or empty zoon in the around.</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media"></div>
-                    </md-card-title-media>
-                </md-card-title>
-            </md-card>
-            <md-card md-theme="dark-grey}" md-theme-watch>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">When enemy turn</span>
-                        <span class="md-subhead">1. Wait a minute.</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media"></div>
-                    </md-card-title-media>
-                </md-card-title>
-            </md-card>
-        </div>
-    </md-dialog-content>
-    <md-dialog-actions>
-        <md-button ng-click="closeDialog()" class="md-warm">
-            Close Dialog
-        </md-button>
-        <md-button ng-click="closeDialog()" class="md-primary">
-            Close Dialog
-        </md-button>
-    </md-dialog-actions>
-</md-dialog>
+<div flex layout="column">
+    <md-card md-theme="dark-grey" md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">When your turn</span>
+                <span class="md-subhead">1. Select your item.</span>
+                <span class="md-subhead">2. Select enemy item or empty zoon in the around.</span>
+            </md-card-title-text>
+            <md-card-title-media>
+                <div class="md-media-lg card-media"></div>
+            </md-card-title-media>
+        </md-card-title>
+    </md-card>
+    <md-card md-theme="dark-grey" md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">When enemy turn</span>
+                <span class="md-subhead">1. Wait a minute.</span>
+            </md-card-title-text>
+            <md-card-title-media>
+                <div class="md-media-lg card-media"></div>
+            </md-card-title-media>
+        </md-card-title>
+    </md-card>
+</div>
+

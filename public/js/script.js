@@ -66,6 +66,20 @@ var app = angular
             templateUrl: dir + "link.html"
           }
         }
+      })
+      .state('help', {
+        url: "/help",
+        views: {
+          "header": {
+            templateUrl: dir + "header.html"
+          },
+          "main": {
+            templateUrl:dir + "help.html"
+          },
+          "link": {
+            templateUrl: dir + "link.html"
+          }
+        }
       });
     $urlRouterProvider.otherwise('/index');
     $urlRouterProvider.when('', '/');

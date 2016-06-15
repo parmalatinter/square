@@ -348,9 +348,10 @@ app
 
     return GameService;
   })
-  .controller('GameSubCtrl', function($scope, $timeout, $mdDialog, $filter, GameService, AjaxService) {
+  .controller('GameSubCtrl', function($scope, $timeout, $mdDialog, $filter, GameService, AjaxService, StorageService) {
     $scope.game = GameService;
     $scope.auth = AjaxService;
+    $scope.strage = StorageService;
     $scope.closeDialog = function() {
       $mdDialog.hide();
     };
@@ -359,12 +360,13 @@ app
       $mdDialog.hide();
     };
   })
-  .controller('GameCtrl', function($scope, $timeout, $mdDialog, $state, $rootScope, $filter, GameService, AjaxService) {
+  .controller('GameCtrl', function($scope, $timeout, $mdDialog, $state, $rootScope, $filter, GameService, AjaxService, StorageService) {
 
     var init = function() {
       $state.go('index');
       $scope.game = GameService.getTeams().getItems().shuffle(true).update({}, true);
       $scope.auth = AjaxService;
+      $scope.strage = StorageService;
       GameService.teamSituation = false;
       GameService.isFinished = false;
       GameService.setTeam(0);

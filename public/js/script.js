@@ -80,6 +80,20 @@ var app = angular
             templateUrl: dir + "link.html"
           }
         }
+      })
+      .state('setting', {
+        url: "/setting",
+        views: {
+          "header": {
+            templateUrl: dir + "header.html"
+          },
+          "main": {
+            templateUrl:dir + "setting.html"
+          },
+          "link": {
+            templateUrl: dir + "link.html"
+          }
+        }
       });
     $urlRouterProvider.otherwise('/index');
     $urlRouterProvider.when('', '/');

@@ -1,12 +1,14 @@
-<md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}">
-  count:{{game.teams[game.selectedTeam.key].count}}
-</md-button>
-<md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}" ng-click="init()">
-  Restart
-</md-button>
-<md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}" ng-click="shuffle()">
-  Shuffle
-</md-button>
+<md-subheader>
+  <md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}">
+    count:{{game.teams[game.selectedTeam.key].count}}
+  </md-button>
+  <md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}" ng-click="init()">
+    Restart
+  </md-button>
+  <md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}" ng-click="shuffle()">
+    Shuffle
+  </md-button>
+</md-subheader>
 <!-- background-color:{{game.selectedTeam.theme.bgColor}} -->
 <div class="pattern" style="text-align: center; width: 352px;display:inline-block">
   <md-button aria-label="item" show-bottom-sheet ng-repeat="item in game.items track by $index" ng-click="changeMode(item, $index)" ng-class="{

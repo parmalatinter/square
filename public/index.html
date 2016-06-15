@@ -30,32 +30,20 @@
                     <md-button open-sidebar="left" hide-gt-sm class="md-icon-button">
                         <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg">
                         </md-icon>
-                    </md-button>
+                    </md-button
                     <h1>Menu</h1>
                 </div>
             </md-toolbar>
-            <!--<li><a ng-href="#/a">a</a></li>-->
-            <!--<li><a ng-href="#/b">b</a></li>-->
-            <!--<li><a ng-href="#/c">c</a></li>-->
-            <md-button open-dialog="{title:'Dialog', ok:'OK', message:'dialog', isInit:false, templateUrl : 'help.html'}" class="md-accent">HELP</md-button>
+            <md-content  flex ui-view="link"></md-content>
         </md-sidenav>
-        <md-content flex ng-controller="GameCtrl" id="popupContainer" class="relative" style="height:800px">
+        <md-content flex ng-controller="GameCtrl" ng-init="init()" id="popupContainer" class="relative body" style="height:800px">
             <md-button open-dialog="{title:'Dialog', ok:'OK', message:'dialog', isInit:false, templateUrl : 'userList.html', controller : 'GameSubCtrl'}" class="md-fab md-fab-bottom-right" aria-label="Add">
                 <ng-md-icon icon="add"></ng-md-icon>
             </md-button>
-            <div class="well" ui-view="viewA"></div>
-            <md-content ng-init="init()" flex class="md-padding main">
-                <div class="well" ui-view="main" style="display: inline-block;"></div>
-                <li><a ui-sref="index">index</a></li>
-                <li><a ui-sref="debug">debug</a></li>
-                <li><a ui-sref="route1">Route 1</a></li>
-                <li><a ui-sref="route2">Route 2</a></li>
-                <div class="span6">
-                </div>
-                <div class="span6">
-                    <div class="well" ui-view="viewB"></div>
-                </div>
-            </md-content>
+            <md-content flex ui-view="header"></md-content>
+            <md-content flex ui-view="main" class="main"></md-content>
+            
+            <md-content flex ui-view="debug"></md-content>
         </md-content>
         <!--縦並び-->
 <!--         <div layout="column" role="fotter">

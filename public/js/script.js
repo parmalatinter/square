@@ -1,7 +1,7 @@
 var app = angular
   .module('MyApp', ['ngRoute', 'ngMaterial', 'ui.router', 'ngStorage'])
   .run(function($http, $templateCache) {
-    $http.get('header.html', {
+    $http.get('templates/header.html', {
       cache: $templateCache
     });
   })
@@ -25,27 +25,30 @@ var app = angular
       .state('index', {
         url: "/",
         views: {
-          "viewA": {
+          "header": {
             templateUrl: dir + 'header.html',
           },
           "main": {
             templateUrl: dir + "start.html"
           },
-          "viewB": {
-            template: "index.viewB"
+          "link": {
+            templateUrl:  dir + "link.html"
           }
         }
       })
       .state('debug', {
         url: "/debug",
         views: {
-          "viewA": {
+          "header": {
             templateUrl: dir + "header.html"
           },
           "main": {
             templateUrl: dir + "game.html"
           },
-          "viewB": {
+          "link": {
+            templateUrl: dir + "link.html"
+          },
+          "debug": {
             templateUrl: dir + "debug.html"
           }
         }
@@ -53,14 +56,14 @@ var app = angular
       .state('battle', {
         url: "/battle",
         views: {
-          "viewA": {
+          "header": {
             templateUrl: dir + "header.html"
           },
           "main": {
             templateUrl:dir + "game.html"
           },
-          "viewB": {
-            template: "route2.viewB"
+          "link": {
+            templateUrl: dir + "link.html"
           }
         }
       });

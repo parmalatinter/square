@@ -1,41 +1,37 @@
 <md-list ng-controller="LocalStrageCtrl">
     <md-subheader class="md-no-sticky">Single Action Checkboxes</md-subheader>
-    <md-list-item ng-repeat="topping in toppings">
+    <md-list-item>
         <p> {{$storage.name}} </p>
         <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
-    </md-list-item>
-    <md-divider></md-divider>
-    <md-subheader class="md-no-sticky">Secondary Buttons</md-subheader>
-    <md-list-item class="secondary-button-padding">
-        <p>Clicking the button to the right will fire the secondary action</p>
-        <md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>
-    </md-list-item>
-    <md-list-item class="secondary-button-padding" ng-click="">
-        <p>Click anywhere to fire the primary action, or the button to fire the secondary</p>
-        <md-button class="md-secondary" ng-click="">More Info</md-button>
     </md-list-item>
     <md-divider></md-divider>
     <md-subheader class="md-no-sticky">Clickable Items with Secondary Controls</md-subheader>
     <md-list-item ng-click="">
         <p> ssssss </p>
-        <md-switch class="md-secondary" ng-model="setting.enabled"></md-switch>
+        <md-switch class="md-secondary" ng-model="$storage.test.enabled"></md-switch>
     </md-list-item>
     <md-list-item ng-click="">
         <md-icon md-svg-icon="cached"></md-icon>
         <p>Data Usage</p>
     </md-list-item>
     <md-divider></md-divider>
-    <md-subheader class="md-no-sticky">Checkbox with Secondary Action</md-subheader>
-    <md-list-item>
-        <md-checkbox ng-model="message.selected"></md-checkbox>
-        <p>xxxxxxxxx</p>
-        <md-icon class="md-secondary" ng-click="doSecondaryAction($event)" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
-    </md-list-item>
+    <md-subheader class="md-no-sticky">Name</md-subheader>
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>First name</label>
+        <input ng-model="$storage.user.firstName">
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Long Last Name That Will Be Truncated And 3 Dots (Ellipsis) Will Appear At The End</label>
+        <input ng-model="$storage.user.lastName">
+      </md-input-container>
+      </div>
+
     <md-divider></md-divider>
     <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
     <md-list-item ng-click="" class="noright">
         <img alt="xxxxxxxxxxx" ng-src="person.img" class="md-avatar" />
-        <md-checkbox class="md-secondary" ng-model="person.selected"></md-checkbox>
+        <md-checkbox class="md-secondary" ng-model="$storage.test.disabled"></md-checkbox>
         <md-icon md-svg-icon="communication:email" ng-click="" aria-label="Send Email" class="md-secondary md-hue-3"></md-icon>
         <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
     </md-list-item>

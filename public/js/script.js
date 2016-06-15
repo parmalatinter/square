@@ -250,6 +250,16 @@ var app = angular
 
     return AjaxService;
   })
+  .controller('LocalStrageCtrl', function($scope, $localStorage) {
+    $scope.$storage = $localStorage.$default({
+        name: 'Anonimas'
+    });
+  })
+  .controller('SessionStrageCtrl', function($scope, $sessionStorage) {
+    $scope.$storage = $sessionStorage.$default({
+        name: 'Anonimas'
+    });
+  })
   .controller('DialogCtrl', function($scope, $mdDialog, locals) {
     $scope.locals = locals;
     $scope.closeDialog = function() {

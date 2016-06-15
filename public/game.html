@@ -1,0 +1,50 @@
+<md-button class="{{game.selectedTeam.theme.bgClass}}">
+  count:{{game.teams[game.selectedTeam.key].count}}
+</md-button>
+<md-button class="{{game.selectedTeam.theme.bgClass}}" ng-click="init()">
+  Restart
+</md-button>
+<md-button class="{{game.selectedTeam.theme.bgClass}}" ng-click="shuffle()">
+  Shuffle
+</md-button>
+<!-- background-color:{{game.selectedTeam.theme.bgColor}} -->
+<div class="pattern" style="text-align: center; width: 352px;">
+  <md-button aria-label="item" show-bottom-sheet ng-repeat="item in game.items track by $index" ng-click="changeMode(item, $index)" ng-class="{
+                  'attacable'         :attacable(item),
+                  'shake'           :attacable(item),
+                  'pulse infinite'  :!item.teamId,
+                  'selected'        :item.isSelected,
+                  'opacity'         :!isMytaem(item) || (!isMytaem(item) && !item.isAround),
+                  'square'          :!item.teamId
+                }" team-id="{{item.teamId}}" style="background-color:{{game.teams[item.teamId -1].theme.bgColor}};color:{{game.teams[item.teamId -1].theme.color}}" ng-disabled="(item.teamId != game.selectedTeam.teamId) && !item.isAround" class="md-raised md-fab item animated">
+    <span ng-if="item.teamId">
+      <!-- <span ng-if="item.teamId == 1" style="font-size:20px">&#9822;</span>
+    <span ng-if="item.teamId == 2" style="font-size:20px">&#9763;</span> --> {{item.power}}
+    </span>
+  </md-button>
+</div>
+
+<!--         <span style="color:white">
+  <span ng-repeat="res in auth.ref">
+    {{res.result}}<br/>
+  </span>
+<span ng-repeat="res2 in auth.arrayRef">
+    {{res2.privateKey}}:{{res2.result[res2.privateKey]}}<br/>
+  </span>
+</span> -->
+
+        <md-content ng-repeat="team in game.teams" style="width: 352px;background-color:{{team.theme.bgColor}}" style="display:inline-block">
+          {{team.name}}
+          <span ng-repeat="item in team.friends">
+            ●
+  <!--           <span ng-if="team.teamId == 2" style="font-size:20px">&#9822;</span>
+  <span ng-if="team.teamId == 1" style="font-size:20px">&#9763;</span> -->
+          </span>
+          <br>
+        </md-content>
+<!--<span style="color:white">-->
+<!--  {{game.selectedItem}}<br/>-->
+<!--  {{game.selectedTargetItem}}-->
+<!--  {{game.modeType}}-->
+<!-- {{base.user.name}} -->
+<!--</span>-->

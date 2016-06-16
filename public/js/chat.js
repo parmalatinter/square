@@ -20,7 +20,9 @@ app
     if(!this.comment) return;
     AjaxService.add('chats', ChatService.chatPath + '/comments' , [{
       detail : this.comment,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
+      name : $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + rand,
+      key : AjaxService.getCurrentUserKey(),
     }], false, true);
     return this;
   };

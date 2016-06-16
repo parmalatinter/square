@@ -306,6 +306,11 @@ var app = angular
             return this.arrayRef.users.result[this.getCurrentUserKey()];
         };
 
+        AjaxService.setPushedKey = function(key, value) {
+            this.arrayRefKeys[key].pushedKey = value;
+            return this;
+        };
+
         AjaxService.getPushedKey = function(key) {
             if (!this.arrayRefKeys[key]) return 0;
             return this.arrayRefKeys[key].pushedKey;

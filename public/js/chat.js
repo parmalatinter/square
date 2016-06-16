@@ -11,7 +11,7 @@ app
                 path: 'chats',
                 value : [{
                     key: AjaxService.getCurrentUserKey(),
-                    name: $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + rand,
+                    name: $localStorage.user.firstName  ? $localStorage.user.firstName + rand : 'Mika_' + rand,
                     comments: [],
                     date: new Date().toISOString()
                 }],
@@ -51,14 +51,23 @@ app
         $scope.storage = StorageService;
         $scope.chat = ChatService;
         $scope.myChat = {};
-        console.log($stateParams.test);
+
+        var chatPushedKey = '';
+
+        if($stateParams.key && $stateParams.value){
+          AjaxService.setPushedKey('chats', $stateParams.value.key)
+          $scope.myChat = AjaxService.getPushedResult('chats', AjaxService.getPushedKey('chats'));
+        }
 
         $scope.addComment = function() {
             ChatService.addComment();
         };
 
         $rootScope.$on('updated', function() {
-            var chatPushedKey = AjaxService.getPushedKey('chats');
+          if(!chatPushedKey){
+            chatPushedKey = AjaxService.getPushedKey('chats');
+          }
+
             $scope.myChat = AjaxService.getPushedResult('chats', chatPushedKey);
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();

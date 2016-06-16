@@ -360,7 +360,7 @@ app
       $mdDialog.hide();
     };
   })
-  .controller('GameCtrl', function($scope, $timeout, $mdDialog, $state, $rootScope, $filter, GameService, AjaxService, StorageService) {
+  .controller('GameCtrl', function($scope, $timeout, $mdDialog, $state, $rootScope, $filter, $localStorage, GameService, AjaxService, StorageService) {
 
     var init = function() {
       $state.go('index');
@@ -379,7 +379,7 @@ app
         .add('users', 'users', [{
           inBattle: false,
           enemyId : false,
-          name : 'Mika_' + rand
+          name : $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + rand
         }], true);
     };
 

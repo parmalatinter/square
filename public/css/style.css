@@ -166,3 +166,7 @@ md-sidenav ng-md-icon {
 body, .body{
 /*  background: radial-gradient(#000000, #555555);*/
 }
+
+.font-game{
+  font-family: 'Press Start 2P', cursive;
+};

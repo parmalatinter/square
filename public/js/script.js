@@ -1,9 +1,11 @@
 var app = angular
     .module('MyApp', ['ngRoute', 'ngMaterial', 'ui.router', 'ngStorage'])
-    .run(function($http, $templateCache) {
+    .run(function($http, $templateCache, $localStorage) {
         $http.get('templates/header.html', {
             cache: $templateCache
         });
+
+        if(!$localStorage.user) $localStorage.user = {};
     })
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
@@ -33,7 +35,10 @@ var app = angular
                     },
                     "link": {
                         templateUrl: dir + "link.html"
-                    }
+                    },
+                    "footer": {
+                        templateUrl: dir + 'footer.html',
+                    },
                 }
             })
             .state('debug', {
@@ -50,7 +55,10 @@ var app = angular
                     },
                     "debug": {
                         templateUrl: dir + "debug.html"
-                    }
+                    },
+                    "footer": {
+                        templateUrl: dir + 'footer.html',
+                    },
                 }
             })
             .state('battle', {
@@ -64,7 +72,10 @@ var app = angular
                     },
                     "link": {
                         templateUrl: dir + "link.html"
-                    }
+                    },
+                    "footer": {
+                        templateUrl: dir + 'footer.html',
+                    },
                 }
             })
             .state('help', {
@@ -78,7 +89,44 @@ var app = angular
                     },
                     "link": {
                         templateUrl: dir + "link.html"
-                    }
+                    },
+                    "footer": {
+                        templateUrl: dir + 'footer.html',
+                    },
+                }
+            })
+            .state('chat', {
+                url: "/chat",
+                views: {
+                    "header": {
+                        templateUrl: dir + "header.html"
+                    },
+                    "main": {
+                        templateUrl: dir + "chat.html"
+                    },
+                    "link": {
+                        templateUrl: dir + "link.html"
+                    },
+                    "footer": {
+                        templateUrl: dir + 'footer.html',
+                    },
+                }
+            })
+            .state('chatList', {
+                url: "/chatList",
+                views: {
+                    "header": {
+                        templateUrl: dir + "header.html"
+                    },
+                    "main": {
+                        templateUrl: dir + "chatList.html"
+                    },
+                    "link": {
+                        templateUrl: dir + "link.html"
+                    },
+                    "footer": {
+                        templateUrl: dir + 'footer.html',
+                    },
                 }
             })
             .state('setting', {
@@ -92,36 +140,14 @@ var app = angular
                     },
                     "link": {
                         templateUrl: dir + "link.html"
-                    }
+                    },
+                    "footer": {
+                        templateUrl: dir + 'footer.html',
+                    },
                 }
             });
         $urlRouterProvider.otherwise('/index');
         $urlRouterProvider.when('', '/');
-    })
-    .factory('StorageService', function($window, $filter, $rootScope) {
-
-        var StorageService = {
-            storageRef: {},
-            baseUrl:'gs://project-3597707734440258770.appspot.com/',
-            urls:{}
-        };
-
-        var init = function() {
-            StorageService.storageRef = firebase.storage().ref();
-        };
-
-        init();
-
-        StorageService.getImageRef = function(fileName, key ){
-            this.storageRef.child(fileName).getDownloadURL().then(function(url) {
-                StorageService.urls[key] = url;
-                $rootScope.$broadcast('updated');
-            }).catch(function(error) {
-              // Handle any errors
-            });
-        };
-
-        return StorageService;
     })
     .factory('AjaxService', function($window, $filter, $rootScope) {
 
@@ -158,7 +184,6 @@ var app = angular
                         this.user.uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
                         // this value to authenticate with your backend server, if
                         // you have one. Use User.getToken() instead.
-                        console.log(this.user);
                         $rootScope.$broadcast('updated');
                     }
                 } else {
@@ -275,6 +300,30 @@ var app = angular
         init();
 
         return AjaxService;
+    })
+    .factory('StorageService', function($window, $filter, $rootScope) {
+
+        var StorageService = {
+            storageRef: {},
+            urls:{}
+        };
+
+        var init = function() {
+            StorageService.storageRef = firebase.storage().ref();
+        };
+
+        init();
+
+        StorageService.getImageRef = function(fileName, key ){
+            this.storageRef.child(fileName).getDownloadURL().then(function(url) {
+                StorageService.urls[key] = url;
+                $rootScope.$broadcast('updated');
+            }).catch(function(error) {
+              // Handle any errors
+            });
+        };
+
+        return StorageService;
     })
     .controller('LocalStrageCtrl', function($scope, $localStorage) {
         $scope.$storage = $localStorage.$default({

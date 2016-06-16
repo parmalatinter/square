@@ -46,11 +46,12 @@ app
         init();
         return ChatService;
     })
-    .controller('ChatCtrl', function($scope, $rootScope, $timeout, $mdDialog, $filter, GameService, AjaxService, ChatService, StorageService) {
+    .controller('ChatCtrl', function($scope, $rootScope, $timeout, $mdDialog, $filter, $state, $stateParams, GameService, AjaxService, ChatService, StorageService) {
         $scope.auth = AjaxService;
         $scope.storage = StorageService;
         $scope.chat = ChatService;
         $scope.myChat = {};
+        console.log($stateParams.test);
 
         $scope.addComment = function() {
             ChatService.addComment();

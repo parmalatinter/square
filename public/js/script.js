@@ -102,7 +102,8 @@ var app = angular
                         templateUrl: dir + "header.html"
                     },
                     "main": {
-                        templateUrl: dir + "chat.html"
+                        templateUrl: dir + "chat.html",
+                        controller: 'ChatCtrl'
                     },
                     "link": {
                         templateUrl: dir + "link.html"
@@ -110,6 +111,10 @@ var app = angular
                     "footer": {
                         templateUrl: dir + 'footer.html',
                     },
+                },
+               params: {
+                  key: null,
+                  value: null
                 }
             })
             .state('chatList', {
@@ -119,7 +124,8 @@ var app = angular
                         templateUrl: dir + "header.html"
                     },
                     "main": {
-                        templateUrl: dir + "chatList.html"
+                        templateUrl: dir + "chatList.html",
+                        controller: 'ChatCtrl',
                     },
                     "link": {
                         templateUrl: dir + "link.html"
@@ -127,6 +133,10 @@ var app = angular
                     "footer": {
                         templateUrl: dir + 'footer.html',
                     },
+                },
+               params: {
+                  key: null,
+                  value: null
                 }
             })
             .state('setting', {

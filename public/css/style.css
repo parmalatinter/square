@@ -163,8 +163,8 @@ md-sidenav ng-md-icon {
   background-color:red !important;
 }
 
-body, .body{
-/*  background: radial-gradient(#000000, #555555);*/
+body .body{
+padding-top: 50px;
 }
 
 .messageView{

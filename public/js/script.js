@@ -307,6 +307,7 @@ var app = angular
         };
 
         AjaxService.setPushedKey = function(key, value) {
+            if (!this.arrayRefKeys[key]) this.arrayRefKeys[key] = {};
             this.arrayRefKeys[key].pushedKey = value;
             return this;
         };

@@ -6,12 +6,18 @@ app
         var rand = Math.floor(Math.random() * 11);
         var init = function() {
             ChatService.user = AjaxService.getCurrentUser();
+
+            AjaxService
+                .ref('chats', 'chats', true);
+        };
+
+        ChatService.addChat = function(name){
             var record = {
                 key : 'chats',
                 path: 'chats',
                 value : [{
-                    key: AjaxService.getCurrentUserKey(),
-                    name: $localStorage.user.firstName  ? $localStorage.user.firstName + rand : 'Mika_' + rand,
+                    author: AjaxService.getCurrentUserKey(),
+                    name: name  ? name + rand : 'Untitle ' + rand,
                     comments: [],
                     date: new Date().toISOString()
                 }],
@@ -19,9 +25,8 @@ app
                 isPush : false
             };
             AjaxService
-                .ref('chats', 'chats', true)
                 .pushValue( record );
-        };
+        }
 
         ChatService.addComment = function() {
             if (!this.comment) return;
@@ -51,13 +56,18 @@ app
         $scope.storage = StorageService;
         $scope.chat = ChatService;
         $scope.myChat = {};
+        $scope.newChat = {};
 
         var chatPushedKey = '';
 
         if($stateParams.key && $stateParams.value){
-          AjaxService.setPushedKey('chats', $stateParams.value.key)
+          AjaxService.setPushedKey('chats', $stateParams.key)
           $scope.myChat = AjaxService.getPushedResult('chats', AjaxService.getPushedKey('chats'));
         }
+
+        $scope.addChat = function() {
+            ChatService.addChat($scope.newChat.title);
+        };
 
         $scope.addComment = function() {
             ChatService.addComment();
@@ -69,6 +79,7 @@ app
           }
 
             $scope.myChat = AjaxService.getPushedResult('chats', chatPushedKey);
+            if(!$scope.$root) return;
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();
             }

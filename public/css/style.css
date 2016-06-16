@@ -167,6 +167,22 @@ body, .body{
 /*  background: radial-gradient(#000000, #555555);*/
 }
 
+.messageView{
+    font-size: 12px;
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #cacaca;
+    padding: 23px;
+    background-color: #000;
+    color: #FFF;
+    line-height: 25px;
+    text-align: left;
+}
+
+@font-face {
+  font-family: PixelMplus10-Regular;
+  src: url('../fonts/PixelMplus10-Regular.ttf') format("truetype");
+}
 .font-game{
-  font-family: 'Press Start 2P', cursive;
+  font-family: PixelMplus10-Regular;
 };

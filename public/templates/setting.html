@@ -1,4 +1,4 @@
-<md-list ng-controller="LocalStrageCtrl">
+<md-list ng-controller="LocalStrageCtrl" sytle="text-align: left;">
     <md-subheader class="md-no-sticky">Single Action Checkboxes</md-subheader>
     <md-list-item>
         <p> {{$storage.user.firstName}} </p>
@@ -30,7 +30,7 @@
     <md-divider></md-divider>
     <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
     <md-list-item ng-click="" class="noright">
-        <img alt="xxxxxxxxxxx" ng-src="person.img" class="md-avatar" />
+        <img alt="xxxxxxxxxxx" ng-src="{{storage.urls.win}}" class="md-avatar" />
         <md-checkbox class="md-secondary" ng-model="$storage.test.disabled"></md-checkbox>
         <md-icon md-svg-icon="communication:email" ng-click="" aria-label="Send Email" class="md-secondary md-hue-3"></md-icon>
         <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>

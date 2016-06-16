@@ -1,13 +1,14 @@
-<md-list ng-controller="ChatCtrl">
-    <md-list flex>
-        <md-subheader class="md-no-sticky">Users</md-subheader>
-        <md-list-item class="md-3-line" ng-repeat="(key2, res3) in auth.arrayRef.users.result" ng-click="selectStage(key2, res3)">
-            <div class="md-list-item-text" layout="column">
-                <h4>{{ res3.name }}</h4>
-            </div>
-        </md-list-item>
-    </md-list>
-</md-list>
-  <div class="messageView font-game" style="font-size:1px;max-width: 100%;box-sizing: border-box;border: 1px solid #cacaca;padding: 23px;" layout-align="center center">
-    <span>.md-whiteframe-1dpざあああ</span>
-  <div>
+  <div ng-controller="ChatCtrl" layout-align="center center">
+    <span>{{getUser().name}}</span>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Add comment</label>
+        <input ng-model="chat.comment">
+      </md-input-container>
+    <md-button class="md-raised md-primary" ng-click="addComment()">
+      addComment
+    </md-button>
+    <div ng-repeat="(commentKey, comment) in myChat.comments" class="messageView font-game">
+        <span style="font-size:30px">{{comment.detail}}</span><br/>
+        <div style="margin-top:5px">{{comment.date}}</div>
+    </div>
+  <div>　

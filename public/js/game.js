@@ -379,6 +379,7 @@ app
         .add('users', 'users', [{
           inBattle: false,
           enemyId : false,
+          key: AjaxService.getCurrentUserKey(),
           name : $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + rand
         }], true);
     };

@@ -194,10 +194,10 @@ var app = angular
             });
         };
 
-        var add = function(key, path, value, isDisconnectRemove) {
+        var add = function(key, path, value, isDisconnectRemove, isPush) {
             if (!AjaxService.arrayRefKeys[key]) AjaxService.arrayRefKeys[key] = {};
             if (Array.isArray(value)) {
-                if (AjaxService.arrayRefKeys[key].pushedKey) {
+                if (AjaxService.arrayRefKeys[key].pushedKey && !isPush) {
                     AjaxService.arrayRef[key] = firebase.database().ref(path + '/' + AjaxService.arrayRefKeys[key].pushedKey);
                     AjaxService.arrayRef[key].update(value[0]);
                 } else {
@@ -217,7 +217,7 @@ var app = angular
 
         var refForObj = function(key, path) {
             if (!AjaxService.objRef[key]) AjaxService.objRef[key] = {};
-            firebase.database().objRef(path).on('value', function(data) {
+            firebase.database().ref(path).on('value', function(data) {
                 if (data.val()) {
                     AjaxService.objRef[key].result = data.val();
                     $rootScope.$broadcast('updated');
@@ -258,8 +258,8 @@ var app = angular
 
         AjaxService.app = firebase.initializeApp(config);
 
-        AjaxService.add = function(key, path, value, isDisconnectRemove) {
-            add(key, path, value, isDisconnectRemove);
+        AjaxService.add = function(key, path, value, isDisconnectRemove, isPush) {
+            add(key, path, value, isDisconnectRemove, isPush);
             return this;
         };
 
@@ -280,14 +280,26 @@ var app = angular
             return this;
         };
 
+        AjaxService.getCurrentUserKey = function() {
+            if (!this.arrayRefKeys.users) return false;
+            return this.arrayRefKeys.users.pushedKey;
+        };
+
         AjaxService.getCurrentUser = function() {
             if (!this.arrayRef.users.result) return false;
-            return this.arrayRef.users.result[this.arrayRefKeys.users.pushedKey];
+            if (!this.getCurrentUserKey()) return false;
+            return this.arrayRef.users.result[this.getCurrentUserKey()];
         };
 
         AjaxService.getPushedKey = function(key) {
             if (!this.arrayRefKeys[key]) return 0;
             return this.arrayRefKeys[key].pushedKey;
+        };
+
+        AjaxService.getObjResult = function(key, pushedKey) {
+            if (!this.objRef[key]) return 0;
+            if (!this.objRef[key].result) return 0;
+            return this.objRef[key].result;
         };
 
         AjaxService.getPushedResult = function(key, pushedKey) {

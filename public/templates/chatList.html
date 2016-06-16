@@ -1,7 +1,8 @@
 <md-list ng-controller="ChatCtrl">
     <md-list flex>
         <md-subheader class="md-no-sticky">Users</md-subheader>
-        <md-list-item class="md-3-line" ng-repeat="(key2, res3) in auth.arrayRef.users.result" ui-sref="chat">
+        {{auth.objRef.chats.result}}
+        <md-list-item class="md-3-line" ng-repeat="(key2, res3) in auth.objRef.chats" ui-sref="chat">
             <div class="md-list-item-text" layout="column">
                 <h4>{{ res3.name }}</h4>
             </div>

@@ -4,6 +4,7 @@ app
     user:{},
     chatPath:''
   };
+  var rand = Math.floor( Math.random() * 11 ) ;
   var init = function () {
     ChatService.user = AjaxService.getCurrentUser();
     ChatService.chatPath = 'chats/' + AjaxService.getCurrentUserKey();

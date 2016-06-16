@@ -177,16 +177,23 @@ app
       if(!$filter('inArray')(stage.users, userPushedKey) && stage.users){
         stage.users.push(userPushedKey);
       }
+      var record = {
+          key : 'stage',
+          path: 'stage',
+          value : [{
+              item: item,
+              items: GameService.items,
+              teams: _teams,
+              selectedItem: GameService.selectedItem,
+              selectedTeam: _selectedTeam,
+              users: [AjaxService.arrayRefKeys.users.pushedKey]
+          }],
+          isDisconnectRemove : true,
+          isPush : false
+      };
 
       AjaxService
-        .add('stage', 'stage', [{
-          item: item,
-          items: GameService.items,
-          teams: _teams,
-          selectedItem: GameService.selectedItem,
-          selectedTeam: _selectedTeam,
-          users: [AjaxService.arrayRefKeys.users.pushedKey]
-        }], true);
+        .pushValue( record );
     };
 
     var switchTeam = function() {
@@ -372,16 +379,24 @@ app
       GameService.setTeam(0);
 
       var rand = Math.floor( Math.random() * 11 ) ;
+
+      var record = {
+          key : 'users',
+          path: 'users',
+          value : [{
+            inBattle: false,
+            enemyId : false,
+            key: AjaxService.getCurrentUserKey(),
+            name : $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + rand
+          }],
+          isDisconnectRemove : true,
+          isPush : false
+      };
       //key, path, isArray, isDisconnectRemove, condition
       AjaxService
         .ref('stage', 'stage', true)
         .ref('users', 'users', true)
-        .add('users', 'users', [{
-          inBattle: false,
-          enemyId : false,
-          key: AjaxService.getCurrentUserKey(),
-          name : $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + rand
-        }], true);
+        .pushValue( record );
     };
 
     $rootScope.$on('updated', function() {

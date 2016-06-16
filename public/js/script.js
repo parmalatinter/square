@@ -194,26 +194,26 @@ var app = angular
             });
         };
 
-        var add = function(key, path, value, isDisconnectRemove, isPush) {
-            if (!AjaxService.arrayRefKeys[key]) AjaxService.arrayRefKeys[key] = {};
-            if (Array.isArray(value)) {
-                if (AjaxService.arrayRefKeys[key].pushedKey && !isPush) {
-                    AjaxService.arrayRef[key] = firebase.database().ref(path + '/' + AjaxService.arrayRefKeys[key].pushedKey);
-                    AjaxService.arrayRef[key].update(value[0]);
-                } else {
-                    AjaxService.arrayRef[key] = firebase.database().ref(path);
-                    angular.forEach(value, function(_value) {
-                        var newRef = AjaxService.arrayRef[key].push(_value);
-                        AjaxService.arrayRefKeys[key].pushedKey = newRef.key;
-                    });
-                }
-                if (isDisconnectRemove) AjaxService.arrayRef[key].onDisconnect().remove();
+        var  setValue = function( record ){
+            AjaxService.objRef[record.key] = firebase.database().ref(record.path);
+            AjaxService.objRef[record.key].set(record.value);
+            if (record.isDisconnectRemove) AjaxService.objRef[record.key].onDisconnect().remove();
+        }
+
+       var  pushValue = function( record ){
+            if (!AjaxService.arrayRefKeys[record.key]) AjaxService.arrayRefKeys[record.key] = {};
+            if (AjaxService.arrayRefKeys[record.key].pushedKey && !record.isPush) {
+                AjaxService.arrayRef[record.key] = firebase.database().ref(record.path + '/' + AjaxService.arrayRefKeys[record.key].pushedKey);
+                AjaxService.arrayRef[record.key].update(record.value[0]);
             } else {
-                AjaxService.objRef[key] = firebase.database().ref(path);
-                AjaxService.objRef[key].update(value);
-                if (isDisconnectRemove) AjaxService.objRef[key].onDisconnect().remove();
+                AjaxService.arrayRef[record.key] = firebase.database().ref(record.path);
+                angular.forEach(record.value, function(_value) {
+                    var newRef = AjaxService.arrayRef[record.key].push(_value);
+                    AjaxService.arrayRefKeys[record.key].pushedKey = newRef.key;
+                });
             }
-        };
+            if (record.isDisconnectRemove) AjaxService.arrayRef[record.key].onDisconnect().remove();
+        }
 
         var refForObj = function(key, path) {
             if (!AjaxService.objRef[key]) AjaxService.objRef[key] = {};
@@ -258,8 +258,13 @@ var app = angular
 
         AjaxService.app = firebase.initializeApp(config);
 
-        AjaxService.add = function(key, path, value, isDisconnectRemove, isPush) {
-            add(key, path, value, isDisconnectRemove, isPush);
+        AjaxService.pushValue = function(record) {
+            pushValue(record);
+            return this;
+        };
+
+        AjaxService.setValue = function(record) {
+            setValue(record);
             return this;
         };
 

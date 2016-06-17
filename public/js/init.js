@@ -5,7 +5,7 @@ var app = angular
             cache: $templateCache
         });
 
-        if(!$localStorage.user) $localStorage.user = {};
+        if (!$localStorage.user) $localStorage.user = {};
     })
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
@@ -23,137 +23,103 @@ var app = angular
     })
     .config(function($stateProvider, $urlRouterProvider) {
         var dir = 'templates/';
+        var states = {
+            header: {
+                templateUrl: dir + "header.html",
+                controller: 'HedderCtrl'
+            },
+            footer: {
+                templateUrl: dir + 'footer.html'
+            },
+            debug: {
+                templateUrl: dir + 'debug.html'
+            },
+            link: {
+                templateUrl: dir + "link.html"
+            },
+            main: {
+                templateUrl: dir + "start.html"
+            },
+            chat: {
+                templateUrl: dir + "chat.html",
+                controller: 'ChatCtrl'
+            },
+            chatList: {
+                templateUrl: dir + "chatList.html",
+                controller: 'ChatCtrl',
+            }
+        };
         $stateProvider
             .state('index', {
                 url: "/",
                 views: {
-                    "header": {
-                        templateUrl: dir + 'header.html',
-                    },
-                    "main": {
-                        templateUrl: dir + "start.html"
-                    },
-                    "link": {
-                        templateUrl: dir + "link.html"
-                    },
-                    "footer": {
-                        templateUrl: dir + 'footer.html',
-                    },
+                    "header": states.header,
+                    "main": states.main,
+                    "link": states.link,
+                    "footer":states.footer
                 }
             })
             .state('debug', {
                 url: "/debug",
                 views: {
-                    "header": {
-                        templateUrl: dir + "header.html"
-                    },
-                    "main": {
-                        templateUrl: dir + "game.html"
-                    },
-                    "link": {
-                        templateUrl: dir + "link.html"
-                    },
-                    "debug": {
-                        templateUrl: dir + "debug.html"
-                    },
-                    "footer": {
-                        templateUrl: dir + 'footer.html',
-                    },
+                    "header": states.header,
+                    "main": states.main,
+                    "link": states.link,
+                    "debug": states.debug,
+                    "footer": states.footer
                 }
             })
             .state('battle', {
                 url: "/battle",
                 views: {
-                    "header": {
-                        templateUrl: dir + "header.html"
-                    },
-                    "main": {
-                        templateUrl: dir + "game.html"
-                    },
-                    "link": {
-                        templateUrl: dir + "link.html"
-                    },
-                    "footer": {
-                        templateUrl: dir + 'footer.html',
-                    },
+                    "header": states.header,
+                    "main": states.main,
+                    "link": states.link,
+                    "footer":states.footer
                 }
             })
             .state('help', {
                 url: "/help",
                 views: {
-                    "header": {
-                        templateUrl: dir + "header.html"
-                    },
-                    "main": {
-                        templateUrl: dir + "help.html"
-                    },
-                    "link": {
-                        templateUrl: dir + "link.html"
-                    },
-                    "footer": {
-                        templateUrl: dir + 'footer.html',
-                    },
+                    "header": states.header,
+                    "main": states.main,
+                    "link": states.link,
+                    "footer":states.footer
                 }
             })
             .state('chat', {
                 url: "/chat",
                 views: {
-                    "header": {
-                        templateUrl: dir + "header.html"
-                    },
-                    "main": {
-                        templateUrl: dir + "chat.html",
-                        controller: 'ChatCtrl'
-                    },
-                    "link": {
-                        templateUrl: dir + "link.html"
-                    },
-                    "footer": {
-                        templateUrl: dir + 'footer.html',
-                    },
+                    "header": states.header,
+                    "main": states.chat,
+                    "link": states.link,
+                    "footer":states.footer
                 },
-               params: {
-                  key: null,
-                  value: null
+                params: {
+                    key: null,
+                    value: null
                 }
             })
             .state('chatList', {
                 url: "/chatList",
                 views: {
-                    "header": {
-                        templateUrl: dir + "header.html"
-                    },
-                    "main": {
-                        templateUrl: dir + "chatList.html",
-                        controller: 'ChatCtrl',
-                    },
-                    "link": {
-                        templateUrl: dir + "link.html"
-                    },
-                    "footer": {
-                        templateUrl: dir + 'footer.html',
-                    },
+                    "header": states.header,
+                    "main": states.chatList,
+                    "link": states.link,
+                    "footer":states.footer
                 },
-               params: {
-                  key: null,
-                  value: null
+                params: {
+                    key: null,
+                    value: null
                 }
             })
             .state('setting', {
                 url: "/setting",
                 views: {
-                    "header": {
-                        templateUrl: dir + "header.html"
-                    },
-                    "main": {
-                        templateUrl: dir + "setting.html"
-                    },
-                    "link": {
-                        templateUrl: dir + "link.html"
-                    },
-                    "footer": {
-                        templateUrl: dir + 'footer.html',
-                    },
+                    "header": states.header,
+                    "main": states.main,
+                    "link": states.link,
+                    "footer":states.footer
                 }
             });
         $urlRouterProvider.otherwise('/index');

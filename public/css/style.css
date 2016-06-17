@@ -1,58 +1,58 @@
 .tabsdemoDynamicTabs md-content {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
 
 .tabsdemoDynamicTabs md-content md-tabs {
-  border: 1px solid #e1e1e1;
+    border: 1px solid #e1e1e1;
 }
 
 .tabsdemoDynamicTabs md-content md-tabs md-tab-content {
-  background: #f6f6f6;
+    background: #f6f6f6;
 }
 
 .tabsdemoDynamicTabs md-content md-tabs md-tabs-wrapper {
-  background: white;
+    background: white;
 }
 
 .tabsdemoDynamicTabs md-content h1:first-child {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .tabsdemoDynamicTabs md-input-container {
-  padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 .tabsdemoDynamicTabs .remove-tab {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .tabsdemoDynamicTabs .demo-tab > div > div {
-  padding: 25px;
-  box-sizing: border-box;
+    padding: 25px;
+    box-sizing: border-box;
 }
 
 .tabsdemoDynamicTabs .edit-form input {
-  width: 100%;
+    width: 100%;
 }
 
 .tabsdemoDynamicTabs md-tabs {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .tabsdemoDynamicTabs md-tab[disabled] {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 .tabsdemoDynamicTabs label {
-  text-align: left;
+    text-align: left;
 }
 
 .tabsdemoDynamicTabs .long > input {
-  width: 264px;
+    width: 264px;
 }
 
 .tabsdemoDynamicTabs .md-button.add-tab {
-  transform: translateY(5px);
+    transform: translateY(5px);
 }
 
 
@@ -67,107 +67,107 @@ md-pagination-wrapper {
 } */
 
 md-tooltip {
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
 }
 
 md-content.md-default-theme {
-  background-color: #eee;
+    background-color: #eee;
 }
 
 md-card {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 md-card h2:first-of-type {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 md-toolbar .md-button.md-default-theme {
-  border-radius: 99%;
+    border-radius: 99%;
 }
 
 h2 {
-  font-weight: 400;
+    font-weight: 400;
 }
 
 .md-toolbar-tools-bottom {
-  font-size: small;
+    font-size: small;
 }
 
 .md-toolbar-tools-bottom:last-child {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 md-toolbar:not(.md-hue-1),
 .md-fab {
-  fill: #fff;
+    fill: #fff;
 }
 
 md-sidenav {
-  fill: #737373;
+    fill: #737373;
 }
 
 md-sidenav ng-md-icon {
-  position: relative;
-  top: 5px;
+    position: relative;
+    top: 5px;
 }
 
 .none {
-  display: none !important;
+    display: none !important;
 }
 
 .transparent {
-  visibility: hidden
+    visibility: hidden
 }
 
 .user-avatar {
-  border-radius: 99%;
+    border-radius: 99%;
 }
 
 .pattern {
-  background-color: #269;
-  background-image: linear-gradient(white 2px, transparent 2px), linear-gradient(90deg, white 2px, transparent 2px), linear-gradient(rgba(255, 255, 255, .3) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .3) 1px, transparent 1px);
-  background-size: 400px 400px, 400px 400px, 70px 65px, 70px 70px;
-  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px
+    background-color: #269;
+    background-image: linear-gradient(white 2px, transparent 2px), linear-gradient(90deg, white 2px, transparent 2px), linear-gradient(rgba(255, 255, 255, .3) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .3) 1px, transparent 1px);
+    background-size: 400px 400px, 400px 400px, 70px 65px, 70px 70px;
+    background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px
 }
 
 .main {
-  background-size: 20px 20px;
-  text-align: center;
+    background-size: 20px 20px;
+    text-align: center;
 }
 
 .opacity {
-  opacity:0.5;
+    opacity: 0.5;
 }
 
-.md-button.item{
-  width:52px;
-  height:52px;
+.md-button.item {
+    width: 52px;
+    height: 52px;
 }
 
-.md-button.square{
-  border-radius:0px;
-  background-color:#663399 !important;
+.md-button.square {
+    border-radius: 0px;
+    background-color: #663399 !important;
 }
 
-.md-button.selected{
-  background-color:skyblue !important;
+.md-button.selected {
+    background-color: skyblue !important;
 }
 
-.md-button.attacable{
-  background-color:red !important;
+.md-button.attacable {
+    background-color: red !important;
 }
 
-body .body{
-padding-top: 60px;
+body .body {
+    padding-top: 70px;
 }
 
-.messageView{
+.messageView {
     font-size: 12px;
     max-width: 100%;
     box-sizing: border-box;
@@ -180,9 +180,12 @@ padding-top: 60px;
 }
 
 @font-face {
-  font-family: PixelMplus10-Regular;
-  src: url('../fonts/PixelMplus10-Regular.ttf') format("truetype");
+    font-family: PixelMplus10-Regular;
+    src: url('../fonts/PixelMplus10-Regular.ttf') format("truetype");
 }
-.font-game{
-  font-family: PixelMplus10-Regular;
-};
+
+.font-game {
+    font-family: PixelMplus10-Regular;
+}
+
+;

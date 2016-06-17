@@ -5,8 +5,8 @@
     <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg">
     </md-icon>
   </md-button>
-  <h4 class="font-game">
-    {{getUser().name}}
+  <h4 class="font-game" style="text-transform:uppercase">
+    {{title}} {{getUser().name}}
     <span ng-if="game.isFinished">WIN</span>
   </h4>
 </div>

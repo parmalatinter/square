@@ -208,6 +208,9 @@ app
             name: 'Anonimas'
         });
     })
+    .controller('HedderCtrl', function($scope, $rootScope, $localStorage, $state) {
+        $scope.title = $state.current.name;
+    })
     .controller('DialogCtrl', function($scope, $mdDialog, locals) {
         $scope.locals = locals;
         $scope.closeDialog = function() {

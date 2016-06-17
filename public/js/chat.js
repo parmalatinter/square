@@ -67,6 +67,7 @@ app
 
         $scope.addChat = function() {
             ChatService.addChat($scope.newChat.title);
+            $scope.newChat.title = null;
         };
 
         $scope.addComment = function() {

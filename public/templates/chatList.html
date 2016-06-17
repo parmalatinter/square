@@ -8,9 +8,9 @@
     <md-button class="md-raised md-primary" ng-click="addChat()">
       add Chat
     </md-button>
-        <md-list-item class="md-3-line" ng-repeat="(key2, res3) in auth.arrayRef.chats.result | orderBy : $index : true" ui-sref="chat({ key: key2, value:res3 })">
+        <md-list-item class="md-3-line" ng-repeat="(key2, res3) in auth.arrayRef.chats.result | orderObjectBy:date:true" ui-sref="chat({ key: key2, value:res3 })">
             <div class="md-list-item-text" layout="column">
-                <h4>{{ res3.name }}{{key2}}</h4>
+                <h4>{{ res3.name }}</h4>
             </div>
         </md-list-item>
     </md-list>

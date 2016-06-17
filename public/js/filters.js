@@ -29,4 +29,18 @@ app.filter('find', function() {
         if(!Array.isArray(array)) return false;
         return array.indexOf(value) !== -1;
     };
+})
+//<div ng-repeat="(date,text) in data | orderObjectBy:date:true">{{text}}</div>
+.filter('orderObjectBy', function() {
+  return function(items, field, reverse) {
+    var filtered = [];
+    angular.forEach(items, function(item) {
+      filtered.push(item);
+    });
+    filtered.sort(function (a, b) {
+      return (a[field] > b[field] ? 1 : -1);
+    });
+    if(reverse) filtered.reverse();
+    return filtered;
+  };
 });

@@ -1,9 +1,9 @@
 [debug] ----------------------------------------------------------------------
-[debug] Command:      node /usr/local/bin/firebase deploy
+[debug] Command:      C:\Program Files\nodejs\\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\bin\firebase deploy
 [debug] CLI Version:  3.0.2
-[debug] Platform:     darwin
-[debug] Node Version: v0.10.25
-[debug] Time:         Fri Jun 17 2016 02:41:11 GMT+0900 (JST)
+[debug] Platform:     win32
+[debug] Node Version: v0.10.26
+[debug] Time:         Fri Jun 17 2016 10:51:16 GMT+0900 (東京 (標準時))
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
@@ -16,4 +16,4 @@
 [info] 
 [info] i  deploying database, hosting
 [info] i  hosting: preparing public directory for upload...
-[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project-3597707734440258770/uploads/-KKPIPdNaxmYRAX-D2b9?fileCount=27&message= 
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project-3597707734440258770/uploads/-KKR2XJbuer7nLGqm7pv?fileCount=28&message= 

@@ -3,9 +3,9 @@
 </md-button>
 <md-list flex ng-repeat="(stageKey, stage) in auth.arrayRef.stage.result" style="background-color: white">
   <md-subheader class="md-no-sticky">Stage :{{stageKey}}</md-subheader>
-  <md-list-item class="md-3-line" ng-repeat="(userKey, user) in stage.users" ng-click="selectStage(userKey, user)">
+  <md-list-item class="md-3-line" ng-repeat="(userKey, user) in stage.users" ng-click="selectStage(stageKey, stage)" >
     <div class="md-list-item-text" layout="column">
-      <p>{{userKey}}:{{user}}</p>
+      <p>{{user}}</p>
     </div>
   </md-list-item>
 </md-list>

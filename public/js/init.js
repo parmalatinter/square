@@ -32,13 +32,19 @@ var app = angular
                 templateUrl: dir + 'footer.html'
             },
             debug: {
-                templateUrl: dir + 'debug.html'
+                templateUrl: dir + 'debug.html',
+                controller: 'GameCtrl'
+            },
+            game: {
+                templateUrl: dir + 'game.html',
+                controller: 'GameCtrl'
             },
             link: {
                 templateUrl: dir + "link.html"
             },
             main: {
-                templateUrl: dir + "start.html"
+                templateUrl: dir + "main.html",
+                controller: 'MainCtrl'
             },
             chat: {
                 templateUrl: dir + "chat.html",
@@ -46,7 +52,11 @@ var app = angular
             },
             chatList: {
                 templateUrl: dir + "chatList.html",
-                controller: 'ChatCtrl',
+                controller: 'ChatCtrl'
+            },
+            setting : {
+                templateUrl: dir + "setting.html",
+                controller: 'MainCtrl',
             }
         };
         $stateProvider
@@ -69,11 +79,11 @@ var app = angular
                     "footer": states.footer
                 }
             })
-            .state('battle', {
-                url: "/battle",
+            .state('game', {
+                url: "/game",
                 views: {
                     "header": states.header,
-                    "main": states.main,
+                    "main": states.game,
                     "link": states.link,
                     "footer":states.footer
                 }
@@ -117,7 +127,7 @@ var app = angular
                 url: "/setting",
                 views: {
                     "header": states.header,
-                    "main": states.main,
+                    "main": states.setting,
                     "link": states.link,
                     "footer":states.footer
                 }

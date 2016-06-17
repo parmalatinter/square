@@ -1,14 +1,13 @@
 app
-    .factory('ChatService', function($window, $filter, $localStorage, AjaxService) {
+    .factory('ChatService', function($window, $filter, $localStorage, FireBaseService) {
         var ChatService = {
             user: {},
         };
         var rand = Math.floor(Math.random() * 11);
         var init = function() {
-            ChatService.user = AjaxService.getCurrentUser();
+            ChatService.user = FireBaseService.getCurrentUser();
 
-            AjaxService
-                .ref('chats', 'chats', true);
+            FireBaseService.ref('chats', 'chats', true);
         };
 
         ChatService.addChat = function(name){
@@ -16,7 +15,7 @@ app
                 key : 'chats',
                 path: 'chats',
                 value : [{
-                    author: AjaxService.getCurrentUserKey(),
+                    author: FireBaseService.getCurrentUserKey(),
                     name: name  ? name + rand : 'Untitle ' + rand,
                     comments: [],
                     date: new Date().toISOString()
@@ -24,26 +23,25 @@ app
                 isDisconnectRemove : false,
                 isPush : false
             };
-            AjaxService
-                .pushValue( record );
+            FireBaseService.pushValue( record );
         }
 
         ChatService.addComment = function() {
             if (!this.comment) return;
             var record = {
                 key : 'chatCommentsts',
-                path: 'chats/' + AjaxService.getPushedKey('chats') + '/comments',
+                path: 'chats/' + FireBaseService.getPushedKey('chats') + '/comments',
                 value : [{
                   detail: this.comment,
                   date: new Date().toISOString(),
                   name: $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + rand,
-                  key: AjaxService.getCurrentUserKey(),
+                  key: FireBaseService.getCurrentUserKey(),
                 }],
                 isDisconnectRemove : false,
                 isPush : true
             };
-            AjaxService
-                .ref('chatCommentsts', 'chats/' + AjaxService.getPushedKey('chats') + '/comments')
+            FireBaseService
+                .ref('chatCommentsts', 'chats/' + FireBaseService.getPushedKey('chats') + '/comments')
                 .pushValue( record );
             return this;
         };
@@ -51,9 +49,9 @@ app
         init();
         return ChatService;
     })
-    .controller('ChatCtrl', function($scope, $rootScope, $timeout, $mdDialog, $filter, $state, $stateParams, GameService, AjaxService, ChatService, StorageService) {
-        $scope.auth = AjaxService;
-        $scope.storage = StorageService;
+    .controller('ChatCtrl', function($scope, $rootScope, $timeout, $mdDialog, $filter, $state, $stateParams, GameService, FireBaseService, ChatService, FireBaseStorageService) {
+        $scope.auth = FireBaseService;
+        $scope.storage = FireBaseStorageService;
         $scope.chat = ChatService;
         $scope.myChat = {};
         $scope.newChat = {};
@@ -61,8 +59,8 @@ app
         var chatPushedKey = '';
 
         if($stateParams.key && $stateParams.value){
-          AjaxService.setPushedKey('chats', $stateParams.key)
-          $scope.myChat = AjaxService.getPushedResult('chats', AjaxService.getPushedKey('chats'));
+          FireBaseService.setPushedKey('chats', $stateParams.key)
+          $scope.myChat = FireBaseService.getPushedResult('chats', FireBaseService.getPushedKey('chats'));
         }
 
         $scope.addChat = function() {
@@ -76,10 +74,10 @@ app
 
         $rootScope.$on('updated', function() {
           if(!chatPushedKey){
-            chatPushedKey = AjaxService.getPushedKey('chats');
+            chatPushedKey = FireBaseService.getPushedKey('chats');
           }
 
-            $scope.myChat = AjaxService.getPushedResult('chats', chatPushedKey);
+            $scope.myChat = FireBaseService.getPushedResult('chats', chatPushedKey);
             if(!$scope.$root) return;
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();

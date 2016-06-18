@@ -1,4 +1,13 @@
 app
+    .factory('Chats', function(FireBaseService , $firebaseArray){
+       var _this = {};
+       if(!FireBaseService.arrayRef.chats) FireBaseService.setArrayRef('chats', 'chats');
+       var chatRef = FireBaseService.arrayRef.chats;
+       _this.get = function(){
+            return $firebaseArray(chatRef);
+       };
+       return _this;
+    })
     .factory('ChatService', function($window, $filter, $localStorage, FireBaseService) {
         var ChatService = {
             user: {},
@@ -82,5 +91,13 @@ app
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();
             }
+        });
+    })
+    .controller('Chat2Ctrl', function($scope, Chats, Loading) {
+        $scope.chats = Chats.get();
+        Loading.start();
+
+        $scope.chats.$watch(function() {
+            Loading.finish();
         });
     });

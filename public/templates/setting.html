@@ -1,32 +1,37 @@
-<md-list ng-controller="LocalStrageCtrl" sytle="text-align: left;">
+<md-list ng-controller="LocalStrageCtrl" style="text-align: left;">
     <md-subheader class="md-no-sticky">Single Action Checkboxes</md-subheader>
     <md-list-item>
-        <p> {{$storage.user.firstName}} </p>
+        <p> {{$storage.user.displayName}} </p>
         <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
     </md-list-item>
     <md-divider></md-divider>
-    <md-subheader class="md-no-sticky">Clickable Items with Secondary Controls</md-subheader>
+    <md-subheader class="md-no-sticky">is Anonymous</md-subheader>
     <md-list-item ng-click="">
-        <p> ssssss </p>
-        <md-switch class="md-secondary" ng-model="$storage.test.enabled"></md-switch>
+        <p> Anonymous </p>
+        <md-switch class="md-secondary" ng-model="$storage.user.isAnonymous"></md-switch>
     </md-list-item>
+    <md-divider></md-divider>
+    <md-subheader class="md-no-sticky">Email</md-subheader>
     <md-list-item ng-click="">
-        <md-icon md-svg-icon="cached"></md-icon>
-        <p>Data Usage</p>
+        <p> Email Verified </p>
+        <md-switch class="md-secondary" ng-model="$storage.user.emailVerified"></md-switch>
     </md-list-item>
     <md-divider></md-divider>
     <md-subheader class="md-no-sticky">Name</md-subheader>
     <div layout-gt-sm="row">
       <md-input-container class="md-block" flex-gt-sm>
-        <label>First name</label>
-        <input ng-model="$storage.user.firstName">
+        <label>Name</label>
+        <input ng-model="$storage.user.displayName">
+      </md-input-container>
+     <md-input-container class="md-block" flex-gt-sm>
+        <label>Email</label>
+        <input ng-model="$storage.user.email">
       </md-input-container>
       <md-input-container class="md-block" flex-gt-sm>
         <label>Long Last Name That Will Be Truncated And 3 Dots (Ellipsis) Will Appear At The End</label>
         <input ng-model="$storage.user.lastName">
       </md-input-container>
       </div>
-
     <md-divider></md-divider>
     <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
     <md-list-item ng-click="" class="noright">

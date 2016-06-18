@@ -8,7 +8,7 @@
     <md-button class="md-raised md-primary" ng-click="addChat()">
       add Chat
     </md-button>
-        <md-list-item class="md-3-line" ng-repeat="chat in auth.arrayRef.chats.result | orderObjectBy:date:true" ui-sref="chat({ key: chat.primaryKey, value:chat })">
+        <md-list-item class="md-3-line" ng-repeat="chat in chats | orderObjectBy:date:true" ui-sref="chat({ key: chat.primaryKey, value:chat })">
             <div class="md-list-item-text" layout="column">
                 <h4>{{ chat.name }}</h4>
             </div>

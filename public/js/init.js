@@ -1,5 +1,5 @@
 var app = angular
-    .module('MyApp', ['ngRoute', 'ngMaterial', 'ui.router', 'ngStorage'])
+    .module('MyApp', ['ngRoute', 'ngMaterial', 'ui.router', 'ngStorage', 'firebase'])
     .run(function($http, $templateCache, $localStorage) {
         $http.get('templates/header.html', {
             cache: $templateCache
@@ -26,7 +26,7 @@ var app = angular
         var states = {
             header: {
                 templateUrl: dir + "header.html",
-                controller: 'HedderCtrl'
+                controller: 'HeaderCtrl'
             },
             footer: {
                 templateUrl: dir + 'footer.html'
@@ -52,7 +52,7 @@ var app = angular
             },
             chatList: {
                 templateUrl: dir + "chatList.html",
-                controller: 'ChatCtrl'
+                controller: 'Chat2Ctrl'
             },
             setting : {
                 templateUrl: dir + "setting.html",

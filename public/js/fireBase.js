@@ -44,11 +44,15 @@ app
             });
         };
 
+        var  setArrayRef = function(key, path){
+            _this.arrayRef[key] = firebase.database().ref(path);
+        };
+
         var  setValue = function( record ){
             _this.objRef[record.key] = firebase.database().ref(record.path);
             _this.objRef[record.key].set(record.value);
             if (record.isDisconnectRemove) _this.objRef[record.key].onDisconnect().remove();
-        }
+        };
 
        var  pushValue = function( record ){
             if (!_this.arrayRefKeys[record.key]) _this.arrayRefKeys[record.key] = {};
@@ -168,6 +172,10 @@ app
             if (!this.arrayRef[key].result) return 0;
             if (!this.arrayRef[key].result[pushedKey]) return 0;
             return this.arrayRef[key].result[pushedKey];
+        };
+
+        _this.setArrayRef = function(key, path){
+            setArrayRef(key, path);
         };
 
         init();

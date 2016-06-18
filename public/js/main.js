@@ -9,22 +9,42 @@ app
             name: 'Anonimas'
         });
     })
-    .controller('HedderCtrl', function($scope, $rootScope, $localStorage, $state) {
+    .controller('HeaderCtrl', function($scope, $rootScope, $localStorage, $state, Loading) {
         $scope.title = $state.current.name;
+        $scope.$storage = $localStorage;
+        $scope.loading = Loading;
     })
-  .controller('MainCtrl', function($scope, $timeout, $mdDialog, $filter, $state, GameService, FireBaseService, FireBaseStorageService) {
-    $scope.game = GameService;
-    $scope.auth = FireBaseService;
-    $scope.storage = FireBaseStorageService;
-    $scope.closeDialog = function() {
-      $mdDialog.hide();
-    };
-    $scope.selectStage = function(stageKey, stage) {
-      FireBaseService.updateArrayRefKey('stage', 'stage', stageKey, stage);
-      $state.go('game');
-      $mdDialog.hide();
-    };
-  })
+    .controller('MainCtrl', function($scope, $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService) {
+        $scope.game = GameService;
+        $scope.auth = FireBaseService;
+        $scope.storage = FireBaseStorageService;
+        $scope.closeDialog = function() {
+            $mdDialog.hide();
+        };
+        $scope.selectStage = function(stageKey, stage) {
+            FireBaseService.updateArrayRefKey('stage', 'stage', stageKey, stage);
+            $state.go('game');
+            $mdDialog.hide();
+        };
+
+        var auth = $firebaseAuth();
+        try {
+          if($sessionStorage.user.isLogedIn) return;
+        }catch(e){
+           return;
+        }
+        auth.$signInWithPopup("google").then(function(firebaseUser) {
+            $localStorage.user = {
+                displayName: firebaseUser.user.displayName,
+                email: firebaseUser.user.email,
+                emailVerified: firebaseUser.user.emailVerified,
+                isAnonymous: firebaseUser.user.isAnonymous,
+            };
+            $sessionStorage.user.isLogedIn = true;
+        }).catch(function(error) {
+            console.log("Authentication failed:", error);
+        });
+    })
     .controller('DialogCtrl', function($scope, $mdDialog, locals) {
         $scope.locals = locals;
         $scope.closeDialog = function() {

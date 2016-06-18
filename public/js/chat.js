@@ -2,10 +2,28 @@ app
     .factory('Chats', function(FireBaseService , $firebaseArray){
        var _this = {};
        if(!FireBaseService.arrayRef.chats) FireBaseService.setArrayRef('chats', 'chats');
-       var chatRef = FireBaseService.arrayRef.chats;
+       var chatsRef = FireBaseService.arrayRef.chats;
        _this.get = function(){
-            return $firebaseArray(chatRef);
+            return $firebaseArray(chatsRef);
        };
+       return _this;
+    })
+    .factory('Chat', function(FireBaseService , $firebaseObject, $firebaseArray){
+       var _this = {};
+       var chatRef = {};
+
+       _this.get = function(key){
+            FireBaseService.setObjRef('chat', 'chats/' + key);
+            chatRef = FireBaseService.objRef.chat;
+            return $firebaseObject(chatRef);
+       };
+
+       _this.getComment = function(key, comment) {
+            if(!FireBaseService.arrayRef.chatCommentsts) FireBaseService.setArrayRef('chatCommentsts', 'chats/' + key + '/comments');
+               var commentsRef = FireBaseService.arrayRef.chatCommentsts;
+                return $firebaseArray(commentsRef);
+            };
+
        return _this;
     })
     .factory('ChatService', function($window, $filter, $localStorage, FireBaseService) {
@@ -100,4 +118,31 @@ app
         $scope.chats.$watch(function() {
             Loading.finish();
         });
+    })
+    .controller('Chat3Ctrl', function($scope, $stateParams, $localStorage, Chat, Loading) {
+        $scope.chat = {};
+        $scope.comment = '';
+        Loading.start();
+
+        if($stateParams.value ){
+            $scope.chat = Chat.get($stateParams.value.$id);
+            $scope.chat.$watch(function() {
+                Loading.finish();
+            });
+            $scope.addComment = function() {
+                if (!$scope.comment) return;
+                var record = {
+                      detail: $scope.comment,
+                      date: new Date().toISOString(),
+                      name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + rand,
+                    };
+                $scope.comments = Chat.getComment($stateParams.value.$id , $scope.comment);
+                $scope.comments.$add(record).then(function(ref) {
+                  var id = ref.key;
+                  console.log("added record with id " + id);
+                  $scope.comments.$indexFor(id); // returns location in the array
+                });
+            };
+        }
+
     });

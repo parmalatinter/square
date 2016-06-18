@@ -47,8 +47,8 @@ var app = angular
                 controller: 'MainCtrl'
             },
             chat: {
-                templateUrl: dir + "chat.html",
-                controller: 'ChatCtrl'
+                templateUrl: dir + "chat2.html",
+                controller: 'Chat3Ctrl'
             },
             chatList: {
                 templateUrl: dir + "chatList.html",

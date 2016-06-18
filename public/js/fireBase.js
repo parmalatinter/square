@@ -48,6 +48,9 @@ app
             _this.arrayRef[key] = firebase.database().ref(path);
         };
 
+        var  setObjRef = function(key, path){
+            _this.objRef[key] = firebase.database().ref(path);
+        };
         var  setValue = function( record ){
             _this.objRef[record.key] = firebase.database().ref(record.path);
             _this.objRef[record.key].set(record.value);
@@ -176,6 +179,10 @@ app
 
         _this.setArrayRef = function(key, path){
             setArrayRef(key, path);
+        };
+
+       _this.setObjRef = function(key, path){
+            setObjRef(key, path);
         };
 
         init();

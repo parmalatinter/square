@@ -44,4 +44,10 @@ app.filter('find', function() {
             if (reverse) filtered.reverse();
             return filtered;
         };
-    });
+    })
+    //ng-repeat="friend in friends | reverse"
+    .filter('reverse', function() {
+      return function(items) {
+        return items.slice().reverse();
+      };
+});

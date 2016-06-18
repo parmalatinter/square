@@ -3,13 +3,10 @@
 [debug] CLI Version:  3.0.2
 [debug] Platform:     darwin
 [debug] Node Version: v5.11.0
-[debug] Time:         Sat Jun 18 2016 17:10:44 GMT+0900 (JST)
+[debug] Time:         Sat Jun 18 2016 17:24:06 GMT+0900 (JST)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
-[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token
-[debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/project-3597707734440258770 
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/project-3597707734440258770/tokens 
@@ -19,4 +16,4 @@
 [info] 
 [info] i  deploying database, hosting
 [info] i  hosting: preparing public directory for upload...
-[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project-3597707734440258770/uploads/-KKXZ-0eNGRlYy90dEJ2?fileCount=31&message= 
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project-3597707734440258770/uploads/-KKXb2o7Ff9eJ1D8v2Ux?fileCount=31&message= 

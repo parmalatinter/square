@@ -19,10 +19,9 @@ app
        };
 
        _this.getComment = function(key, comment) {
-            if(!FireBaseService.arrayRef.chatCommentsts) FireBaseService.setArrayRef('chatCommentsts', 'chats/' + key + '/comments');
-               var commentsRef = FireBaseService.arrayRef.chatCommentsts;
-                return $firebaseArray(commentsRef);
-            };
+            FireBaseService.setArrayRef('chatCommentsts', 'chats/' + key + '/comments');
+            return $firebaseArray(FireBaseService.arrayRef.chatCommentsts);
+        };
 
        return _this;
     })
@@ -111,9 +110,21 @@ app
             }
         });
     })
-    .controller('Chat2Ctrl', function($scope, Chats, Loading) {
+    .controller('Chat2Ctrl', function($scope, $localStorage, Chats, Loading) {
         $scope.chats = Chats.get();
         Loading.start();
+
+        $scope.addChat = function() {
+            var record = {
+                    name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + rand,
+                    comments: [],
+                    date: new Date().toISOString()
+                };
+            $scope.chats.$add(record).then(function(ref) {
+                var id = ref.key;
+                $scope.chats.$indexFor(id); // returns location in the array
+            });
+        };
 
         $scope.chats.$watch(function() {
             Loading.finish();
@@ -139,7 +150,6 @@ app
                 $scope.comments = Chat.getComment($stateParams.value.$id , $scope.comment);
                 $scope.comments.$add(record).then(function(ref) {
                   var id = ref.key;
-                  console.log("added record with id " + id);
                   $scope.comments.$indexFor(id); // returns location in the array
                 });
             };

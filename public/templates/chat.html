@@ -7,7 +7,7 @@
     <md-button class="md-raised md-primary" ng-click="addComment()">
       addComment
     </md-button>
-    <div ng-repeat="(commentKey, comment) in myChat.comments | orderObjectBy:date:true" class="messageView font-game">
+    <div ng-repeat="(commentKey, comment) in myChat.comments | reverse" class="messageView font-game">
         <span style="font-size:30px">{{comment.detail}}</span><br/>
         <div style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
     </div>

@@ -22,7 +22,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#4285f4">
 </head>
 
-<body ng-app="MyApp" layout="column" ng-cloak>
+<body ng-app="MyApp" ng-controller="MainCtrl" layout="column" ng-cloak>
     <div layout="row" flex>
         <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
             <md-toolbar layout="row">
@@ -36,7 +36,7 @@
             </md-toolbar>
             <md-content  flex ui-view="link"></md-content>
         </md-sidenav>
-        <md-content flex ng-controller="GameCtrl" ng-init="init()" id="popupContainer" class="relative body">
+        <md-content flex id="popupContainer" class="relative body">
             <md-button open-dialog="{title:'Dialog', ok:'OK', message:'dialog', isInit:false, templateUrl : 'userList.html', controller : 'GameSubCtrl'}" class="md-fab md-fab-bottom-right" aria-label="Add">
                 <ng-md-icon icon="add"></ng-md-icon>
             </md-button>

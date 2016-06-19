@@ -44,7 +44,6 @@ var app = angular
             },
             main: {
                 templateUrl: dir + "main.html",
-                controller: 'MainCtrl'
             },
             chat: {
                 templateUrl: dir + "chat2.html",
@@ -56,7 +55,6 @@ var app = angular
             },
             setting : {
                 templateUrl: dir + "setting.html",
-                controller: 'MainCtrl',
             }
         };
         $stateProvider

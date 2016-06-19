@@ -47,7 +47,13 @@ app.filter('find', function() {
     })
     //ng-repeat="friend in friends | reverse"
     .filter('reverse', function() {
-      return function(items) {
-        return items.slice().reverse();
-      };
-});
+        return function(items) {
+            return items.slice().reverse();
+        }
+    })
+    //$filter('rand')(10)
+    .filter('rand', function() {
+        return function(num) {
+            return Math.floor(Math.random() * num + 1);;
+        };
+    });

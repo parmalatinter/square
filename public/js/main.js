@@ -29,18 +29,22 @@ app
 
         var auth = $firebaseAuth();
         try {
-          if($sessionStorage.user.isLogedIn) return;
+          if($localStorage.user.isLogedIn) return;
         }catch(e){
            return;
         }
         auth.$signInWithPopup("google").then(function(firebaseUser) {
-            $localStorage.user = {
+            $sessionStorage.user = {
                 displayName: firebaseUser.user.displayName,
                 email: firebaseUser.user.email,
                 emailVerified: firebaseUser.user.emailVerified,
                 isAnonymous: firebaseUser.user.isAnonymous,
+                isLogedIn: true,
             };
-            $sessionStorage.user.isLogedIn = true;
+            $localStorage.user = {
+                displayName: firebaseUser.user.displayName,
+                email: firebaseUser.user.email,
+            }
         }).catch(function(error) {
             console.log("Authentication failed:", error);
         });

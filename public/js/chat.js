@@ -29,7 +29,7 @@ app
         var ChatService = {
             user: {},
         };
-        var rand = Math.floor(Math.random() * 11);
+
         var init = function() {
             ChatService.user = FireBaseService.getCurrentUser();
 
@@ -42,7 +42,7 @@ app
                 path: 'chats',
                 value : [{
                     author: FireBaseService.getCurrentUserKey(),
-                    name: name  ? name + rand : 'Untitle ' + rand,
+                    name: name  ? name + rand : 'Untitle ' + $filter('rand')(10),
                     comments: [],
                     date: new Date().toISOString()
                 }],
@@ -60,7 +60,7 @@ app
                 value : [{
                   detail: this.comment,
                   date: new Date().toISOString(),
-                  name: $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + rand,
+                  name: $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + $filter('rand')(10),
                   key: FireBaseService.getCurrentUserKey(),
                 }],
                 isDisconnectRemove : false,
@@ -130,7 +130,7 @@ app
             Loading.finish();
         });
     })
-    .controller('Chat3Ctrl', function($scope, $stateParams, $localStorage, Chat, Loading) {
+    .controller('Chat3Ctrl', function($scope, $filter, $stateParams, $localStorage, Chat, Loading) {
         $scope.chat = {};
         $scope.comment = '';
         Loading.start();
@@ -145,7 +145,7 @@ app
                 var record = {
                       detail: $scope.comment,
                       date: new Date().toISOString(),
-                      name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + rand,
+                      name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + $filter('rand')(10),
                     };
                 $scope.comments = Chat.getComment($stateParams.value.$id , $scope.comment);
                 $scope.comments.$add(record).then(function(ref) {

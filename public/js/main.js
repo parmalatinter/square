@@ -27,27 +27,27 @@ app
             $mdDialog.hide();
         };
 
-        var auth = $firebaseAuth();
-        try {
-          if($localStorage.user.isLogedIn) return;
-        }catch(e){
-           return;
-        }
-        auth.$signInWithPopup("google").then(function(firebaseUser) {
-            $sessionStorage.user = {
-                displayName: firebaseUser.user.displayName,
-                email: firebaseUser.user.email,
-                emailVerified: firebaseUser.user.emailVerified,
-                isAnonymous: firebaseUser.user.isAnonymous,
-                isLogedIn: true,
-            };
-            $localStorage.user = {
-                displayName: firebaseUser.user.displayName,
-                email: firebaseUser.user.email,
-            }
-        }).catch(function(error) {
-            console.log("Authentication failed:", error);
-        });
+        // var auth = $firebaseAuth();
+        // try {
+        //   if($localStorage.user.isLogedIn) return;
+        // }catch(e){
+        //    return;
+        // }
+        // auth.$signInWithPopup("google").then(function(firebaseUser) {
+        //     $sessionStorage.user = {
+        //         displayName: firebaseUser.user.displayName,
+        //         email: firebaseUser.user.email,
+        //         emailVerified: firebaseUser.user.emailVerified,
+        //         isAnonymous: firebaseUser.user.isAnonymous,
+        //         isLogedIn: true,
+        //     };
+        //     $localStorage.user = {
+        //         displayName: firebaseUser.user.displayName,
+        //         email: firebaseUser.user.email,
+        //     }
+        // }).catch(function(error) {
+        //     console.log("Authentication failed:", error);
+        // });
     })
     .controller('DialogCtrl', function($scope, $mdDialog, locals) {
         $scope.locals = locals;

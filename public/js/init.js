@@ -1,5 +1,5 @@
 var app = angular
-    .module('MyApp', ['ngRoute', 'ngMaterial', 'ui.router', 'ngStorage', 'firebase'])
+    .module('MyApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'ui.router', 'ngStorage', 'firebase'])
     .run(function($http, $templateCache, $localStorage) {
         $http.get('templates/header.html', {
             cache: $templateCache
@@ -52,6 +52,10 @@ var app = angular
             chatList: {
                 templateUrl: dir + "chatList.html",
                 controller: 'Chat2Ctrl'
+            },
+            login : {
+                templateUrl: dir + "login.html",
+                controller: 'LoginCtrl'
             },
             setting : {
                 templateUrl: dir + "setting.html",
@@ -119,6 +123,15 @@ var app = angular
                 params: {
                     key: null,
                     value: null
+                }
+            })
+            .state('login', {
+                url: "/login",
+                views: {
+                    "header": states.header,
+                    "main": states.login,
+                    "link": states.link,
+                    "footer":states.footer
                 }
             })
             .state('setting', {

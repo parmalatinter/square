@@ -193,3 +193,10 @@ body .body {
     flex-shrink: 0;
     z-index: 2;
 }
+
+md-tabs-wrapper{
+        top: 50px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}

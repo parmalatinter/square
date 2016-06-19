@@ -1,4 +1,4 @@
-app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAuth) {
+app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAuth, $state) {
         var auth = $firebaseAuth();
         var _this = { isLoding: false };
         _this.start = function() {
@@ -21,9 +21,18 @@ app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAu
                 console.log("Authentication failed:", error);
             });
         };
-        _this.logout = function (){
+        _this.logout = function() {
             auth.$signOut();
             $sessionStorage.user.isLogedIn = false;
+        }
+
+        _this.checkUser = function() {
+            if (!$sessionStorage.user) {
+                return false;
+            } else if (!$sessionStorage.user.isLogedIn) {
+                return false;
+            }
+            return true;
         }
         return _this;
     })

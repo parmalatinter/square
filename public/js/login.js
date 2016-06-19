@@ -11,6 +11,7 @@ app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAu
                     email: firebaseUser.user.email,
                     emailVerified: firebaseUser.user.emailVerified,
                     isAnonymous: firebaseUser.user.isAnonymous,
+                    photoURL: firebaseUser.user.photoURL,
                     isLogedIn: true,
                 };
                 $localStorage.user = {
@@ -38,7 +39,7 @@ app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAu
     })
     .controller('LoginCtrl', function($scope, $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService) {
         $scope.login = LoginService;
-        $scope.session = $sessionStorage;
+
         $scope.login = function(type) {
             LoginService.login(type);
         };

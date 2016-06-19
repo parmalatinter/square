@@ -17,7 +17,7 @@ app
     .controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService) {
 
 
-
+        $scope.session = $sessionStorage;
         $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams){
 

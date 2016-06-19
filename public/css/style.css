@@ -188,4 +188,8 @@ body .body {
     font-family: PixelMplus10-Regular;
 }
 
-;
+.nav-header {
+    text-align:center;
+    flex-shrink: 0;
+    z-index: 2;
+}

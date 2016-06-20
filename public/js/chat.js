@@ -1,9 +1,20 @@
 app
+    .factory('ChatImage', function(FireBaseStorageService , $firebaseObject){
+       var _this = {};
+       var chatRef = {};
+
+       _this.get = function(key, path, fileName){
+            FireBaseStorageService.setObjRef('chats', 'chats', fileName);
+            chatsRef = FireBaseStorageService.objRef.chats;
+            return chatsRef;
+       };
+       return _this;
+    })
     .factory('Chats', function(FireBaseService , $firebaseArray){
        var _this = {};
        if(!FireBaseService.arrayRef.chats) FireBaseService.setArrayRef('chats', 'chats');
        var chatsRef = FireBaseService.arrayRef.chats;
-       _this.get = function(){
+       _this.get = function(key){
             return $firebaseArray(chatsRef);
        };
        return _this;
@@ -50,7 +61,7 @@ app
                 isPush : false
             };
             FireBaseService.pushValue( record );
-        }
+        };
 
         ChatService.addComment = function() {
             if (!this.comment) return;
@@ -95,8 +106,9 @@ app
             Loading.finish();
         });
     })
-    .controller('ChatCtrl', function($scope, $filter, $stateParams, $localStorage, Chat, Loading) {
+    .controller('ChatCtrl', function($scope, $filter, $stateParams, $localStorage, Chat, ChatImage, Loading) {
         $scope.chat = {};
+        $scope.chatImage = ChatImage.get('chats', 'chats', 'Penguins.jpg');
         $scope.comment = '';
         Loading.start();
 

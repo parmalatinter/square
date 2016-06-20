@@ -25,8 +25,8 @@ app
             if(!LoginService.checkUser()){
                 event.preventDefault();
                 $state.go('login');
-            };
-        })
+            }
+        });
 
         $scope.game = GameService;
         $scope.auth = FireBaseService;

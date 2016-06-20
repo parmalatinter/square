@@ -200,7 +200,8 @@ app
         };
 
         var setObjRef = function(key, path, fileName){
-            _this.objRef[key] = objRef.child(path).child(fileName).getDownloadURL();
+            _this.objRef[key] = objRef.child(path).child(fileName);
+            return _this.objRef[key];
         };
 
         _this.getImageObjRef = function(fileName, key ){
@@ -213,7 +214,7 @@ app
         };
 
        _this.setObjRef = function(key, path, fileName){
-            setObjRef(key, path, fileName);
+            return setObjRef(key, path, fileName);
         };
 
         init();

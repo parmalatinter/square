@@ -14,10 +14,26 @@ app
         $scope.$storage = $localStorage;
         $scope.loading = Loading;
     })
-    .controller('MainCtrl', function($scope, $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService) {
+    .controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService) {
+
+
+        $scope.session = $sessionStorage;
+        $rootScope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams){
+
+            if(toState.name == 'login') return;
+            if(!LoginService.checkUser()){
+                event.preventDefault();
+                $state.go('login');
+            };
+        })
+
         $scope.game = GameService;
         $scope.auth = FireBaseService;
         $scope.storage = FireBaseStorageService;
+
+
+
         $scope.closeDialog = function() {
             $mdDialog.hide();
         };
@@ -26,28 +42,6 @@ app
             $state.go('game');
             $mdDialog.hide();
         };
-
-        var auth = $firebaseAuth();
-        try {
-          if($localStorage.user.isLogedIn) return;
-        }catch(e){
-           return;
-        }
-        auth.$signInWithPopup("google").then(function(firebaseUser) {
-            $sessionStorage.user = {
-                displayName: firebaseUser.user.displayName,
-                email: firebaseUser.user.email,
-                emailVerified: firebaseUser.user.emailVerified,
-                isAnonymous: firebaseUser.user.isAnonymous,
-                isLogedIn: true,
-            };
-            $localStorage.user = {
-                displayName: firebaseUser.user.displayName,
-                email: firebaseUser.user.email,
-            }
-        }).catch(function(error) {
-            console.log("Authentication failed:", error);
-        });
     })
     .controller('DialogCtrl', function($scope, $mdDialog, locals) {
         $scope.locals = locals;

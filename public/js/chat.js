@@ -75,42 +75,7 @@ app
         init();
         return ChatService;
     })
-    .controller('ChatCtrl', function($scope, $rootScope, $timeout, $mdDialog, $filter, $state, $stateParams, GameService, FireBaseService, ChatService, FireBaseStorageService) {
-        $scope.auth = FireBaseService;
-        $scope.storage = FireBaseStorageService;
-        $scope.chat = ChatService;
-        $scope.myChat = {};
-        $scope.newChat = {};
-
-        var chatPushedKey = '';
-
-        if($stateParams.key && $stateParams.value){
-          FireBaseService.setPushedKey('chats', $stateParams.key)
-          $scope.myChat = FireBaseService.getPushedResult('chats', FireBaseService.getPushedKey('chats'));
-        }
-
-        $scope.addChat = function() {
-            ChatService.addChat($scope.newChat.title);
-            $scope.newChat.title = null;
-        };
-
-        $scope.addComment = function() {
-            ChatService.addComment();
-        };
-
-        $rootScope.$on('updated', function() {
-          if(!chatPushedKey){
-            chatPushedKey = FireBaseService.getPushedKey('chats');
-          }
-
-            $scope.myChat = FireBaseService.getPushedResult('chats', chatPushedKey);
-            if(!$scope.$root) return;
-            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-                $scope.$apply();
-            }
-        });
-    })
-    .controller('Chat2Ctrl', function($scope, $localStorage, Chats, Loading) {
+    .controller('ChatListCtrl', function($scope, $localStorage, Chats, Loading) {
         $scope.chats = Chats.get();
         Loading.start();
 
@@ -130,7 +95,7 @@ app
             Loading.finish();
         });
     })
-    .controller('Chat3Ctrl', function($scope, $filter, $stateParams, $localStorage, Chat, Loading) {
+    .controller('ChatCtrl', function($scope, $filter, $stateParams, $localStorage, Chat, Loading) {
         $scope.chat = {};
         $scope.comment = '';
         Loading.start();
@@ -156,3 +121,40 @@ app
         }
 
     });
+
+
+    // .controller('ChatCtrl', function($scope, $rootScope, $timeout, $mdDialog, $filter, $state, $stateParams, GameService, FireBaseService, ChatService, FireBaseStorageService) {
+    //     $scope.auth = FireBaseService;
+    //     $scope.storage = FireBaseStorageService;
+    //     $scope.chat = ChatService;
+    //     $scope.myChat = {};
+    //     $scope.newChat = {};
+
+    //     var chatPushedKey = '';
+
+    //     if($stateParams.key && $stateParams.value){
+    //       FireBaseService.setPushedKey('chats', $statePa rams.key)
+    //       $scope.myChat = FireBaseService.getPushedResult('chats', FireBaseService.getPushedKey('chats'));
+    //     }
+
+    //     $scope.addChat = function() {
+    //         ChatService.addChat($scope.newChat.title);
+    //         $scope.newChat.title = null;
+    //     };
+
+    //     $scope.addComment = function() {
+    //         ChatService.addComment();
+    //     };
+
+    //     $rootScope.$on('updated', function() {
+    //       if(!chatPushedKey){
+    //         chatPushedKey = FireBaseService.getPushedKey('chats');
+    //       }
+
+    //         $scope.myChat = FireBaseService.getPushedResult('chats', chatPushedKey);
+    //         if(!$scope.$root) return;
+    //         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+    //             $scope.$apply();
+    //         }
+    //     });
+    // })

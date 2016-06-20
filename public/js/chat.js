@@ -108,17 +108,21 @@ app
     })
     .controller('ChatListCtrl', function($scope, $localStorage, Chats, Loading) {
         $scope.chats = Chats.get();
+        $scope.title = null;
         Loading.start();
 
         $scope.addChat = function() {
+            if(!$scope.title) return;
             var record = {
                 name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + rand,
+                title:$scope.title,
                 comments: [],
                 date: new Date().toISOString()
             };
             $scope.chats.$add(record).then(function(ref) {
                 var id = ref.key;
                 $scope.chats.$indexFor(id); // returns location in the array
+                $scope.title = null;
             });
         };
 
@@ -139,11 +143,33 @@ app
         $scope.comment = '';
         Loading.start();
 
+
+
+
         if ($stateParams.value) {
             $scope.chat = Chat.get($stateParams.value.$id);
+
             $scope.chat.$watch(function() {
+               $scope.onDemand = true;
+                  $scope.dataset = {
+                    _comments: [],
+                    _refresh: function(data) {
+                      this._comments = data.filter(function(el) {
+                        return !angular.isDefined(el._excluded) || el._excluded === false;
+                      })
+                    },
+                    getItemAtIndex: function(index) {
+                      return this._comments[index];
+                    }, //getItemAtIndex
+                    getLength: function() {
+                      return this._comments.length
+                    } //getLenth
+                  }; //dataset
+                $scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
+                $scope.dataset._refresh($scope.chat.comments);
                 Loading.finish();
             });
+
             $scope.addComment = function(imageUrl) {
                 if (!$scope.comment) return;
                 var record = {
@@ -175,6 +201,7 @@ app
                $scope.chatImageUrl = url;
             });
         }
+
     });
 
 

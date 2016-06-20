@@ -1,30 +1,34 @@
-<div layout-align="center center">
-    <span>{{chat.name}}</span>
-    <md-button class="md-raised md-primary" ng-click="upload()">
-      Upload
-    </md-button>
-    <md-button ng-disabled="progress" >
-        <label for="upload_photo">
-            Select
-        </label>
-    </md-button>
-    {{file.name}}
-    <input type="file" file-model="file" id="upload_photo" style="display:none">
-    <md-input-container class="md-block" flex-gt-sm>
-        <label>Add comment</label>
-        <input ng-model="comment">
-    </md-input-container>
-    <md-button class="md-raised md-primary" ng-click="addComment()">
-        addComment
-    </md-button>
-    <md-button class="md-raised md-primary" ng-click="addComment()">
-        addComment
-    </md-button>
-    <div ng-repeat="(commentKey, comment) in chat.comments | orderObjectBy:date:true" class="messageView font-game">
-        <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
-        <span ng-if="comment.imageUrl"><img ng-src="{{comment.imageUrl}}" width="80%"></span>
-        <br/>
-        <div style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
+<div layout-align="center center" style="background-color: #000;">
+    <div style="background-color: white;">
+        <span>{{chat.title}}</span>
+        <span>{{chat.name}}</span>
+        <md-button class="md-raised md-primary" ng-click="upload()">
+            Upload
+        </md-button>
+        <md-button class="md-raised md-primary" ng-disabled="progress">
+            <label for="upload_photo">
+                Select
+            </label>
+        </md-button>
+        <span style="color:white">{{file.name}}</span>
+        <input type="file" file-model="file" id="upload_photo" style="display:none">
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Add comment</label>
+            <input ng-model="comment">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="addComment()">
+            addComment
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="addComment()">
+            addComment
+        </md-button>
     </div>
-
+    <md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
+        <div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
+            <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
+            <span ng-if="comment.imageUrl" class="updateImageWrap"><img ng-src="{{comment.imageUrl}}"></span>
+            <br/>
+            <div style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
+        </div>
+    </md-virtual-repeat-container>
 </div>

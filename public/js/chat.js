@@ -16,11 +16,14 @@ app
 
         _this.upload = function(key, path, file) {
             var d = $q.defer();
-            chatsRef = FireBaseStorageService.setObjRef(key, path, fileName);
-            chatsRef.put().then(function(url) {
-                d.resolve(url);
-            }).catch(function(error) {
-                d.resolve('error');
+            chatsRef = FireBaseStorageService.setObjRef(key, path , file.name);
+            var uploadTask = chatsRef.put(file);
+            uploadTask.on('state_changed', function(snapshot) {
+                //d.resolve(snapshot);
+            }, function(error) {
+              d.resolve(error);
+            }, function(snapshot) {
+              d.resolve(uploadTask.snapshot.downloadURL);
             });
             return d.promise;
         };
@@ -125,8 +128,13 @@ app
     })
     .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, Chat, ChatImage, Loading) {
         $scope.chat = {};
-        $scope.file = {};
+        $scope.file = "";
         $scope.chatImageUrl = '';
+
+        $scope.$watch('file', function(newVal, oldVal) {
+            console.log(newVal, oldVal)
+        });
+
 
         $scope.comment = '';
         Loading.start();
@@ -149,6 +157,14 @@ app
                     $scope.comments.$indexFor(id); // returns location in the array
                 });
             };
+
+            $scope.upload = function(){
+                    ChatImage.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
+                        if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
+                            $scope.updateImageUrl = updateImageUrl;
+                        }
+                    });
+            }
 
             ChatImage.get('chats', 'chats', 'Penguins.jpg').then(function(url){
                $scope.chatImageUrl = url;

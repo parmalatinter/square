@@ -1,9 +1,5 @@
 var app = angular
-<<<<<<< HEAD
-    .module('MyApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'ui.router', 'ngStorage', 'firebase'])
-=======
     .module('MyApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'ui.router', 'ngStorage', 'firebase', 'ngAudio'])
->>>>>>> origin/master
     .run(function($http, $templateCache, $localStorage) {
         $http.get('templates/header.html', {
             cache: $templateCache

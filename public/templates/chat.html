@@ -1,11 +1,15 @@
 <div layout-align="center center">
     <span>{{chat.name}}</span>
-    <md-button class="md-fab" ng-disabled="progress">
+    <md-button class="md-raised md-primary" ng-click="upload()">
+      Upload
+    </md-button>
+    <md-button ng-disabled="progress" >
         <label for="upload_photo">
-            Upload
+            Select
         </label>
     </md-button>
-    <input type="file" ng-model="file" id="upload_photo">
+    {{file.name}}
+    <input type="file" file-model="file" id="upload_photo" style="display:none">
     <md-input-container class="md-block" flex-gt-sm>
         <label>Add comment</label>
         <input ng-model="comment">
@@ -16,6 +20,7 @@
     <md-button class="md-raised md-primary" ng-click="addComment()">
         addComment
     </md-button>
+    <img ng-src="{{updateImageUrl}}">
     <img ng-src="{{chatImageUrl}}">
     <div ng-repeat="(commentKey, comment) in chat.comments | orderObjectBy:date:true" class="messageView font-game">
         <span style="font-size:30px">{{comment.detail}}</span>

@@ -5,7 +5,7 @@ app
 
         _this.get = function(key, path, fileName) {
             var d = $q.defer();
-            chatsRef = FireBaseStorageService.setObjRef('chats', 'chats', fileName);
+            chatsRef = FireBaseStorageService.setObjRef(key, path, fileName);
             chatsRef.getDownloadURL().then(function(url) {
                 d.resolve(url);
             }).catch(function(error) {
@@ -13,6 +13,18 @@ app
             });
             return d.promise;
         };
+
+        _this.upload = function(key, path, file) {
+            var d = $q.defer();
+            chatsRef = FireBaseStorageService.setObjRef(key, path, fileName);
+            chatsRef.put().then(function(url) {
+                d.resolve(url);
+            }).catch(function(error) {
+                d.resolve('error');
+            });
+            return d.promise;
+        };
+
         return _this;
     })
     .factory('Chats', function(FireBaseService, $firebaseArray) {
@@ -113,6 +125,7 @@ app
     })
     .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, Chat, ChatImage, Loading) {
         $scope.chat = {};
+        $scope.file = {};
         $scope.chatImageUrl = '';
 
         $scope.comment = '';
@@ -137,8 +150,7 @@ app
                 });
             };
 
-            $scope.chatImage = ChatImage.get('chats', 'chats', 'Penguins.jpg');
-            $scope.chatImage.then(function(url){
+            ChatImage.get('chats', 'chats', 'Penguins.jpg').then(function(url){
                $scope.chatImageUrl = url;
             });
         }

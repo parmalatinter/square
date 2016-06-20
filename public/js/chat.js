@@ -75,7 +75,7 @@ app
                     author: FireBaseService.getCurrentUserKey(),
                     name: name ? name + rand : 'Untitle ' + $filter('rand')(10),
                     comments: [],
-                    date: new Date().toISOString()
+                    date: Math.round( new Date().getTime() / 1000 )
                 }],
                 isDisconnectRemove: false,
                 isPush: false
@@ -90,7 +90,7 @@ app
                 path: 'chats/' + FireBaseService.getPushedKey('chats') + '/comments',
                 value: [{
                     detail: this.comment,
-                    date: new Date().toISOString(),
+                    date: Math.round( new Date().getTime() / 1000 ),
                     name: $localStorage.user.firstName ? $localStorage.user.firstName : 'Mika_' + $filter('rand')(10),
                     key: FireBaseService.getCurrentUserKey(),
                 }],
@@ -117,7 +117,7 @@ app
                 name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + rand,
                 title:$scope.title,
                 comments: [],
-                date: new Date().toISOString()
+                date: Math.round( new Date().getTime() / 1000 )
             };
             $scope.chats.$add(record).then(function(ref) {
                 var id = ref.key;
@@ -173,7 +173,7 @@ app
             $scope.addComment = function(imageUrl) {
                 if (!$scope.comment) return;
                 var record = {
-                    date: new Date().toISOString(),
+                    date: Math.round( new Date().getTime() / 1000 ),
                     name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + $filter('rand')(10),
                 };
                 if(imageUrl){
@@ -203,40 +203,3 @@ app
         }
 
     });
-
-
-// .controller('ChatCtrl', function($scope, $rootScope, $timeout, $mdDialog, $filter, $state, $stateParams, GameService, FireBaseService, ChatService, FireBaseStorageService) {
-//     $scope.auth = FireBaseService;
-//     $scope.storage = FireBaseStorageService;
-//     $scope.chat = ChatService;
-//     $scope.myChat = {};
-//     $scope.newChat = {};
-
-//     var chatPushedKey = '';
-
-//     if($stateParams.key && $stateParams.value){
-//       FireBaseService.setPushedKey('chats', $statePa rams.key)
-//       $scope.myChat = FireBaseService.getPushedResult('chats', FireBaseService.getPushedKey('chats'));
-//     }
-
-//     $scope.addChat = function() {
-//         ChatService.addChat($scope.newChat.title);
-//         $scope.newChat.title = null;
-//     };
-
-//     $scope.addComment = function() {
-//         ChatService.addComment();
-//     };
-
-//     $rootScope.$on('updated', function() {
-//       if(!chatPushedKey){
-//         chatPushedKey = FireBaseService.getPushedKey('chats');
-//       }
-
-//         $scope.myChat = FireBaseService.getPushedResult('chats', chatPushedKey);
-//         if(!$scope.$root) return;
-//         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-//             $scope.$apply();
-//         }
-//     });
-// })

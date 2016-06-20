@@ -20,10 +20,9 @@
     <md-button class="md-raised md-primary" ng-click="addComment()">
         addComment
     </md-button>
-    <img ng-src="{{updateImageUrl}}">
-    <img ng-src="{{chatImageUrl}}">
     <div ng-repeat="(commentKey, comment) in chat.comments | orderObjectBy:date:true" class="messageView font-game">
-        <span style="font-size:30px">{{comment.detail}}</span>
+        <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
+        <span ng-if="comment.imageUrl"><img ng-src="{{comment.imageUrl}}" width="80%"></span>
         <br/>
         <div style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
     </div>

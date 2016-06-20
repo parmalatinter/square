@@ -144,13 +144,17 @@ app
             $scope.chat.$watch(function() {
                 Loading.finish();
             });
-            $scope.addComment = function() {
+            $scope.addComment = function(imageUrl) {
                 if (!$scope.comment) return;
                 var record = {
-                    detail: $scope.comment,
                     date: new Date().toISOString(),
                     name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + $filter('rand')(10),
                 };
+                if(imageUrl){
+                    record.imageUrl = imageUrl;
+                }else{
+                    record.detail = $scope.comment;
+                }
                 $scope.comments = Chat.getComment($stateParams.value.$id, $scope.comment);
                 $scope.comments.$add(record).then(function(ref) {
                     var id = ref.key;
@@ -162,6 +166,7 @@ app
                     ChatImage.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
                         if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
                             $scope.updateImageUrl = updateImageUrl;
+                            $scope.addComment(updateImageUrl);
                         }
                     });
             }

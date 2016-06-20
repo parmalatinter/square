@@ -1,4 +1,7 @@
 <md-content class="md-padding" layout-xs="column" layout="row">
+  <md-button ng-audio="sounds/Mouse-click-sound.mp3" volume="0.5">Click me</md-button>
+  <md-button ng-audio="sounds/Click-sound-effect.mp3" volume="0.5">Click me</md-button>
+  <md-button ng-audio="sounds/Ping-sound.mp3" volume="0.5">Click me</md-button>
   <div flex-xs flex-gt-xs="50" layout="column">
     <md-card>
       <md-card-title>
@@ -8,12 +11,12 @@
       </md-card-title>
       <md-card-content>
         <img
-            ng-init="storage.getImageRef('win/win.png', 'win')"
+            ng-init="storage.getImageObjRef('win/win.png', 'win')"
             ng-src="{{storage.urls.win}}"
             width="100px"
             alt="win.png">
         <img
-            ng-init="storage.getImageRef('lose/lose.png', 'lose')"
+            ng-init="storage.getImageObjRef('lose/lose.png', 'lose')"
             ng-src="{{storage.urls.lose}}"
             width="100px"
             alt="lose.png">

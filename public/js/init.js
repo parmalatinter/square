@@ -1,5 +1,9 @@
 var app = angular
+<<<<<<< HEAD
     .module('MyApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'ui.router', 'ngStorage', 'firebase'])
+=======
+    .module('MyApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'ui.router', 'ngStorage', 'firebase', 'ngAudio'])
+>>>>>>> origin/master
     .run(function($http, $templateCache, $localStorage) {
         $http.get('templates/header.html', {
             cache: $templateCache
@@ -46,12 +50,16 @@ var app = angular
                 templateUrl: dir + "main.html",
             },
             chat: {
-                templateUrl: dir + "chat2.html",
-                controller: 'Chat3Ctrl'
+                templateUrl: dir + "chat.html",
+                controller: 'ChatCtrl'
             },
             chatList: {
                 templateUrl: dir + "chatList.html",
-                controller: 'Chat2Ctrl'
+                controller: 'ChatListCtrl'
+            },
+            login : {
+                templateUrl: dir + "login.html",
+                controller: 'LoginCtrl'
             },
             login : {
                 templateUrl: dir + "login.html",

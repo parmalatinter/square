@@ -7,7 +7,6 @@ app
             objRef: {},
             arrayRef: {},
             arrayRefKeys: {},
-            storageRef: {}
         };
 
         // Initialize Firebase
@@ -190,20 +189,23 @@ app
         return _this;
     })
     .factory('FireBaseStorageService', function($window, $filter, $rootScope) {
-
+        var objRef = {};
         var _this = {
-            storageRef: {},
+            objRef: {},
             urls:{}
         };
 
         var init = function() {
-            _this.storageRef = firebase.storage().ref();
+            objRef = firebase.storage().ref();
         };
 
-        init();
+        var setObjRef = function(key, path, fileName){
+            _this.objRef[key] = objRef.child(path).child(fileName);
+            return _this.objRef[key];
+        };
 
-        _this.getImageRef = function(fileName, key ){
-            this.storageRef.child(fileName).getDownloadURL().then(function(url) {
+        _this.getImageObjRef = function(fileName, key ){
+            objRef.child(fileName).getDownloadURL().then(function(url) {
                 _this.urls[key] = url;
                 $rootScope.$broadcast('updated');
             }).catch(function(error) {
@@ -211,5 +213,10 @@ app
             });
         };
 
+       _this.setObjRef = function(key, path, fileName){
+            return setObjRef(key, path, fileName);
+        };
+
+        init();
         return _this;
-    })
+    });

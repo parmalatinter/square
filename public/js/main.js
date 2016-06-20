@@ -25,8 +25,13 @@ app
             if(!LoginService.checkUser()){
                 event.preventDefault();
                 $state.go('login');
+<<<<<<< HEAD
             };
         })
+=======
+            }
+        });
+>>>>>>> origin/master
 
         $scope.game = GameService;
         $scope.auth = FireBaseService;

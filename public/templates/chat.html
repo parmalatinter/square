@@ -1,16 +1,16 @@
 <div layout-align="center center" style="background-color: #000;">
-    <div style="background-color: white;">
+    <div style="background-color: white;padding-top:50px">
         <span>{{chat.title}}</span>
-        <span>{{chat.name}}</span>
-        <md-button class="md-raised md-primary" ng-click="upload()">
-            Upload
-        </md-button>
+        <span>{{chat.name}}</span><br/>
+        <span style="color:black">{{file.name}}</span>
         <md-button class="md-raised md-primary" ng-disabled="progress">
             <label for="upload_photo">
                 Select
             </label>
         </md-button>
-        <span style="color:white">{{file.name}}</span>
+        <md-button class="md-raised md-primary" ng-click="upload()">
+            Upload
+        </md-button>
         <input type="file" file-model="file" id="upload_photo" style="display:none">
         <md-input-container class="md-block" flex-gt-sm>
             <label>Add comment</label>
@@ -19,16 +19,27 @@
         <md-button class="md-raised md-primary" ng-click="addComment()">
             addComment
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="addComment()">
-            addComment
-        </md-button>
     </div>
-    <md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
-        <div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
-            <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
-            <span ng-if="comment.imageUrl" class="updateImageWrap"><img ng-src="{{comment.imageUrl}}"></span>
-            <br/>
-            <div style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
-        </div>
-    </md-virtual-repeat-container>
+    <md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Messages">
+        <md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
+            <div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
+                <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
+                <span ng-if="comment.imageUrl" class="updateImageWrap"><img ng-src="{{comment.imageUrl}}"></span>
+                <br/>
+                <div style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
+            </div>
+        </md-virtual-repeat-container>
+    </md-tab>
+    <md-tab label="Photos">
+        <md-virtual-repeat-container id="vertical-container2" md-top-index="topIndex">
+            <div md-virtual-repeat="comment in imageDataset" md-on-demand="{{onDemand}}">
+                <div class="messageView font-game">
+                    <span ng-if="comment.imageUrl" class="updateFullImageWrap"><img ng-src="{{comment.imageUrl}}"></span>
+                    <div ng-if="comment.imageUrl" style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
+                </div>
+            </div>
+        </md-virtual-repeat-container>
+    </md-tab>
+    </md-tabs>
 </div>

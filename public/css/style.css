@@ -215,6 +215,10 @@ md-tabs-wrapper {
     /* 無視する */
 }
 
+.updateFullImageWrap > img {
+    max-width: 100%;
+}
+
 md-virtual-repeat-container {
   position: relative;
   display: block;

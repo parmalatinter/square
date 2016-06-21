@@ -7,8 +7,18 @@ app.filter('find', function() {
             for (var i = 0; i < input.length; i++) {
                 var isOk = false;
                 for (var j = 0; j < keys.length; j++) {
-                    if (input[i][keys[j]] != value[keys[j]]) {
-                        continue;
+                    var inputVal = input[i][keys[j]];
+                    var judgeVal = value[keys[j]];
+                    if (inputVal != judgeVal) {
+                        if (typeof(judgeVal) === "boolean") {
+                            if ((inputVal ? true : false) == judgeVal) {
+                                isOk = true;
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            continue;
+                        }
                     } else {
                         isOk = true;
                     }

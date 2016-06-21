@@ -147,23 +147,39 @@ app
             $scope.chat = Chat.get($stateParams.value.$id);
 
             $scope.chat.$watch(function() {
-               $scope.onDemand = true;
-                  $scope.dataset = {
-                    _comments: [],
-                    _refresh: function(data) {
+                $scope.onDemand = true;
+                $scope.dataset = {
+                  _comments: [],
+                  _refresh: function(data) {
                       this._comments = data.filter(function(el) {
-                        return !angular.isDefined(el._excluded) || el._excluded === false;
-                      })
-                    },
-                    getItemAtIndex: function(index) {
+                          return !angular.isDefined(el._excluded) || el._excluded === false;
+                      });
+                  },
+                  getItemAtIndex: function(index) {
                       return this._comments[index];
-                    }, //getItemAtIndex
-                    getLength: function() {
-                      return this._comments.length
-                    } //getLenth
-                  }; //dataset
+                  },
+                  getLength: function() {
+                          return this._comments.length;
+                      }
+                };
+                $scope.imageDataset = {
+                  _comments: [],
+                  _refresh: function(data) {
+                      this._comments = data.filter(function(el) {
+                          return !angular.isDefined(el._excluded) || el._excluded === false;
+                      });
+                  },
+                  getItemAtIndex: function(index) {
+                      return this._comments[index];
+                  },
+                  getLength: function() {
+                          return this._comments.length;
+                      }
+                };
                 $scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
                 $scope.dataset._refresh($scope.chat.comments);
+                $scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : true}, false);
+                $scope.imageDataset._refresh($scope.chat.images);
                 Loading.finish();
             });
 

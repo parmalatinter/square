@@ -4,13 +4,15 @@
             <md-list>
                 <md-list flex>
                     <md-subheader class="md-no-sticky">Users</md-subheader>
-                  <md-input-container class="md-block" flex-gt-sm>
-                    <label>Add Chat</label>
-                    <input ng-model="title">
-                  </md-input-container>
-                <md-button class="md-raised md-primary" ng-click="addChat()">
-                  add Chat
-                </md-button>
+                    <div layout="row">
+                        <md-input-container class="md-block" flex>
+                            <label>Add Chat</label>
+                            <input ng-model="title">
+                        </md-input-container>
+                        <md-button class="md-primary" ng-click="addChat()">
+                            add
+                        </md-button>
+                    </div>
                     <md-list-item class="md-3-line" ng-repeat="chat in chats | orderObjectBy:date:true" ui-sref="chat({ key: chat.primaryKey, value:chat })">
                         <div class="md-list-item-text" layout="column">
                             <h4>{{ chat.title }} {{ chat.name }}</h4>

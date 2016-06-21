@@ -12,13 +12,15 @@
             Upload
         </md-button>
         <input type="file" file-model="file" id="upload_photo" style="display:none">
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Add comment</label>
-            <input ng-model="comment">
-        </md-input-container>
-        <md-button class="md-raised md-primary" ng-click="addComment()">
-            addComment
-        </md-button>
+        <div layout="row">
+            <md-input-container class="md-block" flex>
+                <label>Add comment</label>
+                <input ng-model="comment">
+            </md-input-container>
+            <md-button class="md-primary" ng-click="addComment()">
+                add
+            </md-button>
+        </div>
     </div>
     <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="Messages">

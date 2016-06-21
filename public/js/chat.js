@@ -143,9 +143,6 @@ app
         $scope.comment = '';
         Loading.start();
 
-
-
-
         if ($stateParams.value) {
             $scope.chat = Chat.get($stateParams.value.$id);
 
@@ -171,7 +168,8 @@ app
             });
 
             $scope.addComment = function(imageUrl) {
-                if (!$scope.comment) return;
+                if (!$scope.comment && !imageUrl) return;
+                Loading.start();
                 var record = {
                     date: Math.round( new Date().getTime() / 1000 ),
                     name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + $filter('rand')(10),
@@ -185,21 +183,19 @@ app
                 $scope.comments.$add(record).then(function(ref) {
                     var id = ref.key;
                     $scope.comments.$indexFor(id); // returns location in the array
+                    Loading.finish();
                 });
             };
 
             $scope.upload = function(){
-                    ChatImage.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
-                        if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
-                            $scope.updateImageUrl = updateImageUrl;
-                            $scope.addComment(updateImageUrl);
-                        }
-                    });
-            }
-
-            ChatImage.get('chats', 'chats', 'Penguins.jpg').then(function(url){
-               $scope.chatImageUrl = url;
-            });
+                Loading.start();
+                ChatImage.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
+                    if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
+                        $scope.updateImageUrl = updateImageUrl;
+                        $scope.addComment(updateImageUrl);
+                    }
+                });
+            };
         }
 
     });

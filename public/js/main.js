@@ -16,10 +16,12 @@ app
     })
     .controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService, Setting) {
         $scope.session = $sessionStorage;
-        $scope.setting = Setting.get();
+        $scope.siteSetting = Setting.get();
 
-        $scope.setting.$watch(function() {
-            $localStorage.setting = $scope.setting;
+        $scope.siteSetting.$watch(function() {
+            if($scope.siteSetting.cache){
+                $localStorage.setting = $scope.siteSetting.cache.number;
+            }
         });
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
             if(toState.name == 'login') return;

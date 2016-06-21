@@ -10,18 +10,19 @@
             Upload
         </md-button>
         <input type="file" file-model="file" id="upload_photo" style="display:none">
-        <div layout="row">
-            <md-input-container class="md-block" flex>
-                <label>Add comment</label>
-                <input ng-model="comment">
-            </md-input-container>
-            <md-button class="md-primary" ng-click="addComment()">
-                add
-            </md-button>
-        </div>
+
     </div>
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="Messages" style="height: 70vh;">
+            <div layout="row">
+                <md-input-container class="md-block" flex>
+                    <label>Add comment</label>
+                    <input ng-model="comment">
+                </md-input-container>
+                <md-button class="md-primary" ng-click="addComment()">
+                    add
+                </md-button>
+            </div>
             <md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
                 <div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
                     <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>

@@ -73,7 +73,8 @@ app
                 name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + rand,
                 title:$scope.title,
                 comments: [],
-                date: Math.round( new Date().getTime() / 1000 )
+                date: Math.round( new Date().getTime() / 1000 ),
+                uid: $localStorage.user.uid ? $localStorage.user.uid : 0
             };
             $scope.chats.$add(record).then(function(ref) {
                 var id = ref.key;
@@ -141,6 +142,7 @@ app
                 var record = {
                     date: Math.round( new Date().getTime() / 1000 ),
                     name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + $filter('rand')(10),
+                    uid: $localStorage.user.uid ? $localStorage.user.uid : 0
                 };
                 if(imageUrl){
                     record.imageUrl = imageUrl;
@@ -173,6 +175,9 @@ app
             };
         }
 
+        $scope.getDateStr = function(unixTimestamp){
+            return new Date( unixTimestamp * 1000 ).toLocaleString()
+        }
     });
 
 

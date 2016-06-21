@@ -17,6 +17,7 @@ app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAu
                 $localStorage.user = {
                     displayName: firebaseUser.user.displayName,
                     email: firebaseUser.user.email,
+                    uid: firebaseUser.user.uid
                 }
             }).catch(function(error) {
                 console.log("Authentication failed:", error);

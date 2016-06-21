@@ -8,8 +8,8 @@
                     <label>Add comment</label>
                     <input ng-model="comment">
                 </md-input-container>
-                <md-button class="md-primary" ng-click="addComment()">
-                    add
+                <md-button class="md-fab md-mini" aria-label="send" ng-click="addComment()" style="margin-top: 20px;">
+                    <i class="md-icon material-icons">send</i>
                 </md-button>
             </div>
             <md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
@@ -17,7 +17,14 @@
                     <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
                     <span ng-if="comment.imageUrl" class="updateImageWrap"><img ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}"></span>
                     <br/>
-                    <div style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
+                    <div style="margin-top:5px">
+                        <span ng-if="$storage.user.uid != comment.uid" style="color:yellow">
+                            {{comment.name}} {{getDateStr(comment.date)}}
+                        </span>
+                        <span ng-if="$storage.user.uid == comment.uid" style="color:white">
+                            {{comment.name}} {{getDateStr(comment.date)}}
+                        </span>
+                    </div>
                 </div>
             </md-virtual-repeat-container>
         </md-tab>
@@ -26,7 +33,7 @@
                 <div md-virtual-repeat="comment in imageDataset" md-on-demand="{{onDemand}}">
                     <div class="messageView font-game">
                         <span ng-if="comment.imageUrl" class="updateFullImageWrap"><img ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}"></span>
-                        <div ng-if="comment.imageUrl" style="margin-top:5px">{{comment.name}} {{comment.date}}</div>
+                        <div ng-if="comment.imageUrl" style="margin-top:5px">{{comment.name}} {{getDateStr(comment.date)}}</div>
                     </div>
                 </div>
             </md-virtual-repeat-container>

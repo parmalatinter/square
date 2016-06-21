@@ -17,11 +17,16 @@ app
     .controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService, Setting) {
         $scope.session = $sessionStorage;
         $scope.siteSetting = Setting.get();
+        $scope.setting = {};
 
         $scope.siteSetting.$watch(function() {
-            if($scope.siteSetting.cache){
-                $localStorage.setting = $scope.siteSetting.cache.number;
+            if($localStorage.setting){
+                if(typeof $localStorage.setting !== "object") $localStorage.setting　= {};
+            }else{
+                $localStorage.setting　= {};
             }
+            $localStorage.setting.cache = $scope.siteSetting.cache;
+            $scope.setting = $localStorage.setting;
         });
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
             if(toState.name == 'login') return;

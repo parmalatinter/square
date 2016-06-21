@@ -130,7 +130,7 @@ app
             Loading.finish();
         });
     })
-    .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, Chat, ChatImage, Loading) {
+    .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, Chat, ChatImage, Loading, Vibration) {
         $scope.chat = {};
         $scope.file = "";
         $scope.chatImageUrl = '';
@@ -181,6 +181,7 @@ app
                 $scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : true}, false);
                 $scope.imageDataset._refresh($scope.chat.images);
                 Loading.finish();
+                Vibration.play(500);
             });
 
             $scope.addComment = function(imageUrl) {

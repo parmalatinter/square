@@ -19,4 +19,17 @@ app
             return $firebaseObject(settingRef);
         };
         return _this;
+    })
+    .factory('Vibration', function($localStorage) {
+        var _this = {};
+
+        _this.play = function(secound) {
+            if(!$localStorage.setting) return;
+            if(!$localStorage.setting.enableViblate) return;
+            var isVibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+            if(isVibrate){
+                navigator.vibrate(secound);
+            }
+        };
+        return _this;
     });

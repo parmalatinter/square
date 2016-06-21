@@ -4,5 +4,25 @@
   },
   "hosting": {
     "public": "public"
-  }
+  },
+    "headers": [ {
+      "source" : "**/*.@(eot|otf|ttf|ttc|woff)",
+      "headers" : [ {
+        "key" : "Access-Control-Allow-Origin",
+        "value" : "*"
+    } ]
+    }, {
+      "source" : "**/*.@(jpg|jpeg|gif|png|mp3)",
+      "headers" : [ {
+      "key" : "Cache-Control",
+      "value" : "max-age=7200"
+      } ]
+    }, {
+      // Sets the cache header for 404 pages to cache for 5 minutes
+      "source" : "**/*.@(html|js|css)",
+      "headers" : [ {
+      "key" : "Cache-Control",
+      "value" : "max-age=0"
+      } ]
+    } ]
 }

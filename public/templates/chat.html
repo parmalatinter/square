@@ -21,7 +21,7 @@
         </div>
     </div>
     <md-tabs md-dynamic-height md-border-bottom>
-        <md-tab label="Messages" style="height: 50vh;">
+        <md-tab label="Messages" style="height: 70vh;">
             <md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
                 <div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
                     <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
@@ -31,7 +31,7 @@
                 </div>
             </md-virtual-repeat-container>
         </md-tab>
-        <md-tab label="Photos" style="height: 50vh;">
+        <md-tab label="Photos" style="height: 70vh;">
             <md-virtual-repeat-container id="vertical-container2" md-top-index="topIndex">
                 <div md-virtual-repeat="comment in imageDataset" md-on-demand="{{onDemand}}">
                     <div class="messageView font-game">
@@ -41,7 +41,7 @@
                 </div>
             </md-virtual-repeat-container>
         </md-tab>
-        <md-tab label="Setting" style="height: 50vh;">
+        <md-tab label="Setting" style="height: 70vh;">
             <div ayout-gt-sm="row" style="background-color:white">
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Name</label>

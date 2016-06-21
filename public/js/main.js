@@ -14,13 +14,14 @@ app
         $scope.$storage = $localStorage;
         $scope.loading = Loading;
     })
-    .controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService) {
-
-
+    .controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService, Setting) {
         $scope.session = $sessionStorage;
-        $rootScope.$on('$stateChangeStart',
-        function(event, toState, toParams, fromState, fromParams){
+        $scope.setting = Setting.get();
 
+        $scope.setting.$watch(function() {
+            $localStorage.setting = $scope.setting;
+        });
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
             if(toState.name == 'login') return;
             if(!LoginService.checkUser()){
                 event.preventDefault();

@@ -9,10 +9,9 @@ app
             name: 'Anonimas'
         });
     })
-    .controller('HeaderCtrl', function($scope, $rootScope, $localStorage, $state, Loading) {
-        $scope.title = $state.current.name;
-        $scope.$storage = $localStorage;
-        $scope.loading = Loading;
+    .controller('HeaderCtrl', function($scope, $rootScope, $localStorage, $state, Loading, Header) {
+        Header.set();
+        $scope.header = Header;
     })
     .controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService, Setting) {
         $scope.session = $sessionStorage;

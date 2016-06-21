@@ -9,6 +9,17 @@ app
         };
         return _this;
     })
+    .factory('Header', function($state) {
+        var _this = { title: false };
+        _this.set = function( title ) {
+            if(title){
+                _this.title = title;
+                return;
+            }
+            _this.title = $state.current.name;
+        };
+        return _this;
+    })
     .factory('Setting', function(FireBaseService, $firebaseObject, $firebaseArray) {
         var _this = {};
         var settingRef = {};

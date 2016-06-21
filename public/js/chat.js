@@ -130,16 +130,10 @@ app
             Loading.finish();
         });
     })
-    .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, Chat, ChatImage, Loading, Vibration) {
+    .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, Chat, ChatImage, Loading, Vibration, Header) {
         $scope.chat = {};
         $scope.file = "";
         $scope.chatImageUrl = '';
-
-        $scope.$watch('file', function(newVal, oldVal) {
-            console.log(newVal, oldVal)
-        });
-
-
         $scope.comment = '';
         Loading.start();
 
@@ -147,6 +141,7 @@ app
             $scope.chat = Chat.get($stateParams.value.$id);
 
             $scope.chat.$watch(function() {
+                Header.set($scope.chat.title);
                 $scope.onDemand = true;
                 $scope.dataset = {
                   _comments: [],

@@ -12,6 +12,7 @@ app
     .controller('HeaderCtrl', function($scope, $rootScope, $localStorage, $state, Loading, Header) {
         Header.set();
         $scope.header = Header;
+        $scope.loading = Loading;
     })
     .controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService, Setting) {
         $scope.session = $sessionStorage;

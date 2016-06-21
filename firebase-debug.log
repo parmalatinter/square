@@ -1,12 +1,15 @@
 [debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\bin\firebase deploy
+[debug] Command:      node /usr/local/bin/firebase deploy
 [debug] CLI Version:  3.0.2
-[debug] Platform:     win32
-[debug] Node Version: v0.10.26
-[debug] Time:         Tue Jun 21 2016 18:56:31 GMT+0900 (東京 (標準時))
+[debug] Platform:     darwin
+[debug] Node Version: v0.10.25
+[debug] Time:         Wed Jun 22 2016 00:29:41 GMT+0900 (JST)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token
+[debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/project-3597707734440258770 
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/project-3597707734440258770/tokens 
@@ -16,4 +19,4 @@
 [info] 
 [info] i  deploying database, hosting
 [info] i  hosting: preparing public directory for upload...
-[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project-3597707734440258770/uploads/-KKmNxj8Jx_HQdlhUJtq?fileCount=35&message= 
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project-3597707734440258770/uploads/-KKn_DYSwXxRjrYD9Flb?fileCount=37&message= 

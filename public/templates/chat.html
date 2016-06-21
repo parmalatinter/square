@@ -1,17 +1,6 @@
 <div layout-align="center center">
-    <div style="background-color: white;padding-top:50px">
-        <span style="color:black">{{file.name}}</span>
-        <md-button class="md-raised md-primary" ng-disabled="progress">
-            <label for="upload_photo">
-                Select
-            </label>
-        </md-button>
-        <md-button class="md-raised md-primary" ng-click="upload()">
-            Upload
-        </md-button>
-        <input type="file" file-model="file" id="upload_photo" style="display:none">
-
-    </div>
+    <span style="color:black">{{file.name}}</span>
+    <input type="file" file-model="file" id="upload_photo" style="display:none">
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="Messages" style="height: 70vh;">
             <div layout="row">

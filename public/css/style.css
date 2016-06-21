@@ -1,71 +1,3 @@
-.tabsdemoDynamicTabs md-content {
-    background-color: transparent !important;
-}
-
-.tabsdemoDynamicTabs md-content md-tabs {
-    border: 1px solid #e1e1e1;
-}
-
-.tabsdemoDynamicTabs md-content md-tabs md-tab-content {
-    background: #f6f6f6;
-}
-
-.tabsdemoDynamicTabs md-content md-tabs md-tabs-wrapper {
-    background: white;
-}
-
-.tabsdemoDynamicTabs md-content h1:first-child {
-    margin-top: 0;
-}
-
-.tabsdemoDynamicTabs md-input-container {
-    padding-bottom: 0;
-}
-
-.tabsdemoDynamicTabs .remove-tab {
-    margin-bottom: 40px;
-}
-
-.tabsdemoDynamicTabs .demo-tab > div > div {
-    padding: 25px;
-    box-sizing: border-box;
-}
-
-.tabsdemoDynamicTabs .edit-form input {
-    width: 100%;
-}
-
-.tabsdemoDynamicTabs md-tabs {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.tabsdemoDynamicTabs md-tab[disabled] {
-    opacity: 0.5;
-}
-
-.tabsdemoDynamicTabs label {
-    text-align: left;
-}
-
-.tabsdemoDynamicTabs .long > input {
-    width: 264px;
-}
-
-.tabsdemoDynamicTabs .md-button.add-tab {
-    transform: translateY(5px);
-}
-
-
-/* md-tabs-wrapper{
-  display:none;
-}
-md-tabs[md-border-bottom]:not(.md-dynamic-height) md-tabs-content-wrapper {
-   top: 0px;
-}
-md-pagination-wrapper {
-   display:none;
-} */
-
 md-tooltip {
     user-select: none;
     -webkit-user-select: none;
@@ -139,6 +71,7 @@ md-sidenav ng-md-icon {
 .main {
     background-size: 20px 20px;
     text-align: center;
+    padding-top: 40px;
 }
 
 .opacity {
@@ -164,7 +97,7 @@ md-sidenav ng-md-icon {
 }
 
 body .body {
-    padding-top: 70px;
+    // padding-top: 70px;
 }
 
 .messageView {
@@ -191,14 +124,14 @@ body .body {
 .nav-header {
     text-align: center;
     flex-shrink: 0;
-    z-index: 2;
+    // z-index: 2;
 }
 
 md-tabs-wrapper {
-    top: 50px;
-    position: fixed;
-    width: 100%;
-    z-index: 1;
+    // top: 50px;
+    // // position: fixed;
+    // width: 100%;
+    // z-index: 1;
 }
 
 .updateImageWrap > img {
@@ -226,4 +159,11 @@ md-virtual-repeat-container {
   height: 70vh;
   border: solid 1px #ccc;
   padding: 10px;
+}
+
+.header{
+-moz-box-shadow: 10px 0px 10px 10px rgba(0,0,0,0.2);
+-webkit-box-shadow: 10px 0px 10px 10px rgba(0,0,0,0.2);
+-o-box-shadow: 10px 0px 10px 10px rgba(0,0,0,0.2);
+-ms-box-shadow: 10px 0px 10px 10px rgba(0,0,0,0.2);
 }

@@ -1,0 +1,16 @@
+<div class="md-toolbar-tools">
+    <md-button open-sidebar="left" hide-gt-sm class="md-icon-button">
+        <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg">
+        </md-icon>
+    </md-button>
+    <h2>
+       {{header.title}}
+    </h2>
+    <span flex></span>
+    <md-button ng-disabled="progress" class="md-icon-button" for="upload_photo">
+          <label for="upload_photo">
+              <i class="material-icons">insert_photo</i>
+          </label>
+    </md-button>
+</div>
+<md-progress-linear ng-show="loading.isLoding" style="position: fixed;top: 52px;z-index: 2;" md-mode="query"></md-progress-linear>

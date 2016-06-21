@@ -28,6 +28,10 @@ var app = angular
                 templateUrl: dir + "header.html",
                 controller: 'HeaderCtrl'
             },
+            chatsHeader: {
+                templateUrl: dir + "chats/header.html",
+                controller: 'ChatsHeaderCtrl'
+            },
             footer: {
                 templateUrl: dir + 'footer.html'
             },
@@ -106,7 +110,7 @@ var app = angular
             .state('chat', {
                 url: "/chat",
                 views: {
-                    "header": states.header,
+                    "header": states.chatsHeader,
                     "main": states.chat,
                     "link": states.link,
                     "footer":states.footer
@@ -119,7 +123,7 @@ var app = angular
             .state('chatList', {
                 url: "/chatList",
                 views: {
-                    "header": states.header,
+                    "header": states.chatsHeader,
                     "main": states.chatList,
                     "link": states.link,
                     "footer":states.footer

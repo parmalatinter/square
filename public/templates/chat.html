@@ -1,10 +1,10 @@
 <div layout-align="center center">
-    <span style="color:black">{{file.name}}</span>
+    <md-subheader ng-if="file.name" class="md-no-sticky">Updating {{file.name}}</md-subheader>
     <input type="file" file-model="file" id="upload_photo" style="display:none">
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="Messages" style="height: 70vh;">
             <div layout="row">
-                <md-input-container class="md-block" flex>
+                <md-input-container class="md-block chat" flex>
                     <label>Add comment</label>
                     <input ng-model="comment">
                 </md-input-container>

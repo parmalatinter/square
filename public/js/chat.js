@@ -152,6 +152,7 @@ app
                     var id = ref.key;
                     $scope.comments.$indexFor(id); // returns location in the array
                     $scope.comment = '';
+                    $scope.file = '';
                     Loading.finish();
                 });
             };

@@ -72,6 +72,8 @@ app
             var record = {
                 name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + rand,
                 title:$scope.title,
+                subTitle:$scope.subTitle ? $scope.subTitle : 'UNKNOWN',
+                category:$scope.category ? $scope.category : 'UNKNOWN',
                 comments: [],
                 date: Math.round( new Date().getTime() / 1000 ),
                 uid: $localStorage.user.uid ? $localStorage.user.uid : 0
@@ -95,7 +97,7 @@ app
 
         if ($stateParams.value || $sessionStorage.toParams.value.$id) {
             Loading.start();
-            var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id
+            var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
             $scope.chat = Chat.get(id);
             $scope.chat.$watch(function() {
                 Header.set($scope.chat.title);
@@ -178,7 +180,17 @@ app
 
         $scope.getDateStr = function(unixTimestamp){
             return new Date( unixTimestamp * 1000 ).toLocaleString()
-        }
+        };
+
+        $scope.getContainarSize = function(plusValue){
+                return {height: (angular.element('.main').height() - 62) + 'px'};
+            };
+        // var onResize = function() {
+        //       self.listStyle.height = ($window.innerHeight - 112) + 'px';
+        //       if(!$scope.$root.$$phase) $scope.$digest();
+        //     };
+        // $window.addEventListener('resize', onResize);
+
     });
 
 

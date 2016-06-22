@@ -71,7 +71,7 @@ md-sidenav ng-md-icon {
 .main {
     background-size: 20px 20px;
     text-align: center;
-    padding-top: 60px;
+    padding-top: 56px;
 }
 
 .opacity {
@@ -187,4 +187,8 @@ md-tabs md-tabs-wrapper {
 
 .upper-case{
     text-transform:uppercase
+}
+
+md-tabs:not(.md-no-tab-content):not(.md-dynamic-height){
+    min-height: 100%;
 }

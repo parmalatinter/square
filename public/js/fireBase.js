@@ -219,4 +219,13 @@ app
 
         init();
         return _this;
-    });
+    })
+    .factory('Main', function(FireBaseService, $firebaseArray) {
+        var _this = {};
+        if (!FireBaseService.arrayRef.chats) FireBaseService.setArrayRef('chats', 'chats');
+        var chatsRef = FireBaseService.arrayRef.chats;
+        _this.get = function(key) {
+            return $firebaseArray(chatsRef);
+        };
+        return _this;
+    })

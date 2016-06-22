@@ -1,29 +1,18 @@
   <md-tabs md-dynamic-height md-border-bottom>
-    <md-tab label="USERS">
+    <md-tab label="USER">
       <md-content class="md-padding">
-          <div layout="row" style="background-color:white;text-align:left">
-              <md-input-container class="md-block chat" flex>
-                  <label>Add user</label>
-                  <input ng-model="title">
-              </md-input-container>
-               <md-button class="md-fab md-mini" aria-label="send" ng-click="addUser()" style="margin-top: 20px;">
-                  <i class="md-icon material-icons">send</i>
-              </md-button>
-          </div>
-          <md-list>
-              <md-list flex>
-                  <md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ui-sref="user({ key: user.primaryKey, value:user })">
-                      <img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
-                      <div class="md-list-item-text" layout="column">
-                        <span ng-if="$storage.user.uid != user.uid" style="color:yellow">
-                              <h4>{{ user.title }} {{ user.name }}</h4>
-                          </span>
-                          <span ng-if="$storage.user.uid == user.uid" style="color:white">
-                              <h4>{{ user.title }}  {{ user.name }}</h4>
-                          </span>
-                      </div>
-                  </md-list-item>
-              </md-list>
+          <md-list flex>
+              <md-list-item class="md-3-line" ng-repeat="_user in user">
+                  <img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}" class="md-avatar" />
+                  <div class="md-list-item-text" layout="column">
+                    <h4>Name: {{_user.name}}</h4>
+                    <h4>Age : {{_user.age}}</h4>
+                    <h4>Sex Type :{{_user.sexType}}</h4>
+                    <h4>Message : {{_user.message}}</h4>
+                    <h4>Date : {{_user.date}}</h4>
+                    <h4>ID : {{_user.uid}}</h4>
+                  </div>
+              </md-list-item>
           </md-list>
       </md-content>
     </md-tab>

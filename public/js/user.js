@@ -1,24 +1,30 @@
 app
-    .factory('User', function(FireBaseService, $firebaseObject, $firebaseArray) {
+    .factory('User', function(FireBaseService, $firebaseObject, $firebaseArray, $localStorage) {
         var _this = {};
-        var userRef = {};
-
-        _this.get = function(key) {
-            FireBaseService.setObjRef('user', 'users/' + key);
-            userRef = FireBaseService.objRef.user;
-            return $firebaseObject(userRef);
+        if (!FireBaseService.arrayRef.users) FireBaseService.setArrayRef('users', 'users');
+        _this.get = function() {
+            var userRef = FireBaseService.arrayRef.users.orderByChild('uid').equalTo($localStorage.user.uid);
+            return $firebaseArray(userRef);
         };
-
         return _this;
     })
     .factory('Users', function(FireBaseService, $firebaseObject, $firebaseArray) {
         var _this = {};
-        if (!FireBaseService.objRef.users) FireBaseService.setObjRef('users', 'users');
-        var usersRef = FireBaseService.objRef.users;
+        if (!FireBaseService.arrayRef.users) FireBaseService.setArrayRef('users', 'users');
+        var usersRef = FireBaseService.arrayRef.users;
         _this.get = function(key) {
-            return $firebaseObject(usersRef);
+            return $firebaseArray(usersRef);
         };
         return _this;
+    })
+    .controller('UserCtrl', function($scope, $localStorage, $sessionStorage, User, Users, Loading) {
+        $scope.user = User.get();
+        $scope.title = null;
+        Loading.start();
+
+        $scope.user.$watch(function() {
+            Loading.finish();
+        });
     })
     .controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, User, Users, Loading) {
         $scope.users = Users.get();
@@ -27,16 +33,17 @@ app
         Loading.start();
 
         $scope.addUser = function() {
-            //if (!$scope.title) return;
-            this.currentUser.name = $localStorage.user.displayName,
-            this.currentUser.age = 19,
-            //1:men, 2 :women, 3  = other
-            this.currentUser.sexType = 1,
-            this.currentUser.message = [],
-            this.currentUser.date = Math.round(new Date().getTime() / 1000),
-            this.currentUser.uid = $localStorage.user.uid,
-            this.currentUser.photoURL = $sessionStorage.user.photoURL,
-            this.currentUser.$save().then(function(ref) {
+            var record = {
+                    name : $localStorage.user.displayName,
+                    age : 19,
+                    //1:men, 2 :women, 3  : other
+                    sexType : 1,
+                    message : 'よろしくね',
+                    date : Math.round(new Date().getTime() / 1000),
+                    uid : $localStorage.user.uid,
+                    photoURL : $sessionStorage.user.photoURL,
+                };
+            this.users.$add(record).then(function(ref) {
                 ///
             });
         };

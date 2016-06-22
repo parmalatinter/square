@@ -1,5 +1,5 @@
   <md-tabs md-dynamic-height md-border-bottom>
-    <md-tab label="Serch">
+    <md-tab label="USERS">
       <md-content class="md-padding">
           <div layout="row" style="background-color:white;text-align:left">
               <md-input-container class="md-block chat" flex>
@@ -15,12 +15,12 @@
                   <md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ui-sref="user({ key: user.primaryKey, value:user })">
                       <img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
                       <div class="md-list-item-text" layout="column">
-                        <h4>{{user.name}}</h4>
-                        <h4>{{user.age}}</h4>
-                        <h4>{{user.sexType}}</h4>
-                        <h4>{{user.message}}</h4>
-                        <h4>{{user.date}}</h4>
-                        <h4>{{user.uid}}</h4>
+                        <span ng-if="$storage.user.uid != user.uid" style="color:yellow">
+                              <h4>{{ user.title }} {{ user.name }}</h4>
+                          </span>
+                          <span ng-if="$storage.user.uid == user.uid" style="color:white">
+                              <h4>{{ user.title }}  {{ user.name }}</h4>
+                          </span>
                       </div>
                   </md-list-item>
               </md-list>

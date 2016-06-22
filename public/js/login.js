@@ -18,7 +18,7 @@ app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAu
                     displayName: firebaseUser.user.displayName,
                     email: firebaseUser.user.email,
                     uid: firebaseUser.user.uid
-                }
+                };
             }).catch(function(error) {
                 console.log("Authentication failed:", error);
             });
@@ -26,7 +26,7 @@ app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAu
         _this.logout = function() {
             auth.$signOut();
             $sessionStorage.user.isLogedIn = false;
-        }
+        };
 
         _this.checkUser = function() {
             if (!$sessionStorage.user) {
@@ -35,7 +35,7 @@ app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAu
                 return false;
             }
             return true;
-        }
+        };
         return _this;
     })
     .controller('LoginCtrl', function($scope, $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService) {
@@ -52,4 +52,4 @@ app.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAu
             $state.go('game');
             $mdDialog.hide();
         };
-    })
+    });

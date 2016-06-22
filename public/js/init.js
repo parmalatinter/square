@@ -57,9 +57,9 @@ var app = angular
                 templateUrl: dir + "chatList.html",
                 controller: 'ChatListCtrl'
             },
-            login : {
-                templateUrl: dir + "login.html",
-                controller: 'LoginCtrl'
+            userList: {
+                templateUrl: dir + "userList.html",
+                controller: 'UserListCtrl'
             },
             login : {
                 templateUrl: dir + "login.html",
@@ -105,6 +105,19 @@ var app = angular
                     "main": states.main,
                     "link": states.link,
                     //"footer":states.footer
+                }
+            })
+            .state('userList', {
+                url: "/userList",
+                views: {
+                    "header": states.header,
+                    "main": states.userList,
+                    "link": states.link,
+                    //"footer":states.footer
+                },
+                params: {
+                    key: null,
+                    value: null
                 }
             })
             .state('chat', {

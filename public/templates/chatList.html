@@ -1,42 +1,44 @@
-    <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="Serch">
-        <md-content class="md-padding">
-            <div layout="row" style="background-color:white;text-align:left">
-                <md-input-container class="md-block chat" flex>
-                    <label>Add Chat</label>
-                    <input ng-model="title">
-                </md-input-container>
-                 <md-button class="md-fab md-mini" aria-label="send" ng-click="addChat()" style="margin-top: 20px;">
-                    <i class="md-icon material-icons">send</i>
-                </md-button>
-            </div>
-            <md-list>
-                <md-list flex>
-                    <md-list-item class="md-3-line" ng-repeat="chat in chats | orderObjectBy:date:true" ui-sref="chat({ key: chat.primaryKey, value:chat })">
-                        <div class="md-list-item-text" layout="column">
-                          <span ng-if="$storage.user.uid != chat.uid" style="color:yellow">
-                                <h4>{{ chat.title }} {{ chat.name }}</h4>
-                            </span>
-                            <span ng-if="$storage.user.uid == chat.uid" style="color:white">
-                                <h4>{{ chat.title }}  {{ chat.name }}</h4>
-                            </span>
-
-                        </div>
-                    </md-list-item>
-                </md-list>
+<md-tabs md-dynamic-height md-border-bottom>
+  <md-tab label="Serch">
+    <md-content class="md-padding">
+        <div layout="row" style="background-color:white;text-align:left">
+            <md-input-container class="md-block chat" flex>
+                <label>Add Chat</label>
+                <input ng-model="title">
+            </md-input-container>
+             <md-button class="md-fab md-mini" aria-label="send" ng-click="addChat()" style="margin-top: 20px;">
+                <i class="md-icon material-icons">send</i>
+            </md-button>
+        </div>
+        <md-list>
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="chat in chats | orderObjectBy:date:true" ui-sref="chat({ key: chat.primaryKey, value:chat })">
+                    <md-button class="md-fab md-mini" aria-label="send">
+                        <i class="md-icon material-icons">chat</i>
+                    </md-button>
+                    <div class="md-list-item-text" layout="column">
+                      <span ng-if="$storage.user.uid != chat.uid" style="color:yellow">
+                            <h4>{{ chat.title }} {{ chat.name }}</h4>
+                        </span>
+                        <span ng-if="$storage.user.uid == chat.uid" style="color:white">
+                            <h4>{{ chat.title }}  {{ chat.name }}</h4>
+                        </span>
+                    </div>
+                </md-list-item>
             </md-list>
-        </md-content>
-      </md-tab>
-      <md-tab label="Chats">
-        <md-content class="md-padding">
-        </md-content>
-      </md-tab>
-      <md-tab label="Ignores">
-        <md-content class="md-padding">
-        </md-content>
-      </md-tab>
-      <md-tab label="request">
-        <md-content class="md-padding">
-        </md-content>
-      </md-tab>
-    </md-tabs>
+        </md-list>
+    </md-content>
+  </md-tab>
+  <md-tab label="Chats">
+    <md-content class="md-padding">
+    </md-content>
+  </md-tab>
+  <md-tab label="Ignores">
+    <md-content class="md-padding">
+    </md-content>
+  </md-tab>
+  <md-tab label="request">
+    <md-content class="md-padding">
+    </md-content>
+  </md-tab>
+</md-tabs>

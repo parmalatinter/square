@@ -37,6 +37,7 @@ app
                     name : $localStorage.user.displayName,
                     age : 19,
                     //1:men, 2 :women, 3  : other
+                    email: $localStorage.user.email,
                     sexType : 1,
                     message : 'よろしくね',
                     date : Math.round(new Date().getTime() / 1000),

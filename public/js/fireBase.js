@@ -69,7 +69,7 @@ app
                 });
             }
             //if (record.isDisconnectRemove) _this.arrayRef[record.key].onDisconnect().remove();
-        }
+        };
 
         var refForObj = function(key, path) {
             if (!_this.objRef[key]) _this.objRef[key] = {};

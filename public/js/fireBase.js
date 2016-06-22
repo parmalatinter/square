@@ -53,7 +53,7 @@ app
         var  setValue = function( record ){
             _this.objRef[record.key] = firebase.database().ref(record.path);
             _this.objRef[record.key].set(record.value);
-            if (record.isDisconnectRemove) _this.objRef[record.key].onDisconnect().remove();
+            //if (record.isDisconnectRemove) _this.objRef[record.key].onDisconnect().remove();
         };
 
        var  pushValue = function( record ){
@@ -68,7 +68,7 @@ app
                     _this.arrayRefKeys[record.key].pushedKey = newRef.key;
                 });
             }
-            if (record.isDisconnectRemove) _this.arrayRef[record.key].onDisconnect().remove();
+            //if (record.isDisconnectRemove) _this.arrayRef[record.key].onDisconnect().remove();
         }
 
         var refForObj = function(key, path) {

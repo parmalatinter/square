@@ -3,7 +3,12 @@
       <md-content class="md-padding">
           <md-list flex>
               <md-list-item class="md-3-line" ng-repeat="_user in user">
-                  <img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}" class="md-avatar" />
+                  <span ng-if="_user.photoURL">
+                    <img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}" class="md-avatar" />
+                  </span>
+                  <span ng-if="!_user.photoURL">
+                    <img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
+                  </span>
                   <div class="md-list-item-text" layout="column">
                     <h4>Name: {{_user.name}}</h4>
                     <h4>Age : {{_user.age}}</h4>

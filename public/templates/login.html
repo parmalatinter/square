@@ -18,5 +18,12 @@
     <span ng-if="session.user.isLogedIn">
       Loged In
     </span>
-    <img ng-src="{{session.user.photoURL}}" />
+    <span ng-if="session.user">
+        <span ng-if="session.user.photoURL">
+            <img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
+        </span>
+        <span ng-if="!session.user.photoURL">
+            <img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
+        </span>
+    </span>
 </div>

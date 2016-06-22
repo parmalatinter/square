@@ -3,7 +3,7 @@
 [debug] CLI Version:  3.0.2
 [debug] Platform:     win32
 [debug] Node Version: v0.10.26
-[debug] Time:         Wed Jun 22 2016 17:49:32 GMT+0900 (東京 (標準時))
+[debug] Time:         Wed Jun 22 2016 18:10:57 GMT+0900 (東京 (標準時))
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
@@ -16,4 +16,4 @@
 [info] 
 [info] i  deploying database, hosting
 [info] i  hosting: preparing public directory for upload...
-[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project-3597707734440258770/uploads/-KKrIDFps4FAGgepzzxs?fileCount=38&message= 
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project-3597707734440258770/uploads/-KKrN6zTo37ICv8KSzF5?fileCount=39&message= 

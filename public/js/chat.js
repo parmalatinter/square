@@ -87,15 +87,16 @@ app
             Loading.finish();
         });
     })
-    .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, Chat, ChatImage, Loading, Vibration, Header) {
+    .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, Chat, ChatImage, Loading, Vibration, Header) {
         $scope.chat = {};
         $scope.file = "";
         $scope.chatImageUrl = '';
         $scope.comment = '';
 
-        if ($stateParams.value) {
+        if ($stateParams.value || $sessionStorage.toParams.value.$id) {
             Loading.start();
-            $scope.chat = Chat.get($stateParams.value.$id);
+            var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id
+            $scope.chat = Chat.get(id);
             $scope.chat.$watch(function() {
                 Header.set($scope.chat.title);
                 $scope.onDemand = true;

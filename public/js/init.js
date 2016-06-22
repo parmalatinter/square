@@ -76,7 +76,7 @@ var app = angular
                     "header": states.header,
                     "main": states.main,
                     "link": states.link,
-                    "footer":states.footer
+                    //"footer":states.footer
                 }
             })
             .state('debug', {
@@ -95,7 +95,7 @@ var app = angular
                     "header": states.header,
                     "main": states.game,
                     "link": states.link,
-                    "footer":states.footer
+                    //"footer":states.footer
                 }
             })
             .state('help', {
@@ -104,7 +104,7 @@ var app = angular
                     "header": states.header,
                     "main": states.main,
                     "link": states.link,
-                    "footer":states.footer
+                    //"footer":states.footer
                 }
             })
             .state('chat', {
@@ -113,7 +113,7 @@ var app = angular
                     "header": states.chatsHeader,
                     "main": states.chat,
                     "link": states.link,
-                    "footer":states.footer
+                    //"footer":states.footer
                 },
                 params: {
                     key: null,
@@ -126,7 +126,7 @@ var app = angular
                     "header": states.chatsHeader,
                     "main": states.chatList,
                     "link": states.link,
-                    "footer":states.footer
+                    //"footer":states.footer
                 },
                 params: {
                     key: null,
@@ -139,7 +139,7 @@ var app = angular
                     "header": states.header,
                     "main": states.login,
                     "link": states.link,
-                    "footer":states.footer
+                    //"footer":states.footer
                 }
             })
             .state('setting', {
@@ -148,7 +148,7 @@ var app = angular
                     "header": states.header,
                     "main": states.setting,
                     "link": states.link,
-                    "footer":states.footer
+                    //"footer":states.footer
                 }
             });
         $urlRouterProvider.otherwise('/index');

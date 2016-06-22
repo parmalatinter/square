@@ -18,6 +18,7 @@ app
         $scope.session = $sessionStorage;
         $scope.siteSetting = Setting.get();
         $scope.setting = {};
+        $scope.mainBgColor = 'inherit';
 
         $scope.siteSetting.$watch(function() {
             if($localStorage.setting){
@@ -29,10 +30,22 @@ app
             $scope.setting = $localStorage.setting;
         });
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+            if(toParams.value && toParams.key){
+                $sessionStorage.toParams = {
+                    value : toParams.value,
+                    key : toParams.key
+                };
+            }
+
             if(toState.name == 'login') return;
             if(!LoginService.checkUser()){
                 event.preventDefault();
                 $state.go('login');
+            }
+            if(toState.name == 'chat'){
+                $scope.mainBgColor = 'black';
+            }else{
+                $scope.mainBgColor = 'inherit';
             }
         });
 

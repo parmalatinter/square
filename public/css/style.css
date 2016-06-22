@@ -104,9 +104,8 @@ body .body {
     font-size: 12px;
     max-width: 100%;
     box-sizing: border-box;
-    border: 1px solid #cacaca;
+    border-bottom: 1px solid #cacaca;
     padding: 23px;
-    background-color: #000;
     color: #FFF;
     line-height: 25px;
     text-align: left;
@@ -124,14 +123,6 @@ body .body {
 .nav-header {
     text-align: center;
     flex-shrink: 0;
-    // z-index: 2;
-}
-
-md-tabs-wrapper {
-    // top: 50px;
-    // // position: fixed;
-    // width: 100%;
-    // z-index: 1;
 }
 
 .updateImageWrap > img {
@@ -156,7 +147,7 @@ md-virtual-repeat-container {
     position: relative;
     display: block;
     width: 100%;
-    height: 75vh;
+    height: 70vh;
     border: solid 1px #ccc;
     padding: 10px;
 }
@@ -182,4 +173,18 @@ md-input-container.chat {
 .material-icons{
     line-height:inherit !important;
     color: rgba(255,255,255,1) !important;;
+}
+
+md-tabs md-tabs-wrapper {
+    border-width: 0 0 1px;
+    border-style: solid;
+    background-color: white;
+}
+
+.md-virtual-repeat-container{
+    border: inherit;
+}
+
+.upper-case{
+    text-transform:uppercase
 }

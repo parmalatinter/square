@@ -147,13 +147,18 @@ app
 		$scope.chatImageUrl = '';
 		$scope.comment = '';
 		$scope.share = Share;
+		$scope.chatUpdateDisable = true;
 
 		var isInited = false;
+		var isUpdatingChatInfo = false;
 
 		if ($stateParams.value || $sessionStorage.toParams.value.$id) {
 			Loading.start();
 			var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
 			$scope.chat = Chat.get(id);
+			if($localStorage.user.uid == $scope.chat.uid){
+				$scope.chatUpdateDisable = false;
+			}
 			$scope.chat.$watch(function() {
 				Header.set($scope.chat.title);
 				$scope.onDemand = true;
@@ -196,7 +201,7 @@ app
 				angular.element('.md-virtual-repeat-scroller').scrollTop(0);
 				if(!isInited){
 					isInited = true;
-				} else{
+				} else if(isUpdatingChatInfo == false){
 					var newMessage = $scope.chat.comments[0];
 					var text = '';
 					switch (newMessage.fileType) {
@@ -218,6 +223,7 @@ app
 					}
 					Speech.play(text);
 				}
+				isUpdatingChatInfo = false;
 			});
 
 			$scope.addComment = function(imageUrl, shareUrl) {
@@ -275,6 +281,13 @@ app
 					return;
 				}
 			};
+
+			$scope.updateChat = function(){
+				isUpdatingChatInfo = true;
+				$scope.chat.$save().then(function(ref) {
+					console.log(ref)
+				});
+			}
 		}
 
 		$scope.getDateStr = function(unixTimestamp){

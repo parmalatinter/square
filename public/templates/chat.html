@@ -90,21 +90,25 @@
 			<div layout-gt-sm="row" style="background-color:white;text-align:left" layout-padding ng-style="getContainarSize()">
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Title</label>
-					<input ng-model="chat.title">
+					<input ng-model="chat.title" ng-disabled="chatUpdateDisable">
 				</md-input-container>
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Name</label>
-					<input ng-model="chat.name">
+					<input ng-model="chat.name" ng-disabled="chatUpdateDisable">
 				</md-input-container>
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Sub Title</label>
-					<input ng-model="chat.subTitle">
+					<input ng-model="chat.subTitle" ng-disabled="chatUpdateDisable">
 				</md-input-container>
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Category</label>
-					<input ng-model="chat.category">
+					<input ng-model="chat.category" ng-disabled="chatUpdateDisable">
 				</md-input-container>
+				<md-button class="md-raised md-primary" ng-click="updateChat()" ng-disabled="chatUpdateDisable">
+					<ng-md-icon icon="save" style="fill: white"></ng-md-icon>
+				</md-button>
 			</div>
+
 		</md-tab-body>
 	</md-tab>
 </md-tabs>

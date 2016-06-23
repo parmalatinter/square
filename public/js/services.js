@@ -1,4 +1,15 @@
 app
+    .factory('File', function() {
+        var _this = { isLoding: false };
+        _this.readURL = function(file, d) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                return d.resolve(e.target.result);
+            };
+        };
+        return _this;
+    })
     .factory('Loading', function(FireBaseService, $firebaseArray) {
         var _this = { isLoding: false };
         _this.start = function() {

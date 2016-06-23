@@ -1,4 +1,7 @@
-<md-subheader ng-if="file.name" class="md-no-sticky">Updating {{file.name}}</md-subheader>
+<md-subheader ng-if="file.name" class="md-no-sticky">
+    Updating {{file.name}}<br/>
+    <img ng-src="{{uploadFileUrl}}" width="50px"/>
+</md-subheader>
 <input type="file" file-model="file" id="upload_photo" style="display:none">
 <md-tabs md-stretch-tabs="auto">
     <md-tab label="Messages">

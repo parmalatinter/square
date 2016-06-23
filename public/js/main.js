@@ -100,3 +100,10 @@ app
             });
         };
     });
+
+var worker = new Worker('js/worker/task.js');
+worker.postMessage({file:'test.png'});
+
+worker.addEventListener('message', function(e) {
+    console.log(e.data);
+}, false);

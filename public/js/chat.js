@@ -1,5 +1,5 @@
 app
-    .factory('ChatImage', function(FireBaseStorageService, $firebaseObject, $q) {
+    .factory('ChatImage', function(FireBaseStorageService, $firebaseObject,File, $q) {
         var _this = {};
         var chatRef = {};
 
@@ -21,11 +21,19 @@ app
             var uploadTask = chatsRef.put(file);
             uploadTask.on('state_changed', function(snapshot) {
                 //d.resolve(snapshot);
-            }, function(error) {
-              d.resolve(error);
-            }, function(snapshot) {
-              d.resolve(uploadTask.snapshot.downloadURL);
+                }, function(error) {
+                  d.resolve(error);
+                }, function(snapshot) {
+                    console.log(snapshot)
+                  d.resolve(uploadTask.snapshot.downloadURL);
             });
+            return d.promise;
+        };
+
+        _this.getUploadFile = function(file) {
+            if(!file) return;
+            var d = $q.defer();
+            File.readURL(file, d);
             return d.promise;
         };
 
@@ -92,6 +100,7 @@ app
     .controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, Chat, ChatImage, Loading, Vibration, Header) {
         $scope.chat = {};
         $scope.file = "";
+        $scope.uploadFileUrl = "";
         $scope.chatImageUrl = '';
         $scope.comment = '';
 
@@ -169,6 +178,9 @@ app
             $scope.upload = function(){
                 if(!$scope.file) return;
                 Loading.start();
+                ChatImage.getUploadFile($scope.file).then(function(uploadFileUrl){
+                    $scope.uploadFileUrl = uploadFileUrl;
+                });
                 ChatImage.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
                     if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
                         $scope.updateImageUrl = updateImageUrl;

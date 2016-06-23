@@ -209,6 +209,9 @@ app
 						case ('movie'):
 							text = 'イメージがアップされました。'+ newMessage.detail;
 							break;
+						case ('link'):
+							text = 'リンクがシェアされました。'+ newMessage.detail;
+							break;
 						default :
 							text = newMessage.detail;
 							break;
@@ -230,6 +233,7 @@ app
 					record.fileType = ChatImage.getFileType(imageUrl);
 				}else if(shareUrl){
 					record.shareUrl = shareUrl;
+					record.fileType = 'link';
 				}else{
 					record.detail = $scope.comment;
 				}

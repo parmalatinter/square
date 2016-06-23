@@ -22,9 +22,9 @@ app
 			uploadTask.on('state_changed', function(snapshot) {
 				//d.resolve(snapshot);
 				}, function(error) {
-				  d.resolve(error);
+					d.resolve(error);
 				}, function(snapshot) {
-				  d.resolve(uploadTask.snapshot.downloadURL);
+					d.resolve(uploadTask.snapshot.downloadURL);
 			});
 			return d.promise;
 		};
@@ -47,6 +47,18 @@ app
 			}
 		};
 
+		return _this;
+	})
+	.factory('Share', function() {
+		var _this = {url : false};
+		_this.setUrl = function(url) {
+			_this.url = url;
+			return _this;
+		};
+		_this.reset = function() {
+			_this.url = '';
+			return _this;
+		};
 		return _this;
 	})
 	.factory('Chats', function(FireBaseService, $firebaseArray) {
@@ -75,10 +87,31 @@ app
 
 		return _this;
 	})
-	.controller('ChatsHeaderCtrl', function($scope, $rootScope, $localStorage, $state, Loading, Header) {
+	.controller('ChatsHeaderCtrl', function($scope, $rootScope, $localStorage, $state, $mdDialog, Loading, Header, Share) {
 		Header.set();
 		$scope.loading = Loading;
 		$scope.header = Header;
+
+		$scope.showShareDialog = function(ev) {
+		var confirm = $mdDialog.prompt()
+			.title('シェアしたいURLを入力してください。')
+			.textContent('リンク先としてコメント欄に表示されます。')
+			.placeholder('URL')
+			.ariaLabel('URL')
+			.targetEvent(ev)
+			.ok('Okay!')
+			.cancel('Cancel.');
+		$mdDialog.show(confirm).then(function(result) {
+			if(!result) return;
+			Share.setUrl(result) ;
+		}, function() {
+			//nothing todo
+		});
+		};
+
+	})
+	.controller('ChatShareCtrl', function($scope, Share) {
+		$scope.share = Share;
 	})
 	.controller('ChatListCtrl', function($scope, $localStorage, Chats, Loading) {
 		$scope.chats = Chats.get();
@@ -107,12 +140,14 @@ app
 			Loading.finish();
 		});
 	})
-	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, ngAudio, Chat, ChatImage, Speech, Loading, Vibration, Header) {
+	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, ngAudio, Chat, ChatImage, Speech, Share, Loading, Vibration, Header) {
 		$scope.chat = {};
 		$scope.file = "";
 		$scope.uploadFileUrl = "";
 		$scope.chatImageUrl = '';
 		$scope.comment = '';
+		$scope.share = Share;
+
 		var isInited = false;
 
 		if ($stateParams.value || $sessionStorage.toParams.value.$id) {
@@ -123,33 +158,33 @@ app
 				Header.set($scope.chat.title);
 				$scope.onDemand = true;
 				$scope.dataset = {
-				  _comments: [],
-				  _refresh: function(data) {
-					  this._comments = data.filter(function(el) {
-						  return !angular.isDefined(el._excluded) || el._excluded === false;
-					  });
-				  },
-				  getItemAtIndex: function(index) {
-					  return this._comments[index];
-				  },
-				  getLength: function() {
-						  return this._comments.length;
-					  }
+					_comments: [],
+					_refresh: function(data) {
+						this._comments = data.filter(function(el) {
+							return !angular.isDefined(el._excluded) || el._excluded === false;
+						});
+					},
+					getItemAtIndex: function(index) {
+						return this._comments[index];
+					},
+					getLength: function() {
+							return this._comments.length;
+						}
 				};
 				$scope.imageDataset = {
-				  _comments: [],
-				  _refresh: function(data) {
-					  this._comments = data.filter(function(el) {
-						  if(el.imageUrl && !el.fileType) el.fileType = ChatImage.getFileType(el.imageUrl);
-						  return !angular.isDefined(el._excluded) || el._excluded === false;
-					  });
-				  },
-				  getItemAtIndex: function(index) {
-					  return this._comments[index];
-				  },
-				  getLength: function() {
-						  return this._comments.length;
-					  }
+					_comments: [],
+					_refresh: function(data) {
+						this._comments = data.filter(function(el) {
+							if(el.imageUrl && !el.fileType) el.fileType = ChatImage.getFileType(el.imageUrl);
+							return !angular.isDefined(el._excluded) || el._excluded === false;
+						});
+					},
+					getItemAtIndex: function(index) {
+						return this._comments[index];
+					},
+					getLength: function() {
+							return this._comments.length;
+						}
 				};
 				$scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
 				$scope.dataset._refresh($scope.chat.comments);
@@ -182,8 +217,8 @@ app
 				}
 			});
 
-			$scope.addComment = function(imageUrl) {
-				if (!$scope.comment && !imageUrl) return;
+			$scope.addComment = function(imageUrl, shareUrl) {
+				if (!$scope.comment && !imageUrl && !shareUrl) return;
 				Loading.start();
 				var record = {
 					date: Math.round( new Date().getTime() / 1000 ),
@@ -193,6 +228,8 @@ app
 				if(imageUrl){
 					record.imageUrl = imageUrl;
 					record.fileType = ChatImage.getFileType(imageUrl);
+				}else if(shareUrl){
+					record.shareUrl = shareUrl;
 				}else{
 					record.detail = $scope.comment;
 				}
@@ -208,7 +245,13 @@ app
 			};
 
 			$scope.$watch('file', function(newVal, oldVal) {
-			  $scope.upload();
+				$scope.upload();
+			});
+
+			$scope.$watch('share.url', function(newVal, oldVal) {
+				if(!newVal) return;
+				$scope.addComment(false, newVal)
+				Share.reset();
 			});
 
 			$scope.upload = function(){
@@ -241,6 +284,10 @@ app
 		$scope.audioPlay = function(url){
 			var audio = ngAudio.load(url);
 			audio.play();
+		};
+
+		$scope.speechPlay = function(text){
+			Speech.play(text);
 		};
 
 	});

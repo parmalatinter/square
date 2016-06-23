@@ -12,10 +12,8 @@
 			<i class="material-icons">insert_photo</i>
 		</label>
 	</md-button>
-	<md-button class="md-icon-button">
-		<label for="upload_photo">
-			<i class="material-icons">share</i>
-		</label>
+	<md-button class="md-icon-button" ng-click="showShareDialog($event)">
+		<i class="material-icons">share</i>
 	</md-button>
 </div>
 <md-progress-linear ng-show="loading.isLoding" style="position: fixed;top: 52px;z-index: 2;" md-mode="query"></md-progress-linear>

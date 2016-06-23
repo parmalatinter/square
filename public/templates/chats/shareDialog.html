@@ -1,0 +1,26 @@
+<md-content class="md-padding" layout-xs="column" layout="row">
+	<div flex-xs flex-gt-xs="50" layout="column">
+		<md-card>
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">Debug mode</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<img
+					ng-init="storage.getImageObjRef('win/win.png', 'win')"
+					ng-src="{{storage.urls.win}}"
+					width="100px"
+					alt="win.png">
+				<img
+					ng-init="storage.getImageObjRef('lose/lose.png', 'lose')"
+					ng-src="{{storage.urls.lose}}"
+					width="100px"
+					alt="lose.png">
+				<pre>
+					{{game | json}}
+				</pre>
+			</md-card-content>
+		</md-card>
+	</div>
+</md-content>

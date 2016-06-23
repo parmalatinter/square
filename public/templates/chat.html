@@ -17,7 +17,12 @@
 			</div>
 			<md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
 				<div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
-					<span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
+					<span ng-if="comment.detail" ng-click="speechPlay(comment.detail)" style="font-size:30px">{{comment.detail}}</span>
+					<span ng-if="comment.shareUrl" style="font-size:30px">
+						<a class="updateImageWrap" target="_blank" ng-href="{{comment.shareUrl}}">
+							{{comment.shareUrl}}
+						</a>
+					</span>
 					<span ng-if="comment.imageUrl" ng-switch="comment.fileType" >
 						<sapn ng-switch-when="image">
 							<a class="updateImageWrap" target="_blank" ng-href="{{comment.imageUrl}}">

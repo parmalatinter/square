@@ -1,3 +1,3 @@
 self.addEventListener('message', function(e) {
-  self.postMessage(e.data.file);
+	self.postMessage(e.data.file);
 }, false);

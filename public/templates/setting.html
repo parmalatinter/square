@@ -1,47 +1,48 @@
 <md-list ng-controller="LocalStrageCtrl" style="text-align: left;">
-    <md-subheader class="md-no-sticky">Single Action Checkboxes</md-subheader>
-    <md-list-item>
-        <p> {{$storage.user.displayName}} </p>
-        <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
-    </md-list-item>
-    <md-divider></md-divider>
-    <md-subheader class="md-no-sticky">is Anonymous</md-subheader>
-    <md-list-item ng-click="">
-        <p> Anonymous </p>
-        <md-switch class="md-secondary" ng-model="$storage.user.isAnonymous"></md-switch>
-    </md-list-item>
-    <md-divider></md-divider>
-    <md-subheader class="md-no-sticky">Email</md-subheader>
-    <md-list-item ng-click="">
-        <p> Vaiblate </p>
-        <md-switch class="md-secondary" ng-model="$storage.setting.enableViblate"></md-switch>
-    </md-list-item>
-    <md-list-item ng-click="">
-        <p> Sound </p>
-        <md-switch class="md-secondary" ng-model="$storage.setting.enableSound"></md-switch>
-    </md-list-item>
-    <md-divider></md-divider>
-    <md-subheader class="md-no-sticky">Name</md-subheader>
-    <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Name</label>
-            <input ng-model="$storage.user.displayName">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Email</label>
-            <input ng-model="$storage.user.email">
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Long Last Name That Will Be Truncated And 3 Dots (Ellipsis) Will Appear At The End</label>
-            <input ng-model="$storage.user.lastName">
-        </md-input-container>
-    </div>
-    <md-divider></md-divider>
-    <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
-    <md-list-item ng-click="" class="noright">
-        <img alt="xxxxxxxxxxx" ng-src="{{storage.urls.win}}" class="md-avatar" />
-        <md-checkbox class="md-secondary" ng-model="$storage.test.disabled"></md-checkbox>
-        <md-icon md-svg-icon="communication:email" ng-click="" aria-label="Send Email" class="md-secondary md-hue-3"></md-icon>
-        <md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
-    </md-list-item>
+	<md-subheader class="md-no-sticky">Single Action Checkboxes</md-subheader>
+	<md-list-item>
+		<p> {{$storage.user.displayName}} </p>
+		<md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+	</md-list-item>
+	<md-divider></md-divider>
+	<md-subheader class="md-no-sticky">is Anonymous</md-subh
+eader>
+	<md-list-item ng-click="">
+		<p> Anonymous </p>
+		<md-switch class="md-secondary" ng-model="$storage.user.isAnonymous"></md-switch>
+	</md-list-item>
+	<md-divider></md-divider>
+	<md-subheader class="md-no-sticky">Email</md-subheader>
+	<md-list-item ng-click="">
+		<p> Vaiblate </p>
+		<md-switch class="md-secondary" ng-model="$storage.setting.enableViblate"></md-switch>
+	</md-list-item>
+	<md-list-item ng-click="">
+		<p> Sound </p>
+		<md-switch class="md-secondary" ng-model="$storage.setting.enableSound"></md-switch>
+	</md-list-item>
+	<md-divider></md-divider>
+	<md-subheader class="md-no-sticky">Name</md-subheader>
+	<div layout-gt-sm="row">
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Name</label>
+		<input ng-model="$storage.user.displayName">
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Email</label>
+			<input ng-model="$storage.user.email">
+		</md-input-container>
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Long Last Name That Will Be Truncated And 3 Dots (Ellipsis) Will Appear At The End</label>
+			<input ng-model="$storage.user.lastName">
+		</md-input-container>
+	</div>
+	<md-divider></md-divider>
+	<md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
+	<md-list-item ng-click="" class="noright">
+		<img alt="xxxxxxxxxxx" ng-src="{{storage.urls.win}}" class="md-avatar" />
+		<md-checkbox class="md-secondary" ng-model="$storage.test.disabled"></md-checkbox>
+		<md-icon md-svg-icon="communication:email" ng-click="" aria-label="Send Email" class="md-secondary md-hue-3"></md-icon>
+		<md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
+	</md-list-item>
 </md-list>

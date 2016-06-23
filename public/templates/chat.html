@@ -1,102 +1,106 @@
 <md-subheader ng-if="file.name" class="md-no-sticky">
-    Updating {{file.name}}<br/>
-    <span ng-if="uploadFileType == 'image'"><img ng-src="{{uploadFileUrl}}" width="50px"/></span>
+	Updating {{file.name}}<br/>
+	<span ng-if="uploadFileType == 'image'"><img ng-src="{{uploadFileUrl}}" width="50px"/></span>
 </md-subheader>
 <input type="file" file-model="file" id="upload_photo" style="display:none">
 <md-tabs md-stretch-tabs="auto">
-    <md-tab label="Messages">
-        <md-tab-body>
-            <div layout="row" style="background-color:white;text-align:left">
-                <md-input-container class="md-block chat" flex>
-                    <label>Add comment</label>
-                    <input ng-model="comment">
-                </md-input-container>
-                <md-button class="md-fab" aria-label="send" ng-click="addComment()" style="margin-top: 20px;">
-                    <i class="md-icon material-icons">send</i>
-                </md-button>
-            </div>
-            <md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
-                <div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
-                    <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
-                    <span ng-if="comment.imageUrl" >
-                        <a class="updateImageWrap" target="_blank" ng-switch="comment.fileType" ng-href="{{comment.imageUrl}}">
-                            <sapn class="updateImageWrap" ng-switch-when="image">
-                                <img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
-                            </sapn>
-                            <sapn ng-switch-when="sound">
-                                <md-button ng-audio="{{comment.imageUrl}}?v={{setting.cache.number}}" volume="0.5">
-                                    <i class="md-icon material-icons">music_note</i>
-                                </md-button>
-                            </sapn>
-                            <sapn ng-switch-when="movie">
-                                <md-button class="md-fab md-mini" aria-label="send">
-                                    <i class="md-icon material-icons">movie</i>
-                                </md-button>
-                            </sapn>
-                        </a>
-                    </span>
-                    <br/>
-                    <div style="margin-top:5px">
-                        <span ng-if="$storage.user.uid != comment.uid" style="color:yellow">
-                            {{comment.name}} {{getDateStr(comment.date)}}
-                        </span>
-                        <span ng-if="$storage.user.uid == comment.uid" style="color:white">
-                            {{comment.name}} {{getDateStr(comment.date)}}
-                        </span>
-                    </div>
-                </div>
-            </md-virtual-repeat-container>
-        </md-tab-body>
-    </md-tab>
-    <md-tab label="Photos">
-        <md-tab-body>
-            <md-virtual-repeat-container id="vertical-container2" md-top-index="topIndex" ng-style="getContainarSize()">
-                <div md-virtual-repeat="comment in imageDataset" md-on-demand="{{onDemand}}">
-                    <div class="messageView font-game">
-                        <span ng-if="comment.imageUrl">
-                            <a target="_blank" ng-switch="comment.fileType" ng-href="{{comment.imageUrl}}">
-                                <sapn class="updateFullImageWrap" ng-switch-when="image">
-                                    <img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
-                                </sapn>
-                                <sapn ng-switch-when="sound">
-                                    <md-button ng-audio="{{comment.imageUrl}}?v={{setting.cache.number}}" volume="0.5">
-                                        <i class="md-icon material-icons">music_note</i>
-                                    </md-button>
-                                </sapn>
-                                <sapn ng-switch-when="movie">
-                                    <md-button class="md-fab md-mini" aria-label="send">
-                                        <i class="md-icon material-icons">movie</i>
-                                    </md-button>
-                                </sapn>
-                            </a>
-                        </span>
-                        <div ng-if="comment.imageUrl" style="margin-top:5px">{{comment.name}} {{getDateStr(comment.date)}}</div>
-                    </div>
-                </div>
-            </md-virtual-repeat-container>
-        </md-tab-body>
-    </md-tab>
-    <md-tab label="Setting">
-        <md-tab-body style="background-color:white">
-            <div layout-gt-sm="row" style="background-color:white;text-align:left" layout-padding ng-style="getContainarSize()">
-                <md-input-container class="md-block" flex-gt-sm>
-                    <label>Title</label>
-                    <input ng-model="chat.title">
-                </md-input-container>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <label>Name</label>
-                    <input ng-model="chat.name">
-                </md-input-container>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <label>Sub Title</label>
-                    <input ng-model="chat.subTitle">
-                </md-input-container>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <label>Category</label>
-                    <input ng-model="chat.category">
-                </md-input-container>
-            </div>
-        </md-tab-body>
-    </md-tab>
+	<md-tab label="Messages">
+		<md-tab-body>
+			<div layout="row" style="background-color:white;text-align:left">
+				<md-input-container class="md-block chat" flex>
+					<label>Add comment</label>
+					<input ng-model="comment">
+				</md-input-container>
+				<md-button class="md-fab" aria-label="send" ng-click="addComment()" style="margin-top: 20px;">
+					<i class="md-icon material-icons">send</i>
+				</md-button>
+			</div>
+			<md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
+				<div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
+					<span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
+					<span ng-if="comment.imageUrl" ng-switch="comment.fileType" >
+						<sapn ng-switch-when="image">
+							<a class="updateImageWrap" target="_blank" ng-href="{{comment.imageUrl}}">
+								<img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
+							</a>
+						</sapn>
+						<sapn ng-switch-when="sound">
+							<md-button ng-click="audioPlay(comment.imageUrl, 0.5)" >
+								<i class="md-icon material-icons">music_note</i>
+							</md-button>
+						</sapn>
+						<sapn ng-switch-when="movie">
+							<a class="updateImageWrap" target="_blank" ng-href="{{comment.imageUrl}}">
+								<md-button class="md-fab md-mini" aria-label="send">
+									<i class="md-icon material-icons">movie</i>
+								</md-button>
+							</a>
+						</sapn>
+					</span>
+					<br/>
+					<div style="margin-top:5px">
+						<span ng-if="$storage.user.uid != comment.uid" style="color:white">
+							{{comment.name}} {{getDateStr(comment.date)}}
+						</span>
+						<span ng-if="$storage.user.uid == comment.uid" style="color:white">
+							{{comment.name}} {{getDateStr(comment.date)}}
+						</span>
+					</div>
+				</div>
+			</md-virtual-repeat-container>
+		</md-tab-body>
+	</md-tab>
+	<md-tab label="Files">
+		<md-tab-body>
+			<md-virtual-repeat-container id="vertical-container2" md-top-index="topIndex" ng-style="getContainarSize()">
+				<div md-virtual-repeat="comment in imageDataset" md-on-demand="{{onDemand}}">
+					<div class="messageView font-game">
+						<span ng-if="comment.imageUrl" ng-switch="comment.fileType" >
+							<sapn ng-switch-when="image">
+								<a target="_blank" class="updateFullImageWrap" ng-href="{{comment.imageUrl}}">
+									<img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
+								</a>
+							</sapn>
+							<sapn ng-switch-when="sound">
+								<md-button ng-click="audioPlay(comment.imageUrl, 0.5)" >
+									<i class="md-icon material-icons">music_note</i>
+								</md-button>
+							</sapn>
+							<sapn ng-switch-when="movie">
+								<a target="_blank" ng-href="{{comment.imageUrl}}">
+									<md-button class="md-fab md-mini" aria-label="send">
+										<i class="md-icon material-icons">movie</i>
+									</md-button>
+								</a>
+							</sapn>
+						</span>
+						<div ng-if="comment.imageUrl" style="margin-top:5px">{{comment.name}} {{getDateStr(comment.date)}}</div>
+					</div>
+				</div>
+			</md-virtual-repeat-container>
+		</md-tab-body>
+	</md-tab>
+	<md-tab label="Setting">
+		<md-tab-body style="background-color:white">
+			<div layout-gt-sm="row" style="background-color:white;text-align:left" layout-padding ng-style="getContainarSize()">
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Title</label>
+					<input ng-model="chat.title">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Name</label>
+					<input ng-model="chat.name">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Sub Title</label>
+					<input ng-model="chat.subTitle">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Category</label>
+					<input ng-model="chat.category">
+				</md-input-container>
+			</div>
+		</md-tab-body>
+	</md-tab>
 </md-tabs>
 

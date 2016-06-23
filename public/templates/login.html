@@ -1,29 +1,29 @@
 <div layout-align="center center">
-    <md-button class="md-raised md-primary" ng-click="login('google')">
-        <ng-md-icon icon="google-plus" style="fill: white"></ng-md-icon>
-    </md-button>
-    <!--       <md-button class="md-raised md-primary" ng-click="login('facebook')">
-      <ng-md-icon icon="facebook" style="fill: white"></ng-md-icon>
-    </md-button>
-    <md-button class="md-raised md-primary" ng-click="login('twitter')">
-      <ng-md-icon icon="twitter" style="fill: white"></ng-md-icon>
-    </md-button>
-    <md-button class="md-raised md-primary" ng-click="login('github')">
-      <ng-md-icon icon="github-box" style="fill: white"></ng-md-icon>
-    </md-button>
-    -->
-    <md-button class="md-raised md-primary" ng-click="logout()">
-        <ng-md-icon icon="account_circle" style="fill: white"></ng-md-icon>
-    </md-button>
-    <span ng-if="session.user.isLogedIn">
-      Loged In
-    </span>
-    <span ng-if="session.user">
-        <span ng-if="session.user.photoURL">
-            <img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" width="50px"/>
-        </span>
-        <span ng-if="!session.user.photoURL">
-            <img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" width="50px"/>
-        </span>
-    </span>
+	<md-button class="md-raised md-primary" ng-click="login('google')">
+		<ng-md-icon icon="google-plus" style="fill: white"></ng-md-icon>
+	</md-button>
+	<!--       <md-button class="md-raised md-primary" ng-click="login('facebook')">
+		<ng-md-icon icon="facebook" style="fill: white"></ng-md-icon>
+	</md-button>
+	<md-button class="md-raised md-primary" ng-click="login('twitter')">
+		<ng-md-icon icon="twitter" style="fill: white"></ng-md-icon>
+	</md-button>
+	<md-button class="md-raised md-primary" ng-click="login('github')">
+		<ng-md-icon icon="github-box" style="fill: white"></ng-md-icon>
+	</md-button>
+	-->
+	<md-button class="md-raised md-primary" ng-click="logout()">
+			<ng-md-icon icon="account_circle" style="fill: white"></ng-md-icon>
+	</md-button>
+	<span ng-if="session.user.isLogedIn">
+		Loged In
+	</span>
+	<span ng-if="session.user">
+		<span ng-if="session.user.photoURL">
+				<img alt="xxxxxxxxxxx" ng-src="{{session.user.photoURL}}" class="md-avatar" width="50px"/>
+		</span>
+		<span ng-if="!session.user.photoURL">
+				<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" width="50px"/>
+		</span>
+	</span>
 </div>

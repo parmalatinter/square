@@ -1,34 +1,34 @@
 <md-subheader>
-  <md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}">
-    count:{{game.teams[game.selectedTeam.key].count}}
-  </md-button>
-  <md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}" ng-click="init()">
-    Restart
-  </md-button>
-  <md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}" ng-click="shuffle()">
-    Shuffle
-  </md-button>
+	<md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}">
+		count:{{game.teams[game.selectedTeam.key].count}}
+	</md-button>
+	<md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}" ng-click="init()">
+		Restart
+	</md-button>
+	<md-button class="md-raised md-primary {{game.selectedTeam.theme.bgClass}}" ng-click="shuffle()">
+		Shuffle
+	</md-button>
 </md-subheader>
 <!-- background-color:{{game.selectedTeam.theme.bgColor}} -->
 <div class="pattern" style="text-align: center; width: 352px;display:inline-block">
-  <md-button aria-label="item" ng-repeat="item in game.items track by $index" ng-click="changeMode(item, $index)" ng-class="{
-                  'attacable'         :attacable(item),
-                  'shake'           :attacable(item),
-                  'pulse infinite'  :!item.teamId,
-                  'selected'        :item.isSelected,
-                  'opacity'         :!isMytaem(item) || (!isMytaem(item) && !item.isAround),
-                  'square'          :!item.teamId
-                }" team-id="{{item.teamId}}" style="background-color:{{game.teams[item.teamId -1].theme.bgColor}};color:{{game.teams[item.teamId -1].theme.color}}" ng-disabled="(item.teamId != game.selectedTeam.teamId) && !item.isAround" class="md-raised md-fab item animated">
-    <span ng-if="item.teamId">
-      <!-- <span ng-if="item.teamId == 1" style="font-size:20px">&#9822;</span>
-    <span ng-if="item.teamId == 2" style="font-size:20px">&#9763;</span> --> {{item.power}}
-    </span>
-  </md-button>
-  <div ng-repeat="team in game.teams" style="width: 352px;background-color:{{team.theme.bgColor}}" style="display:inline-block;text-align:left">
-    {{team.name}}
-    <span ng-repeat="item in team.friends">
-      ●
-    </span>
-    <br>
-  </div>
+	<md-button aria-label="item" ng-repeat="item in game.items track by $index" ng-click="changeMode(item, $index)" ng-class="{
+			'attacable'         :attacable(item),
+			'shake'           :attacable(item),
+			'pulse infinite'  :!item.teamId,
+			'selected'        :item.isSelected,
+			'opacity'         :!isMytaem(item) || (!isMytaem(item) && !item.isAround),
+			'square'          :!item.teamId
+		}" team-id="{{item.teamId}}" style="background-color:{{game.teams[item.teamId -1].theme.bgColor}};color:{{game.teams[item.teamId -1].theme.color}}" ng-disabled="(item.teamId != game.selectedTeam.teamId) && !item.isAround" class="md-raised md-fab item animated">
+		<span ng-if="item.teamId">
+			<!-- <span ng-if="item.teamId == 1" style="font-size:20px">&#9822;</span>
+		<span ng-if="item.teamId == 2" style="font-size:20px">&#9763;</span> --> {{item.power}}
+		</span>
+	</md-button>
+	<div ng-repeat="team in game.teams" style="width: 352px;background-color:{{team.theme.bgColor}}" style="display:inline-block;text-align:left">
+		{{team.name}}
+		<span ng-repeat="item in team.friends">
+			●
+		</span>
+		<br>
+	</div>
 </div>

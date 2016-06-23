@@ -24,7 +24,6 @@ app
                 }, function(error) {
                   d.resolve(error);
                 }, function(snapshot) {
-                    console.log(snapshot)
                   d.resolve(uploadTask.snapshot.downloadURL);
             });
             return d.promise;
@@ -129,6 +128,7 @@ app
                   _comments: [],
                   _refresh: function(data) {
                       this._comments = data.filter(function(el) {
+                          if(el.imageUrl) el.fileType = el.imageUrl.split('.').pop().split('?')[0];
                           return !angular.isDefined(el._excluded) || el._excluded === false;
                       });
                   },
@@ -178,20 +178,23 @@ app
             $scope.upload = function(){
                 if(!$scope.file) return;
                 Loading.start();
-                ChatImage.getUploadFile($scope.file).then(function(uploadFileUrl){
-                    $scope.uploadFileUrl = uploadFileUrl;
-                });
+                var fileType = $scope.file.name.split('.').pop().split('?')[0];
                 ChatImage.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
                     if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
                         $scope.updateImageUrl = updateImageUrl;
                         $scope.addComment(updateImageUrl);
                     }
                 });
+                if($filter('inArray')(['png','jpg', 'gif'], fileType)){
+                    ChatImage.getUploadFile($scope.file).then(function(uploadFileUrl){
+                        $scope.uploadFileUrl = uploadFileUrl;
+                    });
+                }
             };
         }
 
         $scope.getDateStr = function(unixTimestamp){
-            return new Date( unixTimestamp * 1000 ).toLocaleString()
+            return new Date( unixTimestamp * 1000 ).toLocaleString();
         };
 
         $scope.getContainarSize = function(plusValue){

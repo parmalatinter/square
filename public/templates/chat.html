@@ -1,6 +1,6 @@
 <md-subheader ng-if="file.name" class="md-no-sticky">
     Updating {{file.name}}<br/>
-    <img ng-src="{{uploadFileUrl}}" width="50px"/>
+    <span ng-if="uploadFileUrl"><img ng-src="{{uploadFileUrl}}" width="50px"/></span>
 </md-subheader>
 <input type="file" file-model="file" id="upload_photo" style="display:none">
 <md-tabs md-stretch-tabs="auto">
@@ -18,7 +18,29 @@
             <md-virtual-repeat-container id="vertical-container" md-top-index="topIndex">
                 <div md-virtual-repeat="comment in dataset" md-on-demand="{{onDemand}}" class="messageView font-game">
                     <span ng-if="comment.detail" style="font-size:30px">{{comment.detail}}</span>
-                    <span ng-if="comment.imageUrl" class="updateImageWrap"><img ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}"></span>
+                    <span ng-if="comment.imageUrl" >
+                        <a class="updateImageWrap" target="_blank" ng-switch="comment.fileType" ng-href="{{comment.imageUrl}}">
+                            <sapn class="updateImageWrap" ng-switch-when="png">
+                                <img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
+                            </sapn>
+                            <sapn class="updateImageWrap" ng-switch-when="jpg">
+                                <img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
+                            </sapn>
+                            <sapn class="updateImageWrap" ng-switch-when="gif">
+                                <img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
+                            </sapn>
+                            <sapn ng-switch-when="mp4">
+                                <md-button class="md-fab md-mini" aria-label="send">
+                                    <i class="md-icon material-icons">movie</i>
+                                </md-button>
+                            </sapn>
+                            <sapn ng-switch-when="mp3">
+                                <md-button class="md-fab md-mini" aria-label="send">
+                                    <i class="md-icon material-icons">music_note</i>
+                                </md-button>
+                            </sapn>
+                        </a>
+                    </span>
                     <br/>
                     <div style="margin-top:5px">
                         <span ng-if="$storage.user.uid != comment.uid" style="color:yellow">
@@ -37,7 +59,29 @@
             <md-virtual-repeat-container id="vertical-container2" md-top-index="topIndex" ng-style="getContainarSize()">
                 <div md-virtual-repeat="comment in imageDataset" md-on-demand="{{onDemand}}">
                     <div class="messageView font-game">
-                        <span ng-if="comment.imageUrl" class="updateFullImageWrap"><img ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}"></span>
+                        <span ng-if="comment.imageUrl" >
+                            <a target="_blank" ng-switch="comment.fileType" ng-href="{{comment.imageUrl}}">
+                                <sapn class="updateFullImageWrap" ng-switch-when="png">
+                                    <img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
+                                </sapn>
+                                <sapn class="updateFullImageWrap" ng-switch-when="jpg">
+                                    <img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
+                                </sapn>
+                                <sapn class="updateFullImageWrap" ng-switch-when="gif">
+                                    <img alt="image" ng-src="{{comment.imageUrl}}?v={{setting.cache.number}}">
+                                </sapn>
+                                <sapn ng-switch-when="mp4">
+                                    <md-button class="md-fab md-mini" aria-label="send">
+                                        <i class="md-icon material-icons">movie</i>
+                                    </md-button>
+                                </sapn>
+                                <sapn ng-switch-when="mp3">
+                                    <md-button class="md-fab md-mini" aria-label="send">
+                                        <i class="md-icon material-icons">music_note</i>
+                                    </md-button>
+                                </sapn>
+                            </a>
+                        </span>
                         <div ng-if="comment.imageUrl" style="margin-top:5px">{{comment.name}} {{getDateStr(comment.date)}}</div>
                     </div>
                 </div>

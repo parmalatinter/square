@@ -10,8 +10,8 @@ app.filter('find', function() {
 				var inputVal = input[i][keys[j]];
 				var judgeVal = value[keys[j]];
 				if (inputVal != judgeVal) {
-					if (typeof(judgeVal) === "boolean") {
-						if ((inputVal ? true : false) == judgeVal) {
+					if (judgeVal === "boolean") {
+						if (inputVal) {
 							isOk = true;
 						} else {
 							continue;
@@ -20,7 +20,7 @@ app.filter('find', function() {
 						continue;
 					}
 				} else {
-						isOk = true;
+					isOk = true;
 				}
 			}
 			if (isOk) {

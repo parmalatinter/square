@@ -93,20 +93,24 @@ app
 		$scope.header = Header;
 
 		$scope.showShareDialog = function(ev) {
-		var confirm = $mdDialog.prompt()
-			.title('シェアしたいURLを入力してください。')
-			.textContent('リンク先としてコメント欄に表示されます。')
-			.placeholder('URL')
-			.ariaLabel('URL')
-			.targetEvent(ev)
-			.ok('Okay!')
-			.cancel('Cancel.');
-		$mdDialog.show(confirm).then(function(result) {
-			if(!result) return;
-			Share.setUrl(result) ;
-		}, function() {
-			//nothing todo
-		});
+			var confirm = $mdDialog.prompt()
+				.title('シェアしたいURLを入力してください。')
+				.textContent('リンク先としてコメント欄に表示されます。')
+				.placeholder('URL')
+				.ariaLabel('URL')
+				.targetEvent(ev)
+				.ok('Okay!')
+				.cancel('Cancel.');
+			$mdDialog.show(confirm).then(function(result) {
+				if(!result) return;
+				Share.setUrl(result) ;
+			}, function() {
+				//nothing todo
+			});
+		};
+
+		$scope.playContinuity = function(){
+			$rootScope.$broadcast('playContinuity');
 		};
 
 	})
@@ -305,6 +309,15 @@ app
 
 		$scope.speechPlay = function(text){
 			Speech.play(text);
+		};
+
+		$rootScope.$on('playContinuity', function() {
+			$scope.playContinuity();
+		});
+
+		$scope.playContinuity = function(){
+			var commnets = $filter('find')($scope.chat.comments,{detail : 'boolean'});
+			Speech.playContinuity(commnets);
 		};
 
 	});

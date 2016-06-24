@@ -45,12 +45,38 @@ app
 	.factory('Speech', function($localStorage) {
 		var _this = {};
 		var settingRef = {};
+		var msg = {};
+		var msgs = [];
 
 		_this.play = function(text) {
 			if(!$localStorage.setting) return;
 			if(!$localStorage.setting.enableSound) return;
 			var msg = new SpeechSynthesisUtterance(text);
 			window.speechSynthesis.speak(msg);
+		};
+
+		var count =  0;
+		var countMax = 0;
+		var addSpeechEvent = function(records){
+			msgs[count] = new SpeechSynthesisUtterance(records[count].detail);
+			window.speechSynthesis.speak(msgs[count]);
+			msgs[count].onend = function (event) {
+				if(count == countMax){
+					count =  0;
+					countMax =  0;
+					return;
+				}
+				count++;
+				addSpeechEvent(count);
+			};
+		};
+
+		_this.playContinuity = function(records) {
+			if(!$localStorage.setting) return;
+			if(!$localStorage.setting.enableSound) return;
+			count =  0;
+			countMax =  records.length;
+			addSpeechEvent(records);
 		};
 		return _this;
 	})

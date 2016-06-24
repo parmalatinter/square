@@ -25,29 +25,47 @@ app
 		$scope.user.$watch(function() {
 			Loading.finish();
 		});
+
+		$scope.updateUser = function(){
+			$scope.user.$save().then(function(ref) {
+				console.log(ref);
+			});
+		};
 	})
 	.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, User, Users, Loading) {
 		$scope.users = Users.get();
 		$scope.currentUser = User.get($localStorage.user.uid);
 		$scope.title = null;
-		Loading.start();
+		$scope.user = User.get();
 
-		$scope.addUser = function() {
-			var record = {
-				name: $localStorage.user.displayName,
-				age: 19,
-				//1:men, 2 :women, 3  : other
-				email: $localStorage.user.email,
-				sexType: 1,
-				message: 'よろしくね',
-				date: Math.round(new Date().getTime() / 1000),
-				uid: $localStorage.user.uid,
-				photoURL: $sessionStorage.user.photoURL,
-			};
-			this.users.$add(record).then(function(ref) {
-				///
-			});
-		};
+		$scope.user.$watch(function(ref) {
+			Loading.finish();
+		});
+
+		$scope.user.$loaded()
+		    .then(function(user) {
+				if(!user.length){
+					Loading.start();
+					var record = {
+						name: $localStorage.user.displayName,
+						age: 19,
+						//1:men, 2 :women, 3  : other
+						email: $localStorage.user.email,
+						sexType: 1,
+						message: 'よろしくね',
+						date: Math.round(new Date().getTime() / 1000),
+						uid: $localStorage.user.uid,
+						photoURL: $sessionStorage.user.photoURL,
+					};
+					$scope.users.$add(record).then(function(ref) {
+						Loading.finish();
+					});
+				}
+		    })
+		    .catch(function(error) {
+		        console.log("Error:", error);
+		    });
+
 
 		$scope.users.$watch(function() {
 			Loading.finish();

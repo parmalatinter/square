@@ -156,10 +156,10 @@ app
 			Loading.start();
 			var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
 			$scope.chat = Chat.get(id);
-			if($localStorage.user.uid == $scope.chat.uid){
-				$scope.chatUpdateDisable = false;
-			}
 			$scope.chat.$watch(function() {
+                if($localStorage.user.uid == $scope.chat.uid){
+                    $scope.chatUpdateDisable = false;
+                }
 				Header.set($scope.chat.title);
 				$scope.onDemand = true;
 				$scope.dataset = {
@@ -201,27 +201,27 @@ app
 				angular.element('.md-virtual-repeat-scroller').scrollTop(0);
 				if(!isInited){
 					isInited = true;
-				} else if(isUpdatingChatInfo == false){
-					var newMessage = $scope.chat.comments[0];
+				} else if(!isUpdatingChatInfo && !$scope.chat.comments[0].isSpeeched){
 					var text = '';
-					switch (newMessage.fileType) {
+					switch ($scope.chat.comments[0].fileType) {
 						case ('image'):
-							text = '画像がアップされました。' + newMessage.detail;
+							text = '画像がアップされました。';
 							break;
 						case ('sound'):
-							text = 'サウンドがアップされました。'+ newMessage.detail;
+							text = 'サウンドがアップされました。';
 							break;
 						case ('movie'):
-							text = 'イメージがアップされました。'+ newMessage.detail;
+							text = 'イメージがアップされました。';
 							break;
 						case ('link'):
-							text = 'リンクがシェアされました。'+ newMessage.detail;
+							text = 'リンクがシェアされました。';
 							break;
 						default :
-							text = newMessage.detail;
+							text = $scope.chat.comments[0].detail;
 							break;
 					}
 					Speech.play(text);
+                    $scope.chat.comments[0].isSpeeched = true;
 				}
 				isUpdatingChatInfo = false;
 			});
@@ -287,7 +287,7 @@ app
 				$scope.chat.$save().then(function(ref) {
 					console.log(ref)
 				});
-			}
+			};
 		}
 
 		$scope.getDateStr = function(unixTimestamp){

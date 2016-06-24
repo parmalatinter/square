@@ -67,8 +67,9 @@ app
 					return;
 				}
 				count++;
-				addSpeechEvent(count);
+				addSpeechEvent(records);
 			};
+
 		};
 
 		_this.playContinuity = function(records) {

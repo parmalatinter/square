@@ -197,7 +197,8 @@ app
 				};
 				$scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
 				$scope.dataset._refresh($scope.chat.comments);
-				$scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : true}, false);
+				$scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : 'boolean'}, false);
+
 				$scope.imageDataset._refresh($scope.chat.images);
 
 				Vibration.play(500);

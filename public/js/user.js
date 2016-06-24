@@ -56,6 +56,7 @@ app
 						date: Math.round(new Date().getTime() / 1000),
 						uid: $localStorage.user.uid,
 						photoURL: $sessionStorage.user.photoURL,
+						imageUrl:null
 					};
 					$scope.users.$add(record).then(function(ref) {
 						Loading.finish();

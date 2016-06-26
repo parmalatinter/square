@@ -1,5 +1,5 @@
 app
-	.factory('File', function() {
+	.factory('File', function(resizeService, FireBaseStorageService, $filter, $q, $log) {
 		var _this = { isLoding: false };
 		var chatRef = {};
 
@@ -9,6 +9,7 @@ app
 			reader.onload = function (e) {
 				return d.resolve(e.target.result);
 			};
+
 		};
 
 		_this.get = function(key, path, fileName) {
@@ -26,6 +27,21 @@ app
 			if(!file) return;
 			var d = $q.defer();
 			chatsRef = FireBaseStorageService.setObjRef(key, path , file.name);
+
+			  // resizeService
+			  //   .resizeImage(e.target.result, {
+			  //       size: 100,
+			  //       sizeScale: 'ko'
+			  //       // Other options ...
+			  //   })
+			  //   .then(function(image){
+			  //     // Add the resized image into the body
+     //  // Add the resized image into the body
+			  //     var imageResized = document.createElement('img');
+			  //     imageResized.src = image;
+			  //     console.log(imageResized)
+			  //   })
+			  //   .catch($log.error); // Always catch a promise :)
 			var uploadTask = chatsRef.put(file);
 			uploadTask.on('state_changed', function(snapshot) {
 				//d.resolve(snapshot);
@@ -40,7 +56,7 @@ app
 		_this.getUploadFile = function(file) {
 			if(!file) return;
 			var d = $q.defer();
-			File.readURL(file, d);
+			_this.readURL(file, d);
 			return d.promise;
 		};
 

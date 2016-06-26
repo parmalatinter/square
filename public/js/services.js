@@ -77,8 +77,9 @@ app
 			var d = $q.defer();
 			resizeService
 			.resizeImage(url, {
-				size: 100,
-				sizeScale: 'ko'
+				size: 2,
+				sizeScale: 'ko',
+				width : 320
 				// Other options ...
 			})
 			.then(function(image){

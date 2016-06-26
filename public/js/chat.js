@@ -230,18 +230,33 @@ app
 				if(!$scope.file) return;
 				Loading.start();
 				$scope.uploadFileType = File.getFileType($scope.file.name);
-				File.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
-					if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
-						$scope.updateImageUrl = updateImageUrl;
-						$scope.addComment(updateImageUrl);
-					}
-				});
 				if($scope.uploadFileType == 'image'){
 					File.getUploadFile($scope.file).then(function(uploadFileUrl){
 						$scope.uploadFileUrl = uploadFileUrl;
+						File.resizeFile(uploadFileUrl).then(function(resized){
+							File.getUploadFile(resized.file).then(function(uploadFileUrl2){
+							$scope.uploadFileUrl = uploadFileUrl2;
+								File.upload('chats', 'chats', uploadFileUrl2).then(function(updateImageUrl){
+									// if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
+									// 	$scope.updateImageUrl = updateImageUrl;
+										$scope.addComment(updateImageUrl);
+									//}
+								});
+							});
+						});
+
 					});
 					return;
+				}else{
+					File.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
+						if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
+							//$scope.updateImageUrl = updateImageUrl;
+							$scope.addComment(updateImageUrl);
+						}
+					});
 				}
+
+
 			};
 
 			$scope.updateChat = function(){

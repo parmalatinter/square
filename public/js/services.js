@@ -3,9 +3,31 @@ app
 		var _this = { isLoding: false };
 		var chatRef = {};
 
+		function toBlob(base64) {
+		    var bin = atob(base64.replace(/^.*,/, ''));
+		    var buffer = new Uint8Array(bin.length);
+		    for (var i = 0; i < bin.length; i++) {
+		        buffer[i] = bin.charCodeAt(i);
+		    }
+		    // Blobを作成
+		    try{
+		        var blob = new Blob([buffer.buffer], {
+		            type: 'image/png'
+		        });
+		    }catch (e){
+		        return false;
+		    }
+		    return blob;
+		}
+
 		_this.readURL = function(file, d) {
 			var reader = new FileReader();
-			reader.readAsDataURL(file);
+			if(file.isBlob){
+				d.resolve( toBlob(file.src) );
+			}else{
+				reader.readAsDataURL(file);
+			}
+
 			reader.onload = function (e) {
 				return d.resolve(e.target.result);
 			};
@@ -26,22 +48,12 @@ app
 		_this.upload = function(key, path, file) {
 			if(!file) return;
 			var d = $q.defer();
-			chatsRef = FireBaseStorageService.setObjRef(key, path , file.name);
+			var fileName = '';
+			if(!file.name){
+				fileName = Math.round( new Date().getTime() / 1000 ) + '.jpeg'
+			}
+			chatsRef = FireBaseStorageService.setObjRef(key, path , fileName);
 
-			  // resizeService
-			  //   .resizeImage(e.target.result, {
-			  //       size: 100,
-			  //       sizeScale: 'ko'
-			  //       // Other options ...
-			  //   })
-			  //   .then(function(image){
-			  //     // Add the resized image into the body
-     //  // Add the resized image into the body
-			  //     var imageResized = document.createElement('img');
-			  //     imageResized.src = image;
-			  //     console.log(imageResized)
-			  //   })
-			  //   .catch($log.error); // Always catch a promise :)
 			var uploadTask = chatsRef.put(file);
 			uploadTask.on('state_changed', function(snapshot) {
 				//d.resolve(snapshot);
@@ -60,9 +72,30 @@ app
 			return d.promise;
 		};
 
+		_this.resizeFile = function(url){
+			if(!url) return;
+			var d = $q.defer();
+			resizeService
+			.resizeImage(url, {
+				size: 100,
+				sizeScale: 'ko'
+				// Other options ...
+			})
+			.then(function(image){
+				// Add the resized image into the body
+				// Add the resized image into the body
+				var file = document.createElement('img');
+				file.src = image;
+				file.isBlob = true;
+				d.resolve({src : image, file :file} );
+			})
+			.catch($log.error); // Always catch a promise :)
+			return d.promise;
+		}
+
 		_this.getFileType = function(name){
 			var fileType = name.split('.').pop().split('?')[0];
-			if($filter('inArray')(['png','jpg', 'gif', 'bmp'], fileType)){
+			if($filter('inArray')(['png','jpg', 'gif', 'bmp', 'jpeg'], fileType)){
 				return 'image';
 			}else if($filter('inArray')(['mp3','wav', 'm4a'], fileType)){
 				return 'sound';

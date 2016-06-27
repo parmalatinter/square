@@ -1,54 +1,4 @@
 app
-	.factory('ChatImage', function(FireBaseStorageService, $firebaseObject,File, ngAudio, $filter, $q) {
-		var _this = {};
-		var chatRef = {};
-
-		_this.get = function(key, path, fileName) {
-			var d = $q.defer();
-			chatsRef = FireBaseStorageService.setObjRef(key, path, fileName);
-			chatsRef.getDownloadURL().then(function(url) {
-				d.resolve(url);
-			}).catch(function(error) {
-				d.resolve('error');
-			});
-			return d.promise;
-		};
-
-		_this.upload = function(key, path, file) {
-			if(!file) return;
-			var d = $q.defer();
-			chatsRef = FireBaseStorageService.setObjRef(key, path , file.name);
-			var uploadTask = chatsRef.put(file);
-			uploadTask.on('state_changed', function(snapshot) {
-				//d.resolve(snapshot);
-				}, function(error) {
-					d.resolve(error);
-				}, function(snapshot) {
-					d.resolve(uploadTask.snapshot.downloadURL);
-			});
-			return d.promise;
-		};
-
-		_this.getUploadFile = function(file) {
-			if(!file) return;
-			var d = $q.defer();
-			File.readURL(file, d);
-			return d.promise;
-		};
-
-		_this.getFileType = function(name){
-			var fileType = name.split('.').pop().split('?')[0];
-			if($filter('inArray')(['png','jpg', 'gif', 'bmp'], fileType)){
-				return 'image';
-			}else if($filter('inArray')(['mp3','wav', 'm4a'], fileType)){
-				return 'sound';
-			}else if($filter('inArray')(['wmv','mp4', 'mpeg', 'mov', 'avi'], fileType)){
-				return 'movie';
-			}
-		};
-
-		return _this;
-	})
 	.factory('Share', function() {
 		var _this = {url : false};
 		_this.setUrl = function(url) {
@@ -87,10 +37,11 @@ app
 
 		return _this;
 	})
-	.controller('ChatsHeaderCtrl', function($scope, $rootScope, $localStorage, $state, $mdDialog, Loading, Header, Share) {
+	.controller('ChatsHeaderCtrl', function($scope, $rootScope, $localStorage, $state, $mdDialog, Speech, Loading, Header, Share) {
 		Header.set();
 		$scope.loading = Loading;
 		$scope.header = Header;
+		$scope.speech = Speech;
 
 		$scope.showShareDialog = function(ev) {
 			var confirm = $mdDialog.prompt()
@@ -111,6 +62,14 @@ app
 
 		$scope.playContinuity = function(){
 			$rootScope.$broadcast('playContinuity');
+		};
+
+		$scope.pause = function(){
+			$rootScope.$broadcast('pause');
+		};
+
+		$scope.cancel = function(){
+			$rootScope.$broadcast('cancel');
 		};
 
 	})
@@ -144,11 +103,10 @@ app
 			Loading.finish();
 		});
 	})
-	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, ngAudio, Chat, ChatImage, Speech, Share, Loading, Vibration, Header) {
+	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, ngAudio, Chat, File, Speech, Share, Loading, Vibration, Header) {
 		$scope.chat = {};
 		$scope.file = "";
 		$scope.uploadFileUrl = "";
-		$scope.chatImageUrl = '';
 		$scope.comment = '';
 		$scope.share = Share;
 		$scope.chatUpdateDisable = true;
@@ -184,7 +142,7 @@ app
 					_comments: [],
 					_refresh: function(data) {
 						this._comments = data.filter(function(el) {
-							if(el.imageUrl && !el.fileType) el.fileType = ChatImage.getFileType(el.imageUrl);
+							if(el.imageUrl && !el.fileType) el.fileType = File.getFileType(el.imageUrl);
 							return !angular.isDefined(el._excluded) || el._excluded === false;
 						});
 					},
@@ -198,7 +156,10 @@ app
 				$scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
 				$scope.dataset._refresh($scope.chat.comments);
 				$scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : 'boolean'}, false);
+<<<<<<< HEAD
 
+=======
+>>>>>>> e377f8f813f15178e936660234401a45eb41cc8d
 				$scope.imageDataset._refresh($scope.chat.images);
 
 				Vibration.play(500);
@@ -241,7 +202,7 @@ app
 				};
 				if(imageUrl){
 					record.imageUrl = imageUrl;
-					record.fileType = ChatImage.getFileType(imageUrl);
+					record.fileType = File.getFileType(imageUrl);
 				}else if(shareUrl){
 					record.shareUrl = shareUrl;
 					record.fileType = 'link';
@@ -272,19 +233,34 @@ app
 			$scope.upload = function(){
 				if(!$scope.file) return;
 				Loading.start();
-				$scope.uploadFileType = ChatImage.getFileType($scope.file.name);
-				ChatImage.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
-					if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
-						$scope.updateImageUrl = updateImageUrl;
-						$scope.addComment(updateImageUrl);
-					}
-				});
+				$scope.uploadFileType = File.getFileType($scope.file.name);
 				if($scope.uploadFileType == 'image'){
-					ChatImage.getUploadFile($scope.file).then(function(uploadFileUrl){
+					File.getUploadFile($scope.file).then(function(uploadFileUrl){
 						$scope.uploadFileUrl = uploadFileUrl;
+						File.resizeFile(uploadFileUrl).then(function(resized){
+							File.getUploadFile(resized.file).then(function(uploadFileUrl2){
+							$scope.uploadFileUrl = uploadFileUrl2;
+								File.upload('chats', 'chats', uploadFileUrl2).then(function(updateImageUrl){
+									// if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
+									// 	$scope.updateImageUrl = updateImageUrl;
+										$scope.addComment(updateImageUrl);
+									//}
+								});
+							});
+						});
+
 					});
 					return;
+				}else{
+					File.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
+						if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
+							//$scope.updateImageUrl = updateImageUrl;
+							$scope.addComment(updateImageUrl);
+						}
+					});
 				}
+
+
 			};
 
 			$scope.updateChat = function(){
@@ -316,9 +292,25 @@ app
 			$scope.playContinuity();
 		});
 
+		$rootScope.$on('pause', function() {
+			$scope.pause();
+		});
+
+		$rootScope.$on('cancel', function() {
+			$scope.cancel();
+		});
+
 		$scope.playContinuity = function(){
 			var commnets = $filter('find')($scope.chat.comments,{detail : 'boolean'});
 			Speech.playContinuity(commnets);
+		};
+
+		$scope.pause = function(){
+			Speech.pause();
+		};
+
+		$scope.cancel = function(){
+			Speech.cancel();
 		};
 
 	});

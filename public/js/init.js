@@ -1,5 +1,5 @@
 var app = angular
-	.module('MyApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'ui.router', 'ngStorage', 'firebase', 'ngAudio'])
+	.module('MyApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'ui.router', 'ngStorage', 'firebase', 'ngAudio', 'images-resizer'])
 	.run(function($http, $templateCache, $localStorage) {
 		$http.get('templates/header.html', {
 			cache: $templateCache

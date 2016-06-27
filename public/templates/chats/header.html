@@ -7,12 +7,23 @@
 		 {{header.title}}
 	</h2>
 	<span flex></span>
-	<md-button class="md-icon-button" ng-if="!speech.isPlaying" ng-click="playContinuity($event)">
-		<i class="material-icons">play_arrow</i>
-	</md-button>
-	<md-button class="md-icon-button" ng-if="speech.isPlaying" ng-click="cancel($event)">
-		<i class="material-icons">pause</i>
-	</md-button>
+	<span ng-switch="speech.playsituation">
+		<span ng-switch-when="cancel">
+			<md-button class="md-icon-button" ng-click="playContinuity($event)">
+				<i class="material-icons">play_arrow</i>
+			</md-button>
+		</span>
+		<span ng-switch-when="paly">
+			<md-button class="md-icon-button" ng-click="cancel($event)">
+				<i class="material-icons">stop</i>
+			</md-button>
+		</span>
+		<span ng-switch-when="pause">
+			<md-button class="md-icon-button" ng-click="cancel($event)">
+				<i class="material-icons">pause</i>
+			</md-button>
+		</span>
+	</span>
 	<md-button ng-disabled="progress" class="md-icon-button" for="upload_photo">
 		<label for="upload_photo">
 			<i class="material-icons">insert_photo</i>

@@ -139,9 +139,14 @@ app
 		return _this;
 	})
 	.factory('Speech', function($localStorage) {
-		var _this = {};
-		var settingRef = {
-			isPlaying : false
+		var playTypes = {
+			play : 'play',
+			pause : 'pause',
+			cancel : 'cancel'
+		};
+		var _this = {
+			playsituation : playTypes.cancel,
+			playTypes : playTypes
 		};
 		var msg = {};
 		var msgs = [];
@@ -159,8 +164,8 @@ app
 			msgs[count] = new SpeechSynthesisUtterance(records[count].detail);
 			window.speechSynthesis.speak(msgs[count]);
 			msgs[count].onend = function (event) {
-				if(count == countMax || !_this.isPlaying){
-					_this.isPlaying = false;
+				if(count == countMax || !_this.playsituation){
+					_this.playsituation = playTypes.cancel;
 					count =  0;
 					countMax =  0;
 					return;
@@ -174,7 +179,7 @@ app
 		_this.playContinuity = function(records) {
 			if(!$localStorage.setting) return;
 			if(!$localStorage.setting.enableSound) return;
-			_this.isPlaying = true;
+			_this.playsituation = playTypes.play;
 			count =  0;
 			countMax =  records.length;
 			addSpeechEvent(records);
@@ -185,8 +190,8 @@ app
 				window.speechSynthesis.pause(msgs[i]);
 			}
 
-			_this.isPlaying = false;
-		}
+			_this.playsituation = playTypes.pause;
+		};
 
 		_this.cancel = function(){
 			for (var i = 0; i < msgs.length; i++) {
@@ -194,8 +199,8 @@ app
 			}
 			count =  0;
 			countMax =  0;
-			_this.isPlaying = false;
-		}
+			_this.playsituation = playTypes.cancel;
+		};
 
 		return _this;
 	})

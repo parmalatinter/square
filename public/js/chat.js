@@ -156,10 +156,6 @@ app
 				$scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
 				$scope.dataset._refresh($scope.chat.comments);
 				$scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : 'boolean'}, false);
-<<<<<<< HEAD
-
-=======
->>>>>>> e377f8f813f15178e936660234401a45eb41cc8d
 				$scope.imageDataset._refresh($scope.chat.images);
 
 				Vibration.play(500);
@@ -238,24 +234,18 @@ app
 					File.getUploadFile($scope.file).then(function(uploadFileUrl){
 						$scope.uploadFileUrl = uploadFileUrl;
 						File.resizeFile(uploadFileUrl).then(function(resized){
-							File.getUploadFile(resized.file).then(function(uploadFileUrl2){
-							$scope.uploadFileUrl = uploadFileUrl2;
-								File.upload('chats', 'chats', uploadFileUrl2).then(function(updateImageUrl){
-									// if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
-									// 	$scope.updateImageUrl = updateImageUrl;
-										$scope.addComment(updateImageUrl);
-									//}
+							File.getUploadFile(resized.file).then(function(resizedUploadFileUrl){
+								File.upload('chats', 'chats', resizedUploadFileUrl).then(function(uploadedImageUrl){
+									$scope.addComment(uploadedImageUrl);
 								});
 							});
 						});
-
 					});
 					return;
 				}else{
-					File.upload('chats', 'chats', $scope.file).then(function(updateImageUrl){
-						if(typeof updateImageUrl === 'string' || updateImageUrl instanceof String){
-							//$scope.updateImageUrl = updateImageUrl;
-							$scope.addComment(updateImageUrl);
+					File.upload('chats', 'chats', $scope.file).then(function(uploadedFileUrl){
+						if(typeof uploadedFileUrl === 'string' || uploadedFileUrl instanceof String){
+							$scope.addComment(uploadedFileUrl);
 						}
 					});
 				}

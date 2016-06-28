@@ -37,6 +37,16 @@ app
 
 		return _this;
 	})
+	.factory('Comment', function(FireBaseService, $firebaseObject, $firebaseArray, $localStorage) {
+		var _this = {};
+
+		_this.get = function(chatKey,  commentKey) {
+			FireBaseService.setObjRef('comment', 'chats/' + chatKey + '/comments/' + commentKey );
+			commentRef = FireBaseService.objRef.comment;
+			return $firebaseObject(commentRef);
+		};
+		return _this;
+	})
 	.controller('ChatsHeaderCtrl', function($scope, $rootScope, $localStorage, $state, $mdDialog, Speech, Loading, Header, Share) {
 		Header.set();
 		$scope.loading = Loading;
@@ -103,11 +113,11 @@ app
 			Loading.finish();
 		});
 	})
-	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, Chat, File, Speech, Share, Loading, Vibration, Header) {
+	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, Chat, Comment, File, Speech, Share, Loading, Vibration, Header) {
 		$scope.chat = {};
 		$scope.file = "";
 		$scope.uploadFileUrl = "";
-		$scope.comment = '';
+		$scope.commentText = '';
 		$scope.share = Share;
 		$scope.chatUpdateDisable = true;
 
@@ -189,7 +199,7 @@ app
 			});
 
 			$scope.addComment = function(imageUrl, shareUrl) {
-				if (!$scope.comment && !imageUrl && !shareUrl) return;
+				if (!$scope.commentText && !imageUrl && !shareUrl) return;
 				Loading.start();
 				var record = {
 					date: Math.round( new Date().getTime() / 1000 ),
@@ -210,7 +220,7 @@ app
 				$scope.comments.$add(record).then(function(ref) {
 					var id = ref.key;
 					$scope.comments.$indexFor(id); // returns location in the array
-					$scope.comment = '';
+					$scope.commentText = '';
 					$scope.file = '';
 					Loading.finish();
 				});
@@ -303,15 +313,45 @@ app
 			Speech.cancel();
 		};
 
-		$scope.thumbUp = function(){
-			Speech.play('いいね！');
-			$mdToast.show($mdToast.simple().content('いいね！').position('bottom'));
+		$scope.thumbUp = function(commentKey){
+			$scope.comment = Comment.get( this.chat.$id , commentKey);
+
+			$scope.comment.$loaded().then(function(user) {
+				if($scope.comment.goodCount){
+					$scope.comment.goodCount += 1;
+				}else{
+					$scope.comment.goodCount = 1;
+				}
+				$scope.comment.$save().then(function(ref) {
+					Speech.play('いいね');
+					$mdToast.show($mdToast.simple().content('いいね').position('bottom'));
+				});
+			})
+			.catch(function(error) {
+				console.log("Error:", error);
+			});
+
 		}
 
-		$scope.thumbDown = function(){
-			Speech.play('クソだね');
-			$mdToast.show($mdToast.simple().content('糞だね').position('bottom'));
+		$scope.thumbDown = function(commentKey){
+			$scope.comment = Comment.get( this.chat.$id , commentKey);
+
+			$scope.comment.$loaded().then(function(user) {
+				if($scope.comment.badCount){
+					$scope.comment.badCount += 1;
+				}else{
+					$scope.comment.badCount = 1;
+				}
+				$scope.comment.$save().then(function(ref) {
+					Speech.play('クソだね');
+					$mdToast.show($mdToast.simple().content('糞だね').position('bottom'));
+				});
+			})
+			.catch(function(error) {
+				console.log("Error:", error);
+			});
 		}
+
 
 	});
 

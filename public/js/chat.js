@@ -103,7 +103,7 @@ app
 			Loading.finish();
 		});
 	})
-	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, ngAudio, Chat, File, Speech, Share, Loading, Vibration, Header) {
+	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, Chat, File, Speech, Share, Loading, Vibration, Header) {
 		$scope.chat = {};
 		$scope.file = "";
 		$scope.uploadFileUrl = "";
@@ -302,6 +302,16 @@ app
 		$scope.cancel = function(){
 			Speech.cancel();
 		};
+
+		$scope.thumbUp = function(){
+			Speech.play('いいね！');
+			$mdToast.show($mdToast.simple().content('いいね！').position('bottom'));
+		}
+
+		$scope.thumbDown = function(){
+			Speech.play('クソだね');
+			$mdToast.show($mdToast.simple().content('糞だね').position('bottom'));
+		}
 
 	});
 

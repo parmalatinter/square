@@ -175,6 +175,10 @@ md-input-container.chat {
     color: rgba(255,255,255,1) !important;;
 }
 
+.material-icons.b{
+    color: rgba(0,0,0,1) !important;
+}
+
 md-tabs md-tabs-wrapper {
     border-width: 0 0 1px;
     border-style: solid;

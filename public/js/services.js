@@ -154,6 +154,7 @@ app
 		_this.play = function(text) {
 			if(!$localStorage.setting) return;
 			if(!$localStorage.setting.enableSound) return;
+			var msg = {};
 			var msg = new SpeechSynthesisUtterance(text);
 			window.speechSynthesis.speak(msg);
 		};

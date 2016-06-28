@@ -173,7 +173,7 @@ app
 				angular.element('.md-virtual-repeat-scroller').scrollTop(0);
 				if(!isInited){
 					isInited = true;
-				} else if(!isUpdatingChatInfo && !$scope.chat.comments[0].isSpeeched){
+				} else if(!isUpdatingChatInfo && !$scope.chat.comments[0].isSpeeched && !$scope.chat.comments[0].updateDate){
 					var text = '';
 					switch ($scope.chat.comments[0].fileType) {
 						case ('image'):
@@ -322,6 +322,7 @@ app
 				}else{
 					$scope.comment.goodCount = 1;
 				}
+				$scope.comment.updateDate =  Math.round( new Date().getTime() / 1000 );
 				$scope.comment.$save().then(function(ref) {
 					Speech.play('いいね');
 					$mdToast.show($mdToast.simple().content('いいね').position('bottom'));
@@ -342,6 +343,7 @@ app
 				}else{
 					$scope.comment.badCount = 1;
 				}
+				$scope.comment.updateDate =  Math.round( new Date().getTime() / 1000 );
 				$scope.comment.$save().then(function(ref) {
 					Speech.play('クソだね');
 					$mdToast.show($mdToast.simple().content('糞だね').position('bottom'));

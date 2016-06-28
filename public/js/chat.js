@@ -121,6 +121,8 @@ app
 		$scope.share = Share;
 		$scope.chatUpdateDisable = true;
 
+		var _commentsCount = 0;
+
 		var isInited = false;
 		var isUpdatingChatInfo = false;
 
@@ -129,9 +131,9 @@ app
 			var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
 			$scope.chat = Chat.get(id);
 			$scope.chat.$watch(function() {
-                if($localStorage.user.uid == $scope.chat.uid){
-                    $scope.chatUpdateDisable = false;
-                }
+				if($localStorage.user.uid == $scope.chat.uid){
+					$scope.chatUpdateDisable = false;
+				}
 				Header.set($scope.chat.title);
 				$scope.onDemand = true;
 				$scope.dataset = {
@@ -171,30 +173,36 @@ app
 				Vibration.play(500);
 				Loading.finish();
 				angular.element('.md-virtual-repeat-scroller').scrollTop(0);
-				if(!isInited){
-					isInited = true;
-				} else if(!isUpdatingChatInfo && !$scope.chat.comments[0].isSpeeched && !$scope.chat.comments[0].updateDate){
-					var text = '';
-					switch ($scope.chat.comments[0].fileType) {
-						case ('image'):
-							text = '画像がアップされました。';
-							break;
-						case ('sound'):
-							text = 'サウンドがアップされました。';
-							break;
-						case ('movie'):
-							text = 'イメージがアップされました。';
-							break;
-						case ('link'):
-							text = 'リンクがシェアされました。';
-							break;
-						default :
-							text = $scope.chat.comments[0].detail;
-							break;
+				if(_commentsCount == $scope.chat.comments.length){
+					$scope.audioPlay('sounds/Clap-sound.mp3')
+				}else{
+					if(!isInited){
+						isInited = true;
+					} else if(!isUpdatingChatInfo && !$scope.chat.comments[0].isSpeeched ){
+						var text = '';
+						switch ($scope.chat.comments[0].fileType) {
+							case ('image'):
+								text = '画像がアップされました。';
+								break;
+							case ('sound'):
+								text = 'サウンドがアップされました。';
+								break;
+							case ('movie'):
+								text = 'イメージがアップされました。';
+								break;
+							case ('link'):
+								text = 'リンクがシェアされました。';
+								break;
+							default :
+								text = $scope.chat.comments[0].detail;
+								break;
+						}
+						Speech.play(text);
+	                    		$scope.chat.comments[0].isSpeeched = true;
 					}
-					Speech.play(text);
-                    $scope.chat.comments[0].isSpeeched = true;
 				}
+
+				_commentsCount = $scope.chat.comments.length
 				isUpdatingChatInfo = false;
 			});
 
@@ -322,7 +330,9 @@ app
 				}else{
 					$scope.comment.goodCount = 1;
 				}
+				$scope.comment.updateText =  'いいね';
 				$scope.comment.updateDate =  Math.round( new Date().getTime() / 1000 );
+				isUpdatingChatInfo = true;
 				$scope.comment.$save().then(function(ref) {
 					Speech.play('いいね');
 					$mdToast.show($mdToast.simple().content('いいね').position('bottom'));
@@ -343,7 +353,9 @@ app
 				}else{
 					$scope.comment.badCount = 1;
 				}
+				$scope.comment.updateText =  '糞だね';
 				$scope.comment.updateDate =  Math.round( new Date().getTime() / 1000 );
+				isUpdatingChatInfo = true;
 				$scope.comment.$save().then(function(ref) {
 					Speech.play('クソだね');
 					$mdToast.show($mdToast.simple().content('糞だね').position('bottom'));

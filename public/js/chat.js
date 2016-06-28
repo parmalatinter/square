@@ -221,7 +221,7 @@ app
 					record.shareUrl = shareUrl;
 					record.fileType = 'link';
 				}else{
-					record.detail = $scope.comment;
+					record.detail = $scope.commentText;
 				}
 				var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
 				$scope.comments = Chat.getComment(id, $scope.comment);

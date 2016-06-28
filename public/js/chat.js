@@ -172,7 +172,7 @@ app
 
 				Vibration.play(500);
 				Loading.finish();
-				angular.element('.md-virtual-repeat-scroller').scrollTop(0);
+
 				if(_commentsCount == $scope.chat.comments.length){
 					$scope.audioPlay('sounds/Clap-sound.mp3')
 				}else{
@@ -199,6 +199,7 @@ app
 						}
 						Speech.play(text);
 	                    		$scope.chat.comments[0].isSpeeched = true;
+	                    		angular.element('.md-virtual-repeat-scroller').scrollTop(0);
 					}
 				}
 

@@ -150,13 +150,24 @@ app
 		};
 		var msg = {};
 		var msgs = [];
+		var _text = '';
 
 		_this.play = function(text) {
+			if(_text == text){
+				window.speechSynthesis.cancel(msg);
+				msg = {};
+				_text = '';
+				return;
+			}
 			if(!$localStorage.setting) return;
 			if(!$localStorage.setting.enableSound) return;
-			var msg = {};
-			var msg = new SpeechSynthesisUtterance(text);
+			_text = text;
+			msg = new SpeechSynthesisUtterance(text);
 			window.speechSynthesis.speak(msg);
+			msg.onend = function (event) {
+				msg = {};
+				_text = '';
+			};
 		};
 
 		var count =  0;

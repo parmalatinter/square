@@ -86,8 +86,9 @@ app
 	.controller('ChatShareCtrl', function($scope, Share) {
 		$scope.share = Share;
 	})
-	.controller('ChatListCtrl', function($scope, $localStorage, Chats, Loading) {
+	.controller('ChatListCtrl', function($scope, $localStorage, $mdToast, Chats, Chat, Loading) {
 		$scope.chats = Chats.get();
+		$scope.chat = {};
 		$scope.title = null;
 		Loading.start();
 
@@ -108,6 +109,21 @@ app
 				$scope.title = null;
 			});
 		};
+
+		$scope.delete = function(chat){
+			$scope.chat = Chat.get( chat.$id);
+
+			$scope.chat.$loaded().then(function(chat) {
+				var title = chat.title
+				$scope.chat.$remove().then(function(ref) {
+					var message = '[ ' + title + ' ]を削除しました。'
+					$mdToast.show($mdToast.simple().content(message).position('bottom'));
+				});
+			})
+			.catch(function(error) {
+				console.log("Error:", error);
+			});
+		}
 
 		$scope.chats.$watch(function() {
 			Loading.finish();

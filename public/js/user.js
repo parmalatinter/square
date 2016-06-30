@@ -2,13 +2,9 @@ app
 	.factory('User', function(FireBaseService, $firebaseObject, $firebaseArray, $localStorage) {
 		var _this = {};
 		if (!FireBaseService.arrayRef.users) FireBaseService.setArrayRef('users', 'users');
-		_this.getCurrent = function() {
-			var userRef = FireBaseService.arrayRef.users.orderByChild('uid').equalTo($localStorage.user.uid);
-			return $firebaseArray(userRef);
-		};
 		_this.get = function(uid) {
 			var userRef = FireBaseService.arrayRef.users.orderByChild('uid').equalTo(uid);
-			return $firebaseArray(userRef);
+			return $firebaseObject(userRef);
 		};
 		return _this;
 	})
@@ -21,49 +17,103 @@ app
 		};
 		return _this;
 	})
-	.controller('UserCtrl', function($scope, $localStorage, $sessionStorage, User, Users, Loading) {
-		$scope.user = User.getCurrent();
+	.controller('UsersHeaderCtrl', function($scope, $rootScope, $localStorage, $state, $mdDialog, Speech, Loading, Header, Share) {
+		Header.set();
+		$scope.loading = Loading;
+		$scope.header = Header;
+		$scope.speech = Speech;
+
+	})
+	.controller('UserCtrl', function($scope, $rootScope, $localStorage, $mdToast, $sessionStorage, User, Users, File, Loading) {
+		$scope.users = User.get($localStorage.user.uid);
+		$scope.disableEdit = false;
 		$scope.title = null;
+		$scope.file = "";
 		Loading.start();
 
-		$scope.user.$watch(function() {
+		$scope.users.$watch(function() {
 			Loading.finish();
 		});
 
 		$scope.updateUser = function(){
-			$scope.user.$save().then(function(ref) {
-				console.log(ref);
+			$scope.users.$save().then(function(ref) {
+				$mdToast.show($mdToast.simple().content('Saved').position('bottom'));
 			});
 		};
+
+
+		$scope.$watch('file', function(newVal, oldVal) {
+			if(newVal) $scope.upload();
+		});
+
+		$scope.upload = function(){
+			if(!$scope.file) return;
+			Loading.start();
+			var id = false;
+			angular.forEach($scope.users, function(user, userKey) {
+				if( typeof user == 'object'){
+					if(user.uid) id = userKey;
+				}
+			});
+			$scope.uploadFileType = File.getFileType($scope.file.name);
+			if($scope.uploadFileType == 'image'){
+				File.getUploadFile($scope.file).then(function(uploadFileUrl){
+					$scope.uploadFileUrl = uploadFileUrl;
+					File.resizeFile(uploadFileUrl).then(function(resized){
+						File.getUploadFile(resized.file).then(function(resizedUploadFileUrl){
+							File.upload('users', 'users', resizedUploadFileUrl).then(function(uploadedImageUrl){
+								if(!$scope.users[id].photos) $scope.users[id].photos = [];
+								$scope.users[id].photos.push(uploadedImageUrl);
+								$scope.users[id].photoURL = uploadedImageUrl;
+								$scope.users.$save().then(function(ref) {
+									$mdToast.show($mdToast.simple().content('Saved').position('bottom'));
+									$scope.file = "";
+								});
+							});
+						});
+					});
+				});
+				return;
+			}else{
+
+			}
+		};
 	})
-	.controller('FriendCtrl', function($scope, $localStorage, $sessionStorage, $stateParams, User, Users, Loading) {
+	.controller('FriendCtrl', function($scope, $localStorage, $mdToast, $sessionStorage, $stateParams, User, Users, Loading) {
 		var id = $stateParams.value ? $stateParams.value.uid : $sessionStorage.toParams.value.uid;
-		$scope.friend = User.get(id);
+		$scope.users = User.get(id);
+		$scope.disableEdit = true;
 		$scope.title = null;
 		Loading.start();
 
-		$scope.friend.$watch(function() {
+		$scope.users.$watch(function() {
 			Loading.finish();
 		});
 
 		$scope.updateUser = function(){
-			$scope.user.$save().then(function(ref) {
-				console.log(ref);
+			$scope.users.$save().then(function(ref) {
+				$mdToast.show($mdToast.simple().content('Saved').position('bottom'));
 			});
 		};
 	})
 	.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, User, Users, Loading) {
 		$scope.users = Users.get();
 		$scope.title = null;
-		$scope.currentUser = User.getCurrent();
+		$scope.currentUser = User.get($localStorage.user.uid);
 
 		$scope.currentUser.$watch(function(ref) {
 			Loading.finish();
 		});
 
 		$scope.currentUser.$loaded()
-		    .then(function(user) {
-				if(!user.length){
+		    .then(function(users) {
+		    		var isExist = false;
+				angular.forEach(users, function(user, userKey) {
+					if( typeof user == 'object'){
+						if(user.uid) isExist = true;
+					}
+				});
+				if(!isExist){
 					Loading.start();
 					var record = {
 						name: $localStorage.user.displayName,

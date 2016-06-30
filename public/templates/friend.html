@@ -1,25 +1,58 @@
-<md-tabs md-dynamic-height md-border-bottom>
-	<md-tab label="USER">
-		<md-content class="md-padding">
-			<md-list flex>
-				<md-list-item class="md-3-line" ng-repeat="_user in friend">
-					<span ng-if="_user.photoURL">
-						<img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}" class="md-avatar" />
-					</span>
-					<span ng-if="!_user.photoURL">
-						<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
-					</span>
-					<div class="md-list-item-text" layout="column">
-						<h4>Name: {{_user.name}}</h4>
-						<h4>Age : {{_user.age}}</h4>
-						<h4>Sex Type :{{_user.sexType}}</h4>
-						<h4>Message : {{_user.message}}</h4>
-						<h4>Date : {{_user.date}}</h4>
-						<h4>Email: {{_user.email}}</h4>
-						<h4>ID : {{_user.uid}}</h4>
-					</div>
-				</md-list-item>
-			</md-list>
-		</md-content>
-	</md-tab>
-</md-tabs>
+<md-content class="md-padding" ng-repeat="_user in friend" layout-xs="column" layout="row" style="text-align:left">
+	<div flex-xs flex-gt-xs="50" layout="column">
+		<md-card>
+			<span ng-if="_user.photoURL">
+				<img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}" class="md-card-image" />
+			</span>
+			<span ng-if="!_user.photoURL">
+				<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-card-image" />
+			</span>
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">{{_user.name}}</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-actions layout="row" layout-align="start center">
+				<md-card-icon-actions>
+					<md-button class="md-icon-button" aria-label="Favorite">
+						<md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
+					</md-button>
+					<md-button class="md-icon-button" aria-label="Share">
+						<md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
+					</md-button>
+				</md-card-icon-actions>
+				<md-button>Add</md-button>
+				<md-button>Reject</md-button>
+			</md-card-actions>
+			<md-card-content>
+				<md-input-container class="layout-fill">
+					<label>Age</label>
+					<input ng-disabled="true" ng-model="_user.age" ng-disabled="chatUpdateDisable">
+				</md-input-container>
+				<md-input-container class="layout-fill">
+					<label>Sex Type</label>
+					<input ng-disabled="true" ng-model="_user.sexType" ng-disabled="chatUpdateDisable">
+				</md-input-container>
+				<md-input-container class="layout-fill">
+					<label>Date</label>
+					<input ng-disabled="true" ng-model="_user.date" ng-disabled="chatUpdateDisable">
+				</md-input-container>
+				<md-input-container class="layout-fill">
+					<label>Email</label>
+					<input ng-disabled="true" ng-model="_user.email" ng-disabled="chatUpdateDisable">
+				</md-input-container>
+				<md-input-container class="layout-fill">
+					<label>ID</label>
+					<input ng-disabled="true" ng-model="_user.uid" ng-disabled="chatUpdateDisable">
+				</md-input-container>
+				<p>
+					{{_user.message}}
+				</p>
+				<md-button class="md-raised md-primary" ng-click="updateChat()" ng-disabled="chatUpdateDisable">
+					<ng-md-icon icon="save" style="fill: white"></ng-md-icon>
+				</md-button>
+			</md-card-content>
+		</md-card>
+	</div>
+</md-content>
+

@@ -32,6 +32,10 @@ var app = angular
 				templateUrl: dir + "chats/header.html",
 				controller: 'ChatsHeaderCtrl'
 			},
+			usersHeader: {
+				templateUrl: dir + "users/header.html",
+				controller: 'UsersHeaderCtrl'
+			},
 			footer: {
 				templateUrl: dir + 'footer.html'
 			},
@@ -62,7 +66,7 @@ var app = angular
 				controller: 'UserCtrl'
 			},
 			friend: {
-				templateUrl: dir + "friend.html",
+				templateUrl: dir + "user.html",
 				controller: 'FriendCtrl'
 			},
 			userList: {
@@ -131,7 +135,7 @@ var app = angular
 			.state('user', {
 				url: "/user",
 				views: {
-					"header": states.header,
+					"header": states.usersHeader,
 					"main": states.user,
 					"link": states.link,
 					//"footer":states.footer

@@ -284,8 +284,6 @@ app
 						}
 					});
 				}
-
-
 			};
 
 			$scope.updateChat = function(){

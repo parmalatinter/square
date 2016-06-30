@@ -7,17 +7,17 @@
 	<md-divider></md-divider>
 	<md-subheader class="md-no-sticky">is Anonymous</md-subh
 eader>
-	<md-list-item ng-click="">
+	<md-list-item>
 		<p> Anonymous </p>
 		<md-switch class="md-secondary" ng-model="$storage.user.isAnonymous"></md-switch>
 	</md-list-item>
 	<md-divider></md-divider>
 	<md-subheader class="md-no-sticky">Email</md-subheader>
-	<md-list-item ng-click="">
+	<md-list-item>
 		<p> Vaiblate </p>
 		<md-switch class="md-secondary" ng-model="$storage.setting.enableViblate"></md-switch>
 	</md-list-item>
-	<md-list-item ng-click="">
+	<md-list-item>
 		<p> Sound </p>
 		<md-switch class="md-secondary" ng-model="$storage.setting.enableSound"></md-switch>
 	</md-list-item>
@@ -39,10 +39,10 @@ eader>
 	</div>
 	<md-divider></md-divider>
 	<md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
-	<md-list-item ng-click="" class="noright">
+	<md-list-item class="noright">
 		<img alt="xxxxxxxxxxx" ng-src="{{storage.urls.win}}" class="md-avatar" />
 		<md-checkbox class="md-secondary" ng-model="$storage.test.disabled"></md-checkbox>
-		<md-icon md-svg-icon="communication:email" ng-click="" aria-label="Send Email" class="md-secondary md-hue-3"></md-icon>
-		<md-icon class="md-secondary" ng-click="" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
+		<md-icon md-svg-icon="communication:email" aria-label="Send Email" class="md-secondary md-hue-3"></md-icon>
+		<md-icon class="md-secondary" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
 	</md-list-item>
 </md-list>

@@ -1,4 +1,12 @@
 app
+	.factory('Main', function($localStorage) {
+		var _this = {};
+
+		_this.timeToStr = function(unixTimestamp) {
+			return new Date( unixTimestamp * 1000 ).toLocaleString();
+		};
+		return _this;
+	})
 	.controller('LocalStrageCtrl', function($scope, $localStorage) {
 		$scope.$storage = $localStorage.$default({
 			name: 'Anonimas'
@@ -14,7 +22,8 @@ app
 		$scope.header = Header;
 		$scope.loading = Loading;
 	})
-	.controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService, Setting) {
+	.controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService, Setting, Main) {
+		$scope.main = Main;
 		$scope.session = $sessionStorage;
 		$scope.siteSetting = Setting.get();
 		$scope.setting = {};

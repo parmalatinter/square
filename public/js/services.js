@@ -50,7 +50,7 @@ app
 			var d = $q.defer();
 			var fileName = '';
 			if(!file.name){
-				fileName = Math.round( new Date().getTime() / 1000 ) + '.jpeg'
+				fileName = Math.round( new Date().getTime() / 1000 ) + '.jpeg';
 			}
 			chatsRef = FireBaseStorageService.setObjRef(key, path , fileName);
 

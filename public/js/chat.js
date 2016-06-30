@@ -114,16 +114,16 @@ app
 			$scope.chat = Chat.get( chat.$id);
 
 			$scope.chat.$loaded().then(function(chat) {
-				var title = chat.title
+				var title = chat.title;
 				$scope.chat.$remove().then(function(ref) {
-					var message = '[ ' + title + ' ]を削除しました。'
+					var message = '[ ' + title + ' ]を削除しました。';
 					$mdToast.show($mdToast.simple().content(message).position('bottom'));
 				});
 			})
 			.catch(function(error) {
 				console.log("Error:", error);
 			});
-		}
+		};
 
 		$scope.chats.$watch(function() {
 			Loading.finish();
@@ -190,7 +190,7 @@ app
 				Loading.finish();
 
 				if(_commentsCount == $scope.chat.comments.length){
-					$scope.audioPlay('sounds/Clap-sound.mp3')
+					$scope.audioPlay('sounds/Clap-sound.mp3');
 				}else{
 					if(!isInited){
 						isInited = true;
@@ -219,7 +219,7 @@ app
 					}
 				}
 
-				_commentsCount = $scope.chat.comments.length
+				_commentsCount = $scope.chat.comments.length;
 				isUpdatingChatInfo = false;
 			});
 
@@ -257,7 +257,7 @@ app
 
 			$scope.$watch('share.url', function(newVal, oldVal) {
 				if(!newVal) return;
-				$scope.addComment(false, newVal)
+				$scope.addComment(false, newVal);
 				Share.reset();
 			});
 
@@ -291,7 +291,7 @@ app
 			$scope.updateChat = function(){
 				isUpdatingChatInfo = true;
 				$scope.chat.$save().then(function(ref) {
-					console.log(ref)
+					console.log(ref);
 				});
 			};
 		}
@@ -359,7 +359,7 @@ app
 				console.log("Error:", error);
 			});
 
-		}
+		};
 
 		$scope.thumbDown = function(commentKey){
 			$scope.comment = Comment.get( this.chat.$id , commentKey);
@@ -381,7 +381,7 @@ app
 			.catch(function(error) {
 				console.log("Error:", error);
 			});
-		}
+		};
 
 
 	});

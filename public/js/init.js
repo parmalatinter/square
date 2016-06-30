@@ -61,6 +61,10 @@ var app = angular
 				templateUrl: dir + "user.html",
 				controller: 'UserCtrl'
 			},
+			friend: {
+				templateUrl: dir + "friend.html",
+				controller: 'FriendCtrl'
+			},
 			userList: {
 				templateUrl: dir + "userList.html",
 				controller: 'UserListCtrl'
@@ -109,6 +113,19 @@ var app = angular
 					"main": states.main,
 					"link": states.link,
 					//"footer":states.footer
+				}
+			})
+			.state('friend', {
+				url: "/friend",
+				views: {
+					"header": states.header,
+					"main": states.friend,
+					"link": states.link,
+					//"footer":states.footer
+				},
+				params: {
+					key: null,
+					value: null
 				}
 			})
 			.state('user', {

@@ -1,0 +1,25 @@
+<md-tabs md-dynamic-height md-border-bottom>
+	<md-tab label="USER">
+		<md-content class="md-padding">
+			<md-list flex>
+				<md-list-item class="md-3-line" ng-repeat="_user in friend">
+					<span ng-if="_user.photoURL">
+						<img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}" class="md-avatar" />
+					</span>
+					<span ng-if="!_user.photoURL">
+						<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
+					</span>
+					<div class="md-list-item-text" layout="column">
+						<h4>Name: {{_user.name}}</h4>
+						<h4>Age : {{_user.age}}</h4>
+						<h4>Sex Type :{{_user.sexType}}</h4>
+						<h4>Message : {{_user.message}}</h4>
+						<h4>Date : {{_user.date}}</h4>
+						<h4>Email: {{_user.email}}</h4>
+						<h4>ID : {{_user.uid}}</h4>
+					</div>
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</md-tab>
+</md-tabs>

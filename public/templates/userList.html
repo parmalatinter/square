@@ -11,7 +11,7 @@
                 </md-button>
             </div>
             <md-list flex>
-                <md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ui-sref="user({ key: user.primaryKey, value:user })">
+                <md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ui-sref="friend({ key: user.primaryKey, value:user })">
                     <span ng-if="user.photoURL">
 						<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
 					</span>

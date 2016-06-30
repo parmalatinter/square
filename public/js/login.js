@@ -1,5 +1,5 @@
 app
-	.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAuth, $state) {
+	.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAuth, $state, User) {
 		var auth = $firebaseAuth();
 		var _this = { isLoding: false };
 		_this.start = function() {
@@ -7,12 +7,12 @@ app
 		};
 		_this.login = function(type) {
 			auth.$signInWithPopup(type).then(function(firebaseUser) {
+
 				$sessionStorage.user = {
 					displayName: firebaseUser.user.displayName,
 					email: firebaseUser.user.email,
 					emailVerified: firebaseUser.user.emailVerified,
 					isAnonymous: firebaseUser.user.isAnonymous,
-					photoURL: firebaseUser.user.photoURL,
 					isLogedIn: true,
 				};
 				$localStorage.user = {
@@ -20,7 +20,27 @@ app
 					email: firebaseUser.user.email,
 					uid: firebaseUser.user.uid
 				};
+
+			var users = User.get($localStorage.user.uid);
+			var userKey = '';
+
+			users.$loaded().then(function(users) {
+		    		var photoURL = false;
+				angular.forEach(users, function(user, key) {
+					if( typeof user == 'object'){
+						if(user.photoURL){
+							photoURL = user.photoURL;
+							userKey = userKey;
+							name = user.name;
+						}
+					}
+				});
+				$sessionStorage.user.userKey = userKey;
+				$sessionStorage.user.photoURL = photoURL;
+				$localStorage.user.name = name;
+			});
 			}).catch(function(error) {
+				$sessionStorage.user.photoURL = firebaseUser.user.photoURL;
 				console.log("Authentication failed:", error);
 			});
 		};

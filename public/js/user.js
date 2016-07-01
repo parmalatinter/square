@@ -17,6 +17,25 @@ app
 		};
 		return _this;
 	})
+	.factory('Request', function(FireBaseService, $firebaseObject, $firebaseArray) {
+		var _this = {};
+		if (!FireBaseService.arrayRef.resuests) FireBaseService.setArrayRef('resuests', 'resuests');
+		var resuestRef = FireBaseService.arrayRef.resuests;
+		_this.get = function(uid) {
+			var resuestRef = FireBaseService.arrayRef.resuests.orderByChild('uid').equalTo(uid);
+			return $firebaseObject(resuestRef);
+		};
+		return _this;
+	})
+	.factory('Requests', function(FireBaseService, $firebaseObject, $firebaseArray) {
+		var _this = {};
+		if (!FireBaseService.arrayRef.resuests) FireBaseService.setArrayRef('resuests', 'resuests');
+		var resuestsRef = FireBaseService.arrayRef.resuests;
+		_this.get = function() {
+			return $firebaseArray(resuestsRef);
+		};
+		return _this;
+	})
 	.controller('UsersHeaderCtrl', function($scope, $rootScope, $localStorage, $state, $mdDialog, Speech, Loading, Header, Share) {
 		Header.set();
 		$scope.loading = Loading;
@@ -96,10 +115,12 @@ app
 			});
 		};
 	})
-	.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, User, Users, Loading) {
+	.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, $mdToast, User, Users, Requests, Request, Loading) {
 		$scope.users = Users.get();
 		$scope.title = null;
 		$scope.currentUser = User.get($localStorage.user.uid);
+		$scope.request = Request.get($localStorage.user.uid);
+		$scope.requests = Requests.get();
 
 		$scope.currentUser.$watch(function(ref) {
 			Loading.finish();
@@ -136,6 +157,55 @@ app
 		        console.log("Error:", error);
 		    });
 
+		$scope.requests.$loaded()
+		    .then(function(requests) {
+		    })
+		    .catch(function(error) {
+		        console.log("Error:", error);
+		    });
+
+
+		$scope.setRequest = function(uid){
+			var record = {
+				uid: uid,
+			};
+			$scope.requests.$add(record).then(function(ref) {
+				$scope.sendRequest(uid);
+			});
+		}
+
+		$scope.sendRequest = function(uid){
+			var friendRequest = Request.get(uid);
+			friendRequest.$loaded()
+			    .then(function(requests) {
+			    		var _isExist = false;
+			    		var _requestKey = '';
+					angular.forEach(requests, function(request, requestKey) {
+						if( typeof request == 'object'){
+							if(request.uid){
+								_isExist = true;
+								_requestKey = requestKey;
+							}
+						}
+					});
+					if(_isExist){
+						if(!angular.isObject(requests[_requestKey].friends)){
+							requests[_requestKey].friends = {};
+							requests[_requestKey].friends[$localStorage.user.uid] = false;
+						}else{
+							requests[_requestKey].friends[$localStorage.user.uid] = false;
+						}
+						requests.$save().then(function(ref) {
+							$mdToast.show($mdToast.simple().content('Requested').position('bottom'));
+						});
+					}else{
+						$scope.setRequest(uid);
+					}
+			    })
+			    .catch(function(error) {
+			        console.log("Error:", error);
+			    });
+		}
 
 		$scope.users.$watch(function() {
 			Loading.finish();

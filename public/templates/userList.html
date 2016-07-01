@@ -34,10 +34,7 @@
                         </md-button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="thumbUp()"><i class="material-icons b">thumb_up</i></md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="thumbUp()"><i class="material-icons b">thumb_down</i></md-button>
+                                <md-button ng-click="sendRequest(user.uid)"><i class="material-icons b">thumb_up</i></md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
@@ -45,4 +42,10 @@
             </md-list>
         </md-content>
     </md-tab>
+    <md-tab label="Requests">
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="request in requests | orderObjectBy:date:true">
+                    {{request}}
+                </md-list-item>
+            </md-list>
 </md-tabs>

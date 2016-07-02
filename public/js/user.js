@@ -165,16 +165,18 @@ app
 
 		$scope.requests.$loaded()
 		    .then(function(request) {
-		    		request._users = {};
-		    		request.users = {};
+		    		$scope.requests._users = {};
+		    		$scope.requests.users = {};
 				angular.forEach(request, function(request, requestKey){
 					angular.forEach(request.friends, function(friend, friendKey){
-					request._users[friendKey] = User.gett(friendKey);
-					request._users[friendKey].$loaded()
+		    			$scope.requests._users = {};
+					$scope.requests.users[friendKey] = User.gett(friendKey);
+		    			$scope.requests._users = {};
+					$scope.requests.users[friendKey].$loaded()
 						.then(function(user) {
 							angular.forEach(user, function(userDetail, userDetailKey){
 									if(!$filter('inArray')(['$$conf', '$id', '$priority'],userDetailKey)){
-										request.users[friendKey]  = userDetail;
+										$scope.requests.users[friendKey]  = userDetail;
 									}
 							});
 						});

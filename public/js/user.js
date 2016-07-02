@@ -6,6 +6,10 @@ app
 			var userRef = FireBaseService.arrayRef.users.orderByChild('uid').equalTo(uid);
 			return $firebaseObject(userRef);
 		};
+		_this.gett = function(uid) {
+			var userRef = FireBaseService.arrayRef.users.orderByChild('uid').equalTo(uid);
+			return $firebaseObject(userRef);
+		};
 		return _this;
 	})
 	.factory('Users', function(FireBaseService, $firebaseObject, $firebaseArray) {
@@ -115,16 +119,18 @@ app
 			});
 		};
 	})
-	.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, $mdToast, User, Users, Requests, Request, Loading) {
+	.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, $filter, $mdToast, User, Users, Requests, Request, Loading) {
 		$scope.users = Users.get();
 		$scope.title = null;
 		$scope.currentUser = User.get($localStorage.user.uid);
-		$scope.request = Request.get($localStorage.user.uid);
-		$scope.requests = Requests.get();
+		$scope.requests = Request.get($localStorage.user.uid);
+
+		$scope.newRequests = Requests.get();
 
 		$scope.currentUser.$watch(function(ref) {
 			Loading.finish();
 		});
+
 
 		$scope.currentUser.$loaded()
 		    .then(function(users) {
@@ -158,7 +164,22 @@ app
 		    });
 
 		$scope.requests.$loaded()
-		    .then(function(requests) {
+		    .then(function(request) {
+		    		request._users = {};
+		    		request.users = {};
+				angular.forEach(request, function(request, requestKey){
+					angular.forEach(request.friends, function(friend, friendKey){
+					request._users[friendKey] = User.gett(friendKey);
+					request._users[friendKey].$loaded()
+						.then(function(user) {
+							angular.forEach(user, function(userDetail, userDetailKey){
+									if(!$filter('inArray')(['$$conf', '$id', '$priority'],userDetailKey)){
+										request.users[friendKey]  = userDetail;
+									}
+							});
+						});
+					});
+				})
 		    })
 		    .catch(function(error) {
 		        console.log("Error:", error);
@@ -169,7 +190,7 @@ app
 			var record = {
 				uid: uid,
 			};
-			$scope.requests.$add(record).then(function(ref) {
+			$scope.newRequests.$add(record).then(function(ref) {
 				$scope.sendRequest(uid);
 			});
 		}

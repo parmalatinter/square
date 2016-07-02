@@ -42,10 +42,25 @@
 	  </md-list>
 	</md-content>
   </md-tab>
-  <md-tab label="Requests">
+   <md-tab label="Requests">
 	<md-list flex>
-	  <md-list-item class="md-3-line" ng-repeat="request_ in request | orderObjectBy:date:true">
-		{{request_}}
+	  <md-list-item class="md-3-line" ng-repeat="user in request.users">
+			<span ng-if="user.photoURL">
+				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
+			</span>
+			<span ng-if="!user.photoURL">
+				<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
+			</span>
+			<div class="md-list-item-text" layout="column">
+			<h4>Name: {{user.name}}</h4>
+			<h4>Age : {{user.age}}</h4>
+			<h4>Sex Type :{{user.sexType}}</h4>
+			<h4>Message : {{user.message}}</h4>
+			<h4>Date : {{user.date}}</h4>
+			<h4>Email: {{user.email}}</h4>
+			<h4>ID : {{user.uid}}</h4>
+		  </div>
 	  </md-list-item>
 	</md-list>
+  </md-tab>
 </md-tabs>

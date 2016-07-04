@@ -71,7 +71,7 @@
      <md-tab label="Friends">
      <md-content class="md-padding">
 	<md-list flex>
-	  <md-list-item class="md-3-line" ng-repeat="user in friends">
+	  <md-list-item class="md-3-line" ng-repeat="user in friends.users">
 			<span ng-if="user.photoURL">
 				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
 			</span>

@@ -9,11 +9,14 @@
       }
     },
     "friends": {
-      ".read": "auth.uid !== null",
-      ".write" :"auth.uid !== null",
+       ".read": "auth.uid !== null",
       "$friend": {
-        ".read": "root.child('friends/users/' + auth.uid).exists()",
-        ".write": "root.child('friends/users/' + auth.uid).exists()",
+        ".read": "data.child('users/' + auth.uid).val() === true",
+        ".write" :"auth.uid !== null",
+          "chats" :{
+          ".read": "data.parent().child('users/' + auth.uid).val() === true",
+          ".write" :"data.parent().child('users/' + auth.uid).val() === true",
+          }
       }
     },
     "requests": {

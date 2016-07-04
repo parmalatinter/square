@@ -1,5 +1,5 @@
 app
-		.factory('User', function(FireBaseService, $firebaseObject, $firebaseArray, $localStorage) {
+		.factory('User', function($filter, FireBaseService, $firebaseObject, $firebaseArray, $localStorage) {
 				var _this = {};
 				if (!FireBaseService.arrayRef.users) FireBaseService.setArrayRef('users', 'users');
 				_this.get = function(uid) {
@@ -10,6 +10,18 @@ app
 						var userRef = FireBaseService.arrayRef.users.orderByChild('uid').equalTo(uid);
 						return $firebaseObject(userRef);
 				};
+
+				_this.formatFirst = function(users) {
+					var user = {};
+					var count = 0;
+					angular.forEach(users, function(userDetail, userDetailKey) {
+						if (!$filter('inArray')(['$$conf', '$id', '$priority'], userDetailKey) && !count) {
+							user = userDetail;
+							user.Key = userDetailKey;
+						}
+					});
+					return user;
+				}
 				return _this;
 		})
 		.factory('Users', function(FireBaseService, $firebaseObject, $firebaseArray) {
@@ -84,6 +96,17 @@ app
 
 				$scope.updateUser = function() {
 						$scope.users.$save().then(function(ref) {
+								var user = User.formatFirst($scope.users);
+								$sessionStorage.user = {
+									displayName: user.name,
+									email: user.email,
+									isLogedIn: true,
+								};
+								$localStorage.user = {
+									displayName: user.name,
+									email: user.email,
+									uid: user.uid
+								};
 								$mdToast.show($mdToast.simple().content('Saved').position('bottom'));
 						});
 				};

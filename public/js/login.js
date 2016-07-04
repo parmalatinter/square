@@ -7,7 +7,6 @@ app
 		};
 		_this.login = function(type) {
 			auth.$signInWithPopup(type).then(function(firebaseUser) {
-console.log(firebaseUser)
 				$sessionStorage.user = {
 					displayName: firebaseUser.user.displayName,
 					email: firebaseUser.user.email,

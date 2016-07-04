@@ -95,7 +95,7 @@ app
 		$scope.addChat = function() {
 			if(!$scope.title) return;
 			var record = {
-				name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + rand,
+				name: $localStorage.user.name ? $localStorage.user.name : 'Mika_' + rand,
 				title:$scope.title,
 				subTitle:$scope.subTitle ? $scope.subTitle : 'UNKNOWN',
 				category:$scope.category ? $scope.category : 'UNKNOWN',
@@ -228,7 +228,7 @@ app
 				Loading.start();
 				var record = {
 					date: Math.round( new Date().getTime() / 1000 ),
-					name: $localStorage.user.displayName ? $localStorage.user.displayName : 'Mika_' + $filter('rand')(10),
+					name: $localStorage.user.name ? $localStorage.user.name : 'undefined',
 					uid: $localStorage.user.uid ? $localStorage.user.uid : 0
 				};
 				if(imageUrl){

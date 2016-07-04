@@ -20,7 +20,7 @@
 		</span> -->
 		<md-card-title>
 			<md-card-title-text>
-				<span class="md-headline">{{_user.name}}</span>
+				<span class="md-headline"><input ng-model="_user.name" ng-disabled="chatUpdateDisable">
 			</md-card-title-text>
 		</md-card-title>
 		<md-card-actions ng-if="disableEdit" layout="row" layout-align="start center">

@@ -23,20 +23,45 @@ app
 	})
 	.factory('Request', function(FireBaseService, $firebaseObject, $firebaseArray) {
 		var _this = {};
-		if (!FireBaseService.arrayRef.resuests) FireBaseService.setArrayRef('resuests', 'resuests');
-		var resuestRef = FireBaseService.arrayRef.resuests;
+		if (!FireBaseService.arrayRef.requests) FireBaseService.setArrayRef('requests', 'requests');
+		var resuestRef = FireBaseService.arrayRef.requests;
 		_this.get = function(uid) {
-			var resuestRef = FireBaseService.arrayRef.resuests.orderByChild('uid').equalTo(uid);
+			var resuestRef = FireBaseService.arrayRef.requests.orderByChild('uid').equalTo(uid);
 			return $firebaseObject(resuestRef);
 		};
 		return _this;
 	})
 	.factory('Requests', function(FireBaseService, $firebaseObject, $firebaseArray) {
 		var _this = {};
-		if (!FireBaseService.arrayRef.resuests) FireBaseService.setArrayRef('resuests', 'resuests');
-		var resuestsRef = FireBaseService.arrayRef.resuests;
+		if (!FireBaseService.arrayRef.requests) FireBaseService.setArrayRef('requests', 'requests');
+		var requestsRef = FireBaseService.arrayRef.requests;
 		_this.get = function() {
-			return $firebaseArray(resuestsRef);
+			return $firebaseArray(requestsRef);
+		};
+		return _this;
+	})
+	.factory('Friends', function(FireBaseService, $firebaseObject, $firebaseArray) {
+		var _this = {};
+		if (!FireBaseService.arrayRef.friends) FireBaseService.setArrayRef('friends', 'friends');
+		var friendsRef = FireBaseService.arrayRef.friends;
+		_this.get = function() {
+			return $firebaseArray(friendsRef);
+		};
+
+		_this.getChat = function(key) {
+			FireBaseService.setObjRef('friends', 'friends/' + key );
+			chatRef = FireBaseService.objRef.chat;
+			return $firebaseObject(chatRef);
+		};
+		return _this;
+	})
+	.factory('FriendsChat', function(FireBaseService, $firebaseObject, $firebaseArray) {
+		var _this = {};
+		if (!FireBaseService.arrayRef.friendsChat) FireBaseService.setArrayRef('friends', 'friends');
+		;
+		_this.get = function(key) {
+			var friendsRef = FireBaseService.arrayRef.friends.child(key).child('chats/comment');
+			return $firebaseArray(friendsRef);
 		};
 		return _this;
 	})
@@ -119,11 +144,13 @@ app
 			});
 		};
 	})
-	.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, $filter, $mdToast, User, Users, Requests, Request, Loading) {
+	.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, $filter, $mdToast, User, Users, Requests, Request, Friends, FriendsChat, Loading) {
 		$scope.users = Users.get();
 		$scope.title = null;
 		$scope.currentUser = User.get($localStorage.user.uid);
-		$scope.requests = Request.get($localStorage.user.uid);
+		$scope.friends = Friends.get($localStorage.user.uid);
+		var _requests = Request.get($localStorage.user.uid);
+		$scope.requests = {};
 
 		$scope.newRequests = Requests.get();
 
@@ -131,6 +158,10 @@ app
 			Loading.finish();
 		});
 
+		$scope.friends.$loaded()
+		    .then(function(friends) {
+		    	console.log("friends:", friends);
+		    });
 
 		$scope.currentUser.$loaded()
 		    .then(function(users) {
@@ -163,7 +194,8 @@ app
 		        console.log("Error:", error);
 		    });
 
-		$scope.requests.$loaded()
+
+		_requests.$loaded()
 		    .then(function(request) {
 		    		$scope.requests._users = {};
 		    		$scope.requests.users = {};
@@ -186,6 +218,26 @@ app
 		    .catch(function(error) {
 		        console.log("Error:", error);
 		    });
+
+		$scope.sendApply = function(uid){
+			var record = {users :{}};
+			record.users[uid] = true
+			record.users[$localStorage.user.uid] = true
+			$scope.friends.$add(record).then(function(ref) {
+				$scope.friendsChat = FriendsChat.get(ref.key);
+
+				$scope.friendsChat.$loaded() .then(function(friendsChat) {
+					console.log(friendsChat)
+				});
+			var record = {
+				uid: $localStorage.user.uid,
+			};
+				$scope.friendsChat.$add(record).then(function(ref) {
+				});
+			});
+
+
+		}
 
 
 		$scope.setRequest = function(uid){

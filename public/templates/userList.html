@@ -1,15 +1,6 @@
 <md-tabs md-dynamic-height md-border-bottom>
   <md-tab label="Serch">
 	<md-content class="md-padding">
-	  <div layout="row" style="background-color:white;text-align:left">
-		<md-input-container class="md-block chat" flex>
-		  <label>Add user</label>
-		  <input ng-model="title">
-		</md-input-container>
-		<md-button class="md-fab md-mini" aria-label="send" ng-click="addUser()" style="margin-top: 20px;">
-		  <i class="md-icon material-icons">send</i>
-		</md-button>
-	  </div>
 	  <md-list flex>
 		<md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ui-sref="friend({ key: user.primaryKey, value:user })">
 			<span ng-if="user.photoURL">
@@ -43,6 +34,7 @@
 	</md-content>
   </md-tab>
    <md-tab label="Requests">
+   	<md-content class="md-padding">
 	<md-list flex>
 	  <md-list-item class="md-3-line" ng-repeat="user in requests.users">
 			<span ng-if="user.photoURL">
@@ -60,7 +52,55 @@
 			<h4>Email: {{user.email}}</h4>
 			<h4>ID : {{user.uid}}</h4>
 		  </div>
+		  <md-menu>
+			<!-- Trigger element is a md-button with an icon -->
+			<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+			  <i class="md-fab material-icons b">group_add</i>
+			</md-button>
+			<md-menu-content>
+			  <md-menu-item>
+				<md-button ng-click="sendApply(user.uid)"><i class="material-icons b">check</i></md-button>
+			  </md-menu-item>
+			</md-menu-content>
+		  </md-menu>
+		</md-list-item>
 	  </md-list-item>
 	</md-list>
+	</md-content>
+  </md-tab>
+     <md-tab label="Friends">
+     <md-content class="md-padding">
+	<md-list flex>
+	  <md-list-item class="md-3-line" ng-repeat="user in friends">
+			<span ng-if="user.photoURL">
+				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
+			</span>
+			<span ng-if="!user.photoURL">
+				<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
+			</span>
+			<div class="md-list-item-text" layout="column">
+			<h4>Name: {{user.name}}</h4>
+			<h4>Age : {{user.age}}</h4>
+			<h4>Sex Type :{{user.sexType}}</h4>
+			<h4>Message : {{user.message}}</h4>
+			<h4>Date : {{user.date}}</h4>
+			<h4>Email: {{user.email}}</h4>
+			<h4>ID : {{user.uid}}</h4>
+		  </div>
+		  <md-menu>
+			<!-- Trigger element is a md-button with an icon -->
+			<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+			  <i class="md-fab material-icons b">group_add</i>
+			</md-button>
+			<md-menu-content>
+			  <md-menu-item>
+				<md-button ng-click="sendApply(user.uid)"><i class="material-icons b">check</i></md-button>
+			  </md-menu-item>
+			</md-menu-content>
+		  </md-menu>
+		</md-list-item>
+	  </md-list-item>
+	</md-list>
+	</md-content>
   </md-tab>
 </md-tabs>

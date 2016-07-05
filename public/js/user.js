@@ -105,6 +105,8 @@ app
 																				$scope.user.$save().then(function(ref) {
 																					Loading.finish();
 																				});
+																}else{
+																		Loading.finish();
 																}
 								});
 

@@ -282,6 +282,6 @@ app
 								});
 
 								$scope.goFriend = function(userId, user){
-										$state.go('friend', { key:userId, value:user });
+										$state.go('friend', { value :{uid:user.uid }});
 								};
 				});

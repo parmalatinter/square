@@ -65,6 +65,10 @@ var app = angular
 				templateUrl: dir + "chat.html",
 				controller: 'PrivateChatCtrl'
 			},
+			privateChatList : {
+				templateUrl: dir + "chatList.html",
+				controller: 'PrivateChatListCtrl'
+			},
 			user: {
 				templateUrl: dir + "user.html",
 				controller: 'UserCtrl'
@@ -189,6 +193,19 @@ var app = angular
 				views: {
 					"header": states.chatsHeader,
 					"main": states.privateChat,
+					"link": states.link,
+					//"footer":states.footer
+				},
+				params: {
+					key: null,
+					value: null
+				}
+			})
+			.state('privateChatList', {
+				url: "/privateChatList",
+				views: {
+					"header": states.chatsHeader,
+					"main": states.privateChatList,
 					"link": states.link,
 					//"footer":states.footer
 				},

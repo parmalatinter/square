@@ -37,6 +37,24 @@ app
 
 		return _this;
 	})
+	.factory('PrivateChat', function(FireBaseService, $firebaseObject, $localStorage, $firebaseArray) {
+		var _this = {};
+		var privateChat = {};
+
+		_this.get = function() {
+			FireBaseService.setArrayRef('privateChat', 'private_chats');
+			var record = {}
+			privateChat = FireBaseService.arrayRef.privateChat.orderByChild('users/' + $localStorage.user.uid ).equalTo(true);
+			return $firebaseObject(privateChat);
+		};
+
+		_this.getComment = function(key, comment) {
+			FireBaseService.setArrayRef('privateChatCommentsts', 'private_chats/' + key + '/comments');
+			return $firebaseArray(FireBaseService.arrayRef.chatCommentsts);
+		};
+
+		return _this;
+	})
 	.factory('Comment', function(FireBaseService, $firebaseObject, $firebaseArray, $localStorage) {
 		var _this = {};
 
@@ -87,10 +105,13 @@ app
 		$scope.share = Share;
 	})
 	.controller('ChatListCtrl', function($scope, $localStorage, $mdToast, Chats, Chat, Loading) {
-		$scope.chats = Chats.get();
-		$scope.chat = {};
-		$scope.title = null;
-		Loading.start();
+
+		$scope.init = function(){
+			$scope.chats = Chats.get();
+			$scope.chat = {};
+			$scope.title = null;
+			Loading.start();
+		}
 
 		$scope.addChat = function() {
 			if(!$scope.title) return;
@@ -384,16 +405,33 @@ app
 			});
 		};
 	})
-	.controller('PrivateChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, Chat, Comment, File, Speech, Share, Loading, Vibration, Header, $controller) {
-	    $controller('ChatCtrl', {$scope : $scope, $rootScope : $rootScope, $filter : $filter, $stateParams : $stateParams, $localStorage : $localStorage, $sessionStorage : $sessionStorage, $mdToast : $mdToast, ngAudio : ngAudio, Chat : Chat, Comment : Comment, File : File, Speech : Speech, Share : Share, Loading : Loading, Vibration : Vibration, Header : Header});
+	.controller('PrivateChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, PrivateChat, Comment, File, Speech, Share, Loading, Vibration, Header, $controller) {
+	    $controller('ChatCtrl', {$scope : $scope, $rootScope : $rootScope, $filter : $filter, $stateParams : $stateParams, $localStorage : $localStorage, $sessionStorage : $sessionStorage, $mdToast : $mdToast, ngAudio : ngAudio, Chat : PrivateChat, Comment : Comment, File : File, Speech : Speech, Share : Share, Loading : Loading, Vibration : Vibration, Header : Header});
 
+		var Chat = PrivateChat;
 		$scope.init = function(){
-			if ($stateParams.value || $sessionStorage.toParams.value.$id) {
-				Loading.start();
-				var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
-				Loading.finish();
-			}
+			// if ($stateParams.value  || $sessionStorage.toParams.value.uid) {
+			// 	Loading.start();
+			// 	var id = $stateParams.value ? $stateParams.value.uid : $sessionStorage.toParams.value.uid;
+
+			// 	$scope.chat = Chat.get(id);
+			// 	$scope.chat.$watch(function() {
+			// 		console.log(12345, $scope.chat)
+			// 		Header.set($scope.chat.title);
+			// 	});
+
+			// 	Loading.finish();
+			// }
 		}
+	})
+	.controller('PrivateChatListCtrl', function($scope, $localStorage, $mdToast, Chats, PrivateChat, Loading, $controller) {
+		$controller('ChatCtrl', {$scope : $scope, $localStorage : $localStorage, $mdToast : $mdToast, Chats : PrivateChat, Chat : Chat, Loading :Loading});
+
+		var Chat = PrivateChat;
+		$scope.init = function(){
+			$scope.chats = Chat.get()
+		}
+
 	});
 
 

@@ -11,6 +11,11 @@ app
 						return $firebaseObject(userRef);
 				};
 
+				_this.getById = function(uid) {
+						var userRef = FireBaseService.arrayRef.users.child(uid);
+						return $firebaseObject(userRef);
+				};
+
 				_this.formatFirst = function(users) {
 					var user = {};
 					var count = 0;
@@ -21,7 +26,7 @@ app
 						}
 					});
 					return user;
-				}
+				};
 				return _this;
 		})
 		.factory('Users', function(FireBaseService, $firebaseObject, $firebaseArray) {
@@ -169,7 +174,7 @@ app
 		.controller('UserListCtrl', function($scope, $localStorage, $sessionStorage, $filter, $mdToast, User, Users, Requests, Request, Friends, FriendsChat, Loading) {
 				$scope.users = Users.get();
 				$scope.title = null;
-				$scope.currentUser = User.get($localStorage.user.uid);
+				$scope.currentUser = User.getById($localStorage.user.uid);
 				$scope.friends = Friends.get($localStorage.user.uid);
 				var _requests = Request.get($localStorage.user.uid);
 				$scope.requests = {};
@@ -186,29 +191,20 @@ app
 						});
 
 				$scope.currentUser.$loaded()
-						.then(function(users) {
-								var isExist = false;
-								angular.forEach(users, function(user, userKey) {
-										if (typeof user == 'object') {
-												if (user.uid) isExist = true;
-										}
-								});
-								if (!isExist) {
+						.then(function(user) {
+								if (user.$id !== $localStorage.user.uid) {
 										Loading.start();
-										var record = {
-												name: $localStorage.user.displayName,
-												age: 19,
-												//1:men, 2 :women, 3  : other
-												email: $localStorage.user.email,
-												sexType: 1,
-												message: 'よろしくね',
-												date: Math.round(new Date().getTime() / 1000),
-												uid: $localStorage.user.uid,
-												photoURL: $sessionStorage.user.photoURL,
-												imageUrl: null
-										};
-										$scope.users.$add(record).then(function(ref) {
-												Loading.finish();
+										$scope.currentUser.name = $localStorage.user.displayName;
+										$scope.currentUser.age = 0;
+										//1:men, 2 :women, 3   = other
+										$scope.currentUser.sexType = 1;
+										$scope.currentUser.message = 'よろしくね';
+										$scope.currentUser.date = Math.round(new Date().getTime() / 1000);
+										$scope.currentUser.uid = $localStorage.user.uid;
+										$scope.currentUser.photoURL = $sessionStorage.user.photoURL;
+										$scope.currentUser.imageUrl = null;
+										$scope.currentUser.$save().then(function(ref) {
+											Loading.finish();
 										});
 								}
 						})

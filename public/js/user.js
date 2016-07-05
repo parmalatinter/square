@@ -102,12 +102,12 @@ app
 				$scope.updateUser = function() {
 						$scope.user.$save().then(function(ref) {
 								$sessionStorage.user = {
-									displayName: $scope.user.name,
+									name: $scope.user.name,
 									email: $scope.user.email,
 									isLogedIn: true,
 								};
 								$localStorage.user = {
-									displayName: $scope.user.name,
+									name: $scope.user.name,
 									email: $scope.user.email,
 									uid: $scope.user.uid
 								};

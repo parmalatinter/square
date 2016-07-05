@@ -47,7 +47,7 @@
 									{{comment.shareUrl}}
 								</a>
 							</h1>
-							<p ng-style="{color:$storage.user.uid != comment.uid ? 'white' : 'red'}">
+							<p ng-style="{color:localStorage.user.uid != comment.uid ? 'white' : 'red'}">
 								{{comment.name}} {{getDateStr(comment.date)}}
 							</p>
 							<p ng-if="comment.goodCount || comment.badCount">

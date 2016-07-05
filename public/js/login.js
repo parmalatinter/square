@@ -24,7 +24,7 @@ app
 			var userKey = '';
 
 			users.$loaded().then(function(users) {
-		    		var photoURL = false;
+		    	var photoURL = false;
 				angular.forEach(users, function(user, key) {
 					if( typeof user == 'object'){
 						if(user.photoURL){

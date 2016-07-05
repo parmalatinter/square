@@ -25,6 +25,7 @@ app
 	.controller('MainCtrl', function($scope, $rootScope,  $timeout, $mdDialog, $filter, $state, $firebaseAuth, $localStorage, $sessionStorage, GameService, FireBaseService, FireBaseStorageService, LoginService, Setting, Main) {
 		$scope.main = Main;
 		$scope.session = $sessionStorage;
+		$scope.localStorage = $localStorage;
 		$scope.siteSetting = Setting.get();
 		$scope.setting = {};
 		$scope.mainBgColor = 'inherit';

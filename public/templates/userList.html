@@ -2,22 +2,17 @@
   <md-tab label="Serch">
 	<md-content class="md-padding">
 	  <md-list flex>
-		<md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ui-sref="friend({ key: user.primaryKey, value:user })">
+		<md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ng-if="user.uid !== localStorage.user.uid" ui-sref="friend({ key: user.primaryKey, value:user })">
 			<span ng-if="user.photoURL">
-				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
+				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
 			</span>
 			<span ng-if="!user.photoURL">
-				<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
+				<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
 			</span>
 			<div class="md-list-item-text" layout="column">
-			<h4>Name: {{user.name}}</h4>
-			<h4>Age : {{user.age}}</h4>
-			<h4>Sex Type :{{user.sexType}}</h4>
-			<h4>Message : {{user.message}}</h4>
-			<h4>Date : {{user.date}}</h4>
-			<h4>Email: {{user.email}}</h4>
-			<h4>ID : {{user.uid}}</h4>
-		  </div>
+				<h4>{{user.name}} ({{user.age}})</h4>
+				<h4>{{user.message}}</h4>
+		  	</div>
 		  <md-menu>
 			<!-- Trigger element is a md-button with an icon -->
 			<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
@@ -34,23 +29,19 @@
 	</md-content>
   </md-tab>
    <md-tab label="Requests">
-   	<md-content class="md-padding">
+	<md-content class="md-padding">
 	<md-list flex>
-	  <md-list-item class="md-3-line" ng-repeat="user in requests.users">
+	  <md-list-item class="md-3-line" ng-repeat="(userKey, user ) in requests.users" ng-if="user.uid !== localStorage.user.uid" ng-click="goFriend(userKey, user)">
 			<span ng-if="user.photoURL">
-				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
+				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
 			</span>
 			<span ng-if="!user.photoURL">
-				<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
+				<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
 			</span>
 			<div class="md-list-item-text" layout="column">
-			<h4>Name: {{user.name}}</h4>
-			<h4>Age : {{user.age}}</h4>
-			<h4>Sex Type :{{user.sexType}}</h4>
-			<h4>Message : {{user.message}}</h4>
-			<h4>Date : {{user.date}}</h4>
-			<h4>Email: {{user.email}}</h4>
-			<h4>ID : {{user.uid}}</h4>
+				<h4>{{user.name}} ({{user.age}})</h4>
+				<h4>{{user.message}}</h4>
+		  	</div>
 		  </div>
 		  <md-menu>
 			<!-- Trigger element is a md-button with an icon -->
@@ -68,25 +59,20 @@
 	</md-list>
 	</md-content>
   </md-tab>
-     <md-tab label="Friends">
-     <md-content class="md-padding">
+	 <md-tab label="Friends">
+	 <md-content class="md-padding">
 	<md-list flex>
-	  <md-list-item class="md-3-line" ng-repeat="user in friends.users">
+	  <md-list-item class="md-3-line" ng-repeat="(userKey, user ) in friends.users" ng-if="user.uid !== localStorage.user.uid" ng-click="goFriend(userKey, user)">
 			<span ng-if="user.photoURL">
-				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-avatar" />
+				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
 			</span>
 			<span ng-if="!user.photoURL">
-				<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-avatar" />
+				<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
 			</span>
 			<div class="md-list-item-text" layout="column">
-			<h4>Name: {{user.name}}</h4>
-			<h4>Age : {{user.age}}</h4>
-			<h4>Sex Type :{{user.sexType}}</h4>
-			<h4>Message : {{user.message}}</h4>
-			<h4>Date : {{user.date}}</h4>
-			<h4>Email: {{user.email}}</h4>
-			<h4>ID : {{user.uid}}</h4>
-		  </div>
+				<h4>{{user.name}} ({{user.age}})</h4>
+				<h4>{{user.message}}</h4>
+		  	</div>
 		  <md-menu>
 			<!-- Trigger element is a md-button with an icon -->
 			<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
@@ -99,7 +85,6 @@
 			</md-menu-content>
 		  </md-menu>
 		</md-list-item>
-	  </md-list-item>
 	</md-list>
 	</md-content>
   </md-tab>

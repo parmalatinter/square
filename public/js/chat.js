@@ -142,157 +142,160 @@ app
 		var isInited = false;
 		var isUpdatingChatInfo = false;
 
-		if ($stateParams.value || $sessionStorage.toParams.value.$id) {
-			Loading.start();
-			var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
-			$scope.chat = Chat.get(id);
-			$scope.chat.$watch(function() {
-				if($localStorage.user.uid == $scope.chat.uid){
-					$scope.chatUpdateDisable = false;
-				}
-				Header.set($scope.chat.title);
-				$scope.onDemand = true;
-				$scope.dataset = {
-					_comments: [],
-					_refresh: function(data) {
-						this._comments = data.filter(function(el) {
-							return !angular.isDefined(el._excluded) || el._excluded === false;
-						});
-					},
-					getItemAtIndex: function(index) {
-						return this._comments[index];
-					},
-					getLength: function() {
-							return this._comments.length;
-						}
-				};
-				$scope.imageDataset = {
-					_comments: [],
-					_refresh: function(data) {
-						this._comments = data.filter(function(el) {
-							if(el.imageUrl && !el.fileType) el.fileType = File.getFileType(el.imageUrl);
-							return !angular.isDefined(el._excluded) || el._excluded === false;
-						});
-					},
-					getItemAtIndex: function(index) {
-						return this._comments[index];
-					},
-					getLength: function() {
-							return this._comments.length;
-						}
-				};
-				$scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
-				$scope.dataset._refresh($scope.chat.comments);
-				$scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : 'boolean'}, false);
-				$scope.imageDataset._refresh($scope.chat.images);
-
-				Vibration.play(500);
-				Loading.finish();
-
-				if(_commentsCount == $scope.chat.comments.length){
-					$scope.audioPlay('sounds/Clap-sound.mp3');
-				}else{
-					if(!isInited){
-						isInited = true;
-					} else if(!isUpdatingChatInfo && !$scope.chat.comments[0].isSpeeched ){
-						var text = '';
-						switch ($scope.chat.comments[0].fileType) {
-							case ('image'):
-								text = '画像がアップされました。';
-								break;
-							case ('sound'):
-								text = 'サウンドがアップされました。';
-								break;
-							case ('movie'):
-								text = 'イメージがアップされました。';
-								break;
-							case ('link'):
-								text = 'リンクがシェアされました。';
-								break;
-							default :
-								text = $scope.chat.comments[0].detail;
-								break;
-						}
-						Speech.play(text);
-	                    		$scope.chat.comments[0].isSpeeched = true;
-	                    		angular.element('.md-virtual-repeat-scroller').scrollTop(0);
-					}
-				}
-
-				_commentsCount = $scope.chat.comments.length;
-				isUpdatingChatInfo = false;
-			});
-
-			$scope.addComment = function(imageUrl, shareUrl) {
-				if (!$scope.commentText && !imageUrl && !shareUrl) return;
+		$scope.init = function(){
+			if ($stateParams.value || $sessionStorage.toParams.value.$id) {
 				Loading.start();
-				var record = {
-					date: Math.round( new Date().getTime() / 1000 ),
-					name: $localStorage.user.name ? $localStorage.user.name : 'undefined',
-					uid: $localStorage.user.uid ? $localStorage.user.uid : 0
-				};
-				if(imageUrl){
-					record.imageUrl = imageUrl;
-					record.fileType = File.getFileType(imageUrl);
-				}else if(shareUrl){
-					record.shareUrl = shareUrl;
-					record.fileType = 'link';
-				}else{
-					record.detail = $scope.commentText;
-				}
 				var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
-				$scope.comments = Chat.getComment(id, $scope.comment);
-				$scope.comments.$add(record).then(function(ref) {
-					var id = ref.key;
-					$scope.comments.$indexFor(id); // returns location in the array
-					$scope.commentText = '';
-					$scope.file = '';
+				$scope.chat = Chat.get(id);
+				$scope.chat.$watch(function() {
+					if($localStorage.user.uid == $scope.chat.uid){
+						$scope.chatUpdateDisable = false;
+					}
+					Header.set($scope.chat.title);
+					$scope.onDemand = true;
+					$scope.dataset = {
+						_comments: [],
+						_refresh: function(data) {
+							this._comments = data.filter(function(el) {
+								return !angular.isDefined(el._excluded) || el._excluded === false;
+							});
+						},
+						getItemAtIndex: function(index) {
+							return this._comments[index];
+						},
+						getLength: function() {
+								return this._comments.length;
+							}
+					};
+					$scope.imageDataset = {
+						_comments: [],
+						_refresh: function(data) {
+							this._comments = data.filter(function(el) {
+								if(el.imageUrl && !el.fileType) el.fileType = File.getFileType(el.imageUrl);
+								return !angular.isDefined(el._excluded) || el._excluded === false;
+							});
+						},
+						getItemAtIndex: function(index) {
+							return this._comments[index];
+						},
+						getLength: function() {
+								return this._comments.length;
+							}
+					};
+					$scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
+					$scope.dataset._refresh($scope.chat.comments);
+					$scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : 'boolean'}, false);
+					$scope.imageDataset._refresh($scope.chat.images);
+
+					Vibration.play(500);
 					Loading.finish();
+
+					if(_commentsCount == $scope.chat.comments.length){
+						$scope.audioPlay('sounds/Clap-sound.mp3');
+					}else{
+						if(!isInited){
+							isInited = true;
+						} else if(!isUpdatingChatInfo && !$scope.chat.comments[0].isSpeeched ){
+							var text = '';
+							switch ($scope.chat.comments[0].fileType) {
+								case ('image'):
+									text = '画像がアップされました。';
+									break;
+								case ('sound'):
+									text = 'サウンドがアップされました。';
+									break;
+								case ('movie'):
+									text = 'イメージがアップされました。';
+									break;
+								case ('link'):
+									text = 'リンクがシェアされました。';
+									break;
+								default :
+									text = $scope.chat.comments[0].detail;
+									break;
+							}
+							Speech.play(text);
+		                    		$scope.chat.comments[0].isSpeeched = true;
+		                    		angular.element('.md-virtual-repeat-scroller').scrollTop(0);
+						}
+					}
+
+					_commentsCount = $scope.chat.comments.length;
+					isUpdatingChatInfo = false;
 				});
-			};
 
-			$scope.$watch('file', function(newVal, oldVal) {
-				$scope.upload();
-			});
+				$scope.addComment = function(imageUrl, shareUrl) {
+					if (!$scope.commentText && !imageUrl && !shareUrl) return;
+					Loading.start();
+					var record = {
+						date: Math.round( new Date().getTime() / 1000 ),
+						name: $localStorage.user.name ? $localStorage.user.name : 'undefined',
+						uid: $localStorage.user.uid ? $localStorage.user.uid : 0
+					};
+					if(imageUrl){
+						record.imageUrl = imageUrl;
+						record.fileType = File.getFileType(imageUrl);
+					}else if(shareUrl){
+						record.shareUrl = shareUrl;
+						record.fileType = 'link';
+					}else{
+						record.detail = $scope.commentText;
+					}
+					var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
+					$scope.comments = Chat.getComment(id, $scope.comment);
+					$scope.comments.$add(record).then(function(ref) {
+						var id = ref.key;
+						$scope.comments.$indexFor(id); // returns location in the array
+						$scope.commentText = '';
+						$scope.file = '';
+						Loading.finish();
+					});
+				};
 
-			$scope.$watch('share.url', function(newVal, oldVal) {
-				if(!newVal) return;
-				$scope.addComment(false, newVal);
-				Share.reset();
-			});
+				$scope.$watch('file', function(newVal, oldVal) {
+					$scope.upload();
+				});
 
-			$scope.upload = function(){
-				if(!$scope.file) return;
-				Loading.start();
-				$scope.uploadFileType = File.getFileType($scope.file.name);
-				if($scope.uploadFileType == 'image'){
-					File.getUploadFile($scope.file).then(function(uploadFileUrl){
-						$scope.uploadFileUrl = uploadFileUrl;
-						File.resizeFile(uploadFileUrl).then(function(resized){
-							File.getUploadFile(resized.file).then(function(resizedUploadFileUrl){
-								File.upload('chats', 'chats', resizedUploadFileUrl).then(function(uploadedImageUrl){
-									$scope.addComment(uploadedImageUrl);
+				$scope.$watch('share.url', function(newVal, oldVal) {
+					if(!newVal) return;
+					$scope.addComment(false, newVal);
+					Share.reset();
+				});
+
+				$scope.upload = function(){
+					if(!$scope.file) return;
+					Loading.start();
+					$scope.uploadFileType = File.getFileType($scope.file.name);
+					if($scope.uploadFileType == 'image'){
+						File.getUploadFile($scope.file).then(function(uploadFileUrl){
+							$scope.uploadFileUrl = uploadFileUrl;
+							File.resizeFile(uploadFileUrl).then(function(resized){
+								File.getUploadFile(resized.file).then(function(resizedUploadFileUrl){
+									File.upload('chats', 'chats', resizedUploadFileUrl).then(function(uploadedImageUrl){
+										$scope.addComment(uploadedImageUrl);
+									});
 								});
 							});
 						});
-					});
-					return;
-				}else{
-					File.upload('chats', 'chats', $scope.file).then(function(uploadedFileUrl){
-						if(typeof uploadedFileUrl === 'string' || uploadedFileUrl instanceof String){
-							$scope.addComment(uploadedFileUrl);
-						}
-					});
-				}
-			};
+						return;
+					}else{
+						File.upload('chats', 'chats', $scope.file).then(function(uploadedFileUrl){
+							if(typeof uploadedFileUrl === 'string' || uploadedFileUrl instanceof String){
+								$scope.addComment(uploadedFileUrl);
+							}
+						});
+					}
+				};
 
-			$scope.updateChat = function(){
-				isUpdatingChatInfo = true;
-				$scope.chat.$save().then(function(ref) {
-					console.log(ref);
-				});
-			};
+				$scope.updateChat = function(){
+					isUpdatingChatInfo = true;
+					$scope.chat.$save().then(function(ref) {
+						console.log(ref);
+					});
+				};
+			}
 		}
+
 
 		$scope.getDateStr = function(unixTimestamp){
 			return new Date( unixTimestamp * 1000 ).toLocaleString();
@@ -380,6 +383,19 @@ app
 				console.log("Error:", error);
 			});
 		};
+	})
+	.controller('PrivateChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, Chat, Comment, File, Speech, Share, Loading, Vibration, Header, $controller) {
+	    $controller('ChatCtrl', {$scope : $scope, $rootScope : $rootScope, $filter : $filter, $stateParams : $stateParams, $localStorage : $localStorage, $sessionStorage : $sessionStorage, $mdToast : $mdToast, ngAudio : ngAudio, Chat : Chat, Comment : Comment, File : File, Speech : Speech, Share : Share, Loading : Loading, Vibration : Vibration, Header : Header});
 
-
+		$scope.init = function(){
+			if ($stateParams.value || $sessionStorage.toParams.value.$id) {
+				Loading.start();
+				var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
+				Loading.finish();
+			}
+		}
 	});
+
+
+
+

@@ -264,6 +264,10 @@ app
     });
 
     $scope.goFriend = function(userId, user) {
-      $state.go('friend', { value: { uid: user.uid } });
+      $state.go('friend', { key: userId, value: { uid: user.uid } });
+    };
+
+    $scope.goChat = function(userId, user) {
+      $state.go('privateChat', { key: userId,  value: { uid: user.uid } });
     };
   });

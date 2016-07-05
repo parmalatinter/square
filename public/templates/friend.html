@@ -2,10 +2,10 @@
 	<div flex-xs flex-gt-xs="50" layout="column">
 		<md-card>
 			<span ng-if="_user.photoURL">
-				<img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}" class="md-card-image" />
+				<img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}?v={{setting.cache.number}}" class="md-card-image" />
 			</span>
 			<span ng-if="!_user.photoURL">
-				<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-card-image" />
+				<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-card-image" />
 			</span>
 			<md-card-title>
 				<md-card-title-text>

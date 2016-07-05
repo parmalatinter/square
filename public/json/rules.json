@@ -1,38 +1,38 @@
 {
-  "rules": {
-    ".read": false,
-    ".write" :false,
-    "users": {
-      ".read": "auth.uid !== null",
-      "$user": {
-        ".write": "data.child('uid').val() === auth.uid"
-      }
-    },
-    "friends": {
-       ".read": "auth.uid !== null",
-      "$friend": {
-        ".read": "data.child('users/' + auth.uid).val() === true",
-        ".write" :"auth.uid !== null",
-          "chats" :{
-          ".read": "data.parent().child('users/' + auth.uid).val() === true",
-          ".write" :"data.parent().child('users/' + auth.uid).val() === true",
-          }
-      }
-    },
-    "requests": {
-      ".read": "auth.uid !== null",
-      ".write" :"auth.uid !== null",
-      "$requests": {
-        ".read": "auth.uid !== null",
-        ".write": "auth.uid !== null",
-      }
-     },
-    "chats": {
-      ".read": "auth.uid !== null",
-      ".write" :"auth.uid !== null",
-     },
-     "setting" :{
-       ".read": true,
-     }
-  }
+	"rules": {
+		".read": false,
+		".write" :false,
+		"users": {
+			".read": "auth.uid !== null",
+			"$user": {
+				".write": "data.child('uid').val() === auth.uid"
+			}
+		},
+		"friends": {
+			 ".read": "auth.uid !== null",
+			"$friend": {
+				".read": "data.child('users/' + auth.uid).val() === true",
+				".write" :"auth.uid !== null",
+					"chats" :{
+					".read": "data.parent().child('users/' + auth.uid).val() === true",
+					".write" :"data.parent().child('users/' + auth.uid).val() === true",
+					}
+			}
+		},
+		"requests": {
+			".read": "auth.uid !== null",
+			".write" :"auth.uid !== null",
+			"$requests": {
+				".read": "auth.uid !== null",
+				".write": "auth.uid !== null",
+			}
+		 },
+		"chats": {
+			".read": "auth.uid !== null",
+			".write" :"auth.uid !== null",
+		 },
+		 "setting" :{
+			 ".read": true,
+		 }
+	}
 }

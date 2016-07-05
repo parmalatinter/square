@@ -1,26 +1,26 @@
-	<md-subheader ng-if="file.name" class="md-no-sticky">
+<md-subheader ng-if="file.name" class="md-no-sticky">
 		Uploading {{file.name}}
 		<br/>
 		<span ng-if="uploadFileType == 'image'"><img ng-src="{{uploadFileUrl}}" width="50px"/></span>
 	</md-subheader>
 	{{file.name}}
-	<input type="file" file-model="file" id="upload_user_photo" style="display:none">
-<md-content class="md-padding" ng-repeat="_user in users" layout-xs="column" layout="row" style="text-align:left">
+	<input type="file" file-model="file" id="uploaduser_photo" style="display:none">
+<md-content class="md-padding" layout-xs="column" layout="row" style="text-align:left">
 	<md-card>
-		<span ng-if="_user.photoURL">
-			<img alt="xxxxxxxxxxx" ng-src="{{_user.photoURL}}" class="md-card-image" />
+		<span ng-if="user.photoURL">
+			<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}" class="md-card-image" />
 		</span>
-		<span ng-if="!_user.photoURL">
+		<span ng-if="!user.photoURL">
 			<img alt="unknown" ng-src="{{'images/user.png'}}" class="md-card-image" />
 		</span>
-<!-- 		<span ng-if="_user.photos" ng-repeat="photo in _user.photos">
+<!-- 		<span ng-if="user.photos" ng-repeat="photo in user.photos">
 			<span ng-if="$last">
 				<img alt="unknown" ng-src="{{photo}}" class="md-card-image" />
 			</span>
 		</span> -->
 		<md-card-title>
 			<md-card-title-text>
-				<span class="md-headline"><input ng-model="_user.name" ng-disabled="chatUpdateDisable">
+				<span class="md-headline"><input ng-model="user.name" ng-disabled="chatUpdateDisable">
 			</md-card-title-text>
 		</md-card-title>
 		<md-card-actions ng-if="disableEdit" layout="row" layout-align="start center">
@@ -38,11 +38,11 @@
 		<md-card-content>
 			<md-input-container class="layout-fill">
 				<label>Age</label>
-				<input ng-disabled="disableEdit" ng-model="_user.age" ng-disabled="chatUpdateDisable">
+				<input ng-disabled="disableEdit" ng-model="user.age" ng-disabled="chatUpdateDisable">
 			</md-input-container>
 			<md-input-container class="layout-fill">
 				<label>Sex Type</label>
-				<span ng-switch="_user.sexType">
+				<span ng-switch="user.sexType">
 					<span ng-switch-when="1">
 						<input value="Mele" ng-disabled="true">
 					</span>
@@ -56,19 +56,19 @@
 			</md-input-container>
 			<md-input-container class="layout-fill">
 				<label>Date</label>
-				<input value="{{main.timeToStr(_user.date)}}" ng-disabled="true">
+				<input value="{{main.timeToStr(user.date)}}" ng-disabled="true">
 			</md-input-container>
 			<md-input-container class="layout-fill">
 				<label>Email</label>
-				<input ng-model="_user.email" ng-disabled="true">
+				<input ng-model="user.email" ng-disabled="true">
 			</md-input-container>
 			<md-input-container class="layout-fill">
 				<label>ID</label>
-				<input ng-disabled="true" ng-model="_user.uid" ng-disabled="chatUpdateDisable">
+				<input ng-disabled="true" ng-model="user.uid" ng-disabled="chatUpdateDisable">
 			</md-input-container>
 			<md-input-container class="layout-fill">
 				<label>Message</label>
-				<textarea ng-disabled="disableEdit"  ng-model="_user.message" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+				<textarea ng-disabled="disableEdit"  ng-model="user.message" md-maxlength="150" rows="5" md-select-on-focus></textarea>
 			</md-input-container>
 			<md-button ng-if="!disableEdit" class="md-raised md-primary" ng-click="updateUser()">
 				<ng-md-icon icon="save" style="fill: white"></ng-md-icon>

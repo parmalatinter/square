@@ -74,7 +74,7 @@ app
 		})
 		.factory('FriendsChat', function(FireBaseService, $firebaseObject, $firebaseArray) {
 				var _this = {};
-				if (!FireBaseService.arrayRef.friendsChat) FireBaseService.setArrayRef('friends', 'friends');;
+				if (!FireBaseService.arrayRef.friendsChat) FireBaseService.setArrayRef('friends', 'friends');
 				_this.get = function(key) {
 						var friendsRef = FireBaseService.arrayRef.friends.child(key).child('chats/comment');
 						return $firebaseArray(friendsRef);
@@ -89,28 +89,27 @@ app
 
 		})
 		.controller('UserCtrl', function($scope, $rootScope, $localStorage, $mdToast, $sessionStorage, User, Users, File, Loading) {
-				$scope.users = User.get($localStorage.user.uid);
+				$scope.user = User.getById($localStorage.user.uid);
 				$scope.disableEdit = false;
 				$scope.title = null;
 				$scope.file = "";
 				Loading.start();
 
-				$scope.users.$watch(function() {
+				$scope.user.$watch(function() {
 						Loading.finish();
 				});
 
 				$scope.updateUser = function() {
-						$scope.users.$save().then(function(ref) {
-								var user = User.formatFirst($scope.users);
+						$scope.user.$save().then(function(ref) {
 								$sessionStorage.user = {
-									displayName: user.name,
-									email: user.email,
+									displayName: $scope.user.name,
+									email: $scope.user.email,
 									isLogedIn: true,
 								};
 								$localStorage.user = {
-									displayName: user.name,
-									email: user.email,
-									uid: user.uid
+									displayName: $scope.user.name,
+									email: $scope.user.email,
+									uid: $scope.user.uid
 								};
 								$mdToast.show($mdToast.simple().content('Saved').position('bottom'));
 						});
@@ -124,12 +123,6 @@ app
 				$scope.upload = function() {
 						if (!$scope.file) return;
 						Loading.start();
-						var id = false;
-						angular.forEach($scope.users, function(user, userKey) {
-								if (typeof user == 'object') {
-										if (user.uid) id = userKey;
-								}
-						});
 						$scope.uploadFileType = File.getFileType($scope.file.name);
 						if ($scope.uploadFileType == 'image') {
 								File.getUploadFile($scope.file).then(function(uploadFileUrl) {
@@ -137,10 +130,10 @@ app
 										File.resizeFile(uploadFileUrl).then(function(resized) {
 												File.getUploadFile(resized.file).then(function(resizedUploadFileUrl) {
 														File.upload('users', 'users', resizedUploadFileUrl).then(function(uploadedImageUrl) {
-																if (!$scope.users[id].photos) $scope.users[id].photos = [];
-																$scope.users[id].photos.push(uploadedImageUrl);
-																$scope.users[id].photoURL = uploadedImageUrl;
-																$scope.users.$save().then(function(ref) {
+																if (!$scope.user.photos) $scope.user.photos = [];
+																$scope.user.photos.push(uploadedImageUrl);
+																$scope.user.photoURL = uploadedImageUrl;
+																$scope.user.$save().then(function(ref) {
 																		$mdToast.show($mdToast.simple().content('Saved').position('bottom'));
 																		$scope.file = "";
 																});
@@ -230,8 +223,8 @@ app
 																});
 												}
 
-										})
-								})
+										});
+								});
 						})
 						.catch(function(error) {
 								console.log("Error:", error);
@@ -255,7 +248,7 @@ app
 																});
 												}
 										});
-								})
+								});
 						})
 						.catch(function(error) {
 								console.log("Error:", error);
@@ -263,13 +256,13 @@ app
 
 				$scope.sendApply = function(uid) {
 						var record = { users: {} };
-						record.users[uid] = true
-						record.users[$localStorage.user.uid] = true
+						record.users[uid] = true;
+						record.users[$localStorage.user.uid] = true;
 						$scope.friends.$add(record).then(function(ref) {
 								$scope.friendsChat = FriendsChat.get(ref.key);
 
 								$scope.friendsChat.$loaded().then(function(friendsChat) {
-										console.log(friendsChat)
+										console.log(friendsChat);
 								});
 
 								var record = {
@@ -279,7 +272,7 @@ app
 						});
 
 
-				}
+				};
 
 
 				$scope.setRequest = function(uid) {
@@ -289,7 +282,7 @@ app
 						$scope.newRequests.$add(record).then(function(ref) {
 								$scope.sendRequest(uid);
 						});
-				}
+				};
 
 				$scope.sendRequest = function(uid) {
 						var friendRequest = Request.get(uid);
@@ -322,7 +315,7 @@ app
 								.catch(function(error) {
 										console.log("Error:", error);
 								});
-				}
+				};
 
 				$scope.users.$watch(function() {
 						Loading.finish();

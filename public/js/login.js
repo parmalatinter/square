@@ -2,45 +2,51 @@ app
 	.factory('LoginService', function($localStorage, $sessionStorage, $firebaseAuth, $state, User) {
 		var auth = $firebaseAuth();
 		var _this = { isLoding: false };
+
+		auth.$onAuthStateChanged(function(firebaseUser) {
+			if (firebaseUser) {
+				$sessionStorage.user = {
+					displayName: firebaseUser.displayName,
+					email: firebaseUser.email,
+					emailVerified: firebaseUser.emailVerified,
+					isAnonymous: firebaseUser.isAnonymous,
+					isLogedIn: true,
+				};
+				$localStorage.user = {
+					displayName: firebaseUser.displayName,
+					email: firebaseUser.email,
+					uid: firebaseUser.uid
+				};
+
+				var users = User.get($localStorage.user.uid);
+				var userKey = '';
+
+				users.$loaded().then(function(users) {
+			    	var photoURL = false;
+					angular.forEach(users, function(user, key) {
+						if( typeof user == 'object'){
+							if(user.photoURL){
+								photoURL = user.photoURL;
+								userKey = userKey;
+								name = user.name;
+							}
+						}
+					});
+					$sessionStorage.user.userKey = userKey;
+					$sessionStorage.user.photoURL = photoURL;
+					$localStorage.user.name = name;
+				});
+			}
+		});
+
 		_this.start = function() {
 			_this.isLoding = true;
 		};
 		_this.login = function(type) {
-			auth.$signInWithPopup(type).then(function(firebaseUser) {
-				$sessionStorage.user = {
-					displayName: firebaseUser.user.displayName,
-					email: firebaseUser.user.email,
-					emailVerified: firebaseUser.user.emailVerified,
-					isAnonymous: firebaseUser.user.isAnonymous,
-					isLogedIn: true,
-				};
-				$localStorage.user = {
-					displayName: firebaseUser.user.displayName,
-					email: firebaseUser.user.email,
-					uid: firebaseUser.user.uid
-				};
-
-			var users = User.get($localStorage.user.uid);
-			var userKey = '';
-
-			users.$loaded().then(function(users) {
-		    	var photoURL = false;
-				angular.forEach(users, function(user, key) {
-					if( typeof user == 'object'){
-						if(user.photoURL){
-							photoURL = user.photoURL;
-							userKey = userKey;
-							name = user.name;
-						}
-					}
-				});
-				$sessionStorage.user.userKey = userKey;
-				$sessionStorage.user.photoURL = photoURL;
-				$localStorage.user.name = name;
-			});
+			auth.$signInWithRedirect(type).then(function() {
+			  // Never called because of page redirect
 			}).catch(function(error) {
-				$sessionStorage.user.photoURL = firebaseUser.user.photoURL;
-				console.log("Authentication failed:", error);
+			  console.error("Authentication failed:", error);
 			});
 		};
 		_this.logout = function() {

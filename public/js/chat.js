@@ -111,6 +111,10 @@ app
 			$scope.chat = {};
 			$scope.title = null;
 			Loading.start();
+
+			$scope.chats.$watch(function() {
+				Loading.finish();
+			});
 		}
 
 		$scope.addChat = function() {
@@ -145,10 +149,6 @@ app
 				console.log("Error:", error);
 			});
 		};
-
-		$scope.chats.$watch(function() {
-			Loading.finish();
-		});
 	})
 	.controller('ChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, Chat, Comment, File, Speech, Share, Loading, Vibration, Header) {
 		$scope.chat = {};

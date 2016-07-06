@@ -184,6 +184,17 @@ app
 			setObjRef(key, path);
 		};
 
+	    _this.formatFirst = function(records) {
+	      var result = {};
+	      var count = 0;
+	      angular.forEach(records, function(record, recordKey) {
+	        if (!$filter('inArray')(['$$conf', '$id', '$priority'], recordKey) && !count) {
+	          result = record;
+	          result.Key = recordKey;
+	        }
+	      });
+	      return result;
+	    };
 		init();
 
 		return _this;

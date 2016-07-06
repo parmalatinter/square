@@ -52,7 +52,7 @@ app
 				event.preventDefault();
 				$state.go('login');
 			}
-			if(toState.name == 'chat'){
+			if(toState.name == 'chat' || toState.name == 'privateChat'){
 				$scope.mainBgColor = 'black';
 			}else{
 				$scope.mainBgColor = 'inherit';

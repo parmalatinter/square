@@ -264,14 +264,14 @@ app
     });
 
     $scope.goFriend = function(userId, user) {
-      $state.go('friend', { key: userId, value: { uid: user.uid } });
+      $state.go('friend', { key: userId, value: { uid: user.uid, name: user.name} });
     };
 
     $scope.goChat = function(userId, user) {
-      $state.go('privateChat', { key: userId,  value: { uid: user.uid } });
+      $state.go('privateChat', { key: userId,  value: { uid: user.uid, name: user.name} });
     };
 
      $scope.goChatList = function(userId, user) {
-      $state.go('privateChatList', { key: userId,  value: { uid: user.uid } });
+      $state.go('privateChatList', { key: userId,  value: { uid: user.uid, name: user.name} });
     };
   });

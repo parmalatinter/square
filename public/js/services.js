@@ -4,20 +4,20 @@ app
 		var chatRef = {};
 
 		function toBlob(base64) {
-		    var bin = atob(base64.replace(/^.*,/, ''));
-		    var buffer = new Uint8Array(bin.length);
-		    for (var i = 0; i < bin.length; i++) {
-		        buffer[i] = bin.charCodeAt(i);
-		    }
-		    // Blobを作成
-		    try{
-		        var blob = new Blob([buffer.buffer], {
-		            type: 'image/png'
-		        });
-		    }catch (e){
-		        return false;
-		    }
-		    return blob;
+			var bin = atob(base64.replace(/^.*,/, ''));
+			var buffer = new Uint8Array(bin.length);
+			for (var i = 0; i < bin.length; i++) {
+				buffer[i] = bin.charCodeAt(i);
+			}
+			// Blobを作成
+			try{
+				var blob = new Blob([buffer.buffer], {
+					type: 'image/png'
+				});
+			}catch (e){
+				return false;
+			}
+			return blob;
 		}
 
 		_this.readURL = function(file, d) {
@@ -229,6 +229,46 @@ app
 			if(isVibrate){
 				navigator.vibrate(secound);
 			}
+		};
+		return _this;
+	})
+
+	.factory('Dataset', function($localStorage) {
+		var _this = {};
+
+		_this.get = function(secound) {
+			return {
+					_comments: [],
+					_refresh: function(data) {
+						this._comments = data.filter(function(el) {
+							return !angular.isDefined(el._excluded) || el._excluded === false;
+						});
+					},
+					getItemAtIndex: function(index) {
+						return this._comments[index];
+					},
+					getLength: function() {
+							return this._comments.length;
+						}
+				};
+		};
+
+		_this.getImage = function(secound) {
+			return {
+				_comments: [],
+				_refresh: function(data) {
+					this._comments = data.filter(function(el) {
+						if(el.imageUrl && !el.fileType) el.fileType = File.getFileType(el.imageUrl);
+						return !angular.isDefined(el._excluded) || el._excluded === false;
+					});
+				},
+				getItemAtIndex: function(index) {
+					return this._comments[index];
+				},
+				getLength: function() {
+						return this._comments.length;
+					}
+			};
 		};
 		return _this;
 	});

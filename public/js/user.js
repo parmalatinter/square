@@ -178,7 +178,7 @@ app
     $scope.friends = Friends.getById($localStorage.user.uid);
     var _requests = Request.getById($localStorage.user.uid);
     $scope.requests = {};
-    var _requestHistories = RequestHistories.getById($localStorage.user.uid);
+    $scope._requestHistories = RequestHistories.getById($localStorage.user.uid);
     $scope.requestHistories = {'users' : {}};
     $scope.friendList = {};
 
@@ -196,10 +196,10 @@ app
         console.log("Error:", error);
       });
 
-    _requestHistories.$loaded()
+    $scope._requestHistories.$loaded()
       .then(function(request) {
         angular.forEach(request.friends, function(isApplyed, friendKey) {
-          if ($localStorage.user.uid != friendKey && !isApplyed) {
+          if ($localStorage.user.uid != friendKey) {
             if(!$scope.requestHistories.users[friendKey]) $scope.requestHistories.users[friendKey] = User.getById(friendKey);
           }
         });
@@ -227,11 +227,11 @@ app
         .then(function(requests) {
           if (!_friendRequest.friends) _friendRequest.friends = {};
           _friendRequest.friends[$localStorage.user.uid] = false;
-          _requestHistories.frineds[uid] = true;
+          $scope._requestHistories[uid] = true;
           _friendRequest.$save().then(function(ref) {
             $mdToast.show($mdToast.simple().content('Requested').position('bottom'));
           });
-          _requestHistories.$save().then(function(ref) {
+          $scope._requestHistories.$save().then(function(ref) {
             console.log(ref);
           });
         })

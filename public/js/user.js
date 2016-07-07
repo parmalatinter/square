@@ -184,6 +184,7 @@ app
     $scope.friends = Friends.getById($localStorage.user.uid);
     var _requests = Request.getById($localStorage.user.uid);
     $scope.requests = {};
+    $scope.friendList = {};
 
     _requests.$loaded()
       .then(function(request) {
@@ -193,7 +194,7 @@ app
             $scope.requests.users[friendKey] = User.getById(friendKey);
           }
         });
-        console.log($scope.requests.users)
+        console.log($scope.requests.users);
       })
       .catch(function(error) {
         console.log("Error:", error);
@@ -201,14 +202,10 @@ app
 
     $scope.friends.$loaded()
       .then(function(friends) {
+        $scope.friendList = {};
         angular.forEach(friends.users, function(isApplyed, userKey) {
           if ($localStorage.user.uid != userKey) {
-            $scope.friends.users[userKey] = User.getById(userKey);
-
-            $scope.friends.users[userKey].$loaded()
-              .then(function(friend) {
-                console.log("friend:", friend);
-              });
+            $scope.friendList[userKey] = User.getById(userKey);
           }
         });
       })
@@ -217,22 +214,23 @@ app
       });
 
     $scope.sendApply = function(uid) {
-      if (!$scope.friends.users) $scope.friends.users = {}
+      if (!$scope.friends.users) $scope.friends.users = {};
       $scope.friends.users[uid] = true;
       $scope.friends.$save().then(function(ref) {
 
       	 _requests.friends[uid] = true;
 
       	 _requests.$save().then(function(ref) {
-      	 	delete $scope.requests.users[uid]
+      	 	delete $scope.requests.users[uid];
       	 	$mdToast.show($mdToast.simple().content('Applyed').position('bottom'));
       	 });
 
+        $scope.friendList = {};
         angular.forEach($scope.friends.users, function(isApplyed, userKey) {
           if ($localStorage.user.uid != userKey && isApplyed) {
-            $scope.friends.users[userKey] = User.getById(userKey);
+            $scope.friendList[userKey] = User.getById(userKey);
 
-            $scope.friends.users[userKey].$loaded()
+            $scope.friendList[userKey].$loaded()
               .then(function(friend) {
                 console.log("friend:", friend);
               });
@@ -248,11 +246,11 @@ app
       var friendRequest = Request.getById(uid);
       friendRequest.$loaded()
         .then(function(requests) {
-          if (!friendRequest.friends) friendRequest.friends = {}
-          friendRequest.friends[$localStorage.user.uid] = false
+          if (!friendRequest.friends) friendRequest.friends = {};
+          friendRequest.friends[$localStorage.user.uid] = false;
           friendRequest.$save().then(function(ref) {
             $mdToast.show($mdToast.simple().content('Requested').position('bottom'));
-          })
+          });
         })
         .catch(function(error) {
           console.log("Error:", error);

@@ -22,17 +22,30 @@ app
 	})
 	.factory('Chat', function(FireBaseService, $firebaseObject, $firebaseArray) {
 		var _this = {isPrivate: false};
-		var chatRef = {};
 
 		_this.get = function(key) {
 			FireBaseService.setObjRef('chat', 'chats/' + key);
-			chatRef = FireBaseService.objRef.chat;
-			return $firebaseObject(chatRef);
+			return $firebaseObject(FireBaseService.objRef.chat);
 		};
 
-		_this.getComment = function(key, comment) {
+		_this.getComment = function(key) {
 			FireBaseService.setArrayRef('chatCommentsts', 'chats/' + key + '/comments');
 			return $firebaseArray(FireBaseService.arrayRef.chatCommentsts);
+		};
+
+		return _this;
+	})
+	.factory('PrivateChat', function(FireBaseService, $firebaseObject, $localStorage, $firebaseArray) {
+		var _this = {isPrivate: true};
+
+		_this.get = function(key) {
+			FireBaseService.setObjRef('privateChatCommentsts', 'private_chats/' + key);
+			return $firebaseObject(FireBaseService.objRef.privateChatCommentsts);
+		};
+
+		_this.getComment = function(key) {
+			FireBaseService.setArrayRef('privateChatCommentsts', 'private_chats/' + key + '/comments');
+			return $firebaseArray(FireBaseService.arrayRef.privateChatCommentsts);
 		};
 
 		return _this;
@@ -43,14 +56,19 @@ app
 
 		_this.get = function() {
 			FireBaseService.setArrayRef('privateChats', 'private_chats');
-			var record = {};
 			privateChats = FireBaseService.arrayRef.privateChats.orderByChild('users/' + $localStorage.user.uid ).equalTo(true);
 			return $firebaseArray(privateChats);
 		};
 
+		_this.getNew = function(key) {
+			FireBaseService.setArrayRef('privateChats', 'private_chats');
+			privateChats = FireBaseService.arrayRef.privateChats;
+			return $firebaseArray(privateChats);
+		};
+
 		_this.getComment = function(key, comment) {
-			FireBaseService.setArrayRef('privateChatCommentsts', 'private_chats/' + key + '/comments');
-			return $firebaseArray(FireBaseService.arrayRef.privateChatCommentsts);
+			FireBaseService.setArrayRef('privateChatComments', 'private_chats/' + key + '/comments');
+			return $firebaseArray(FireBaseService.arrayRef.privateChatComments);
 		};
 
 		return _this;
@@ -256,7 +274,7 @@ app
 			if(!Chat.isPrivate){
 				var id = $stateParams.value ? $stateParams.value.$id : $sessionStorage.toParams.value.$id;
 			}else{
-				var id = $scope.chat.$id;
+				var id = $scope._chat.$id;
 			}
 
 			$scope.comments = Chat.getComment(id, $scope.comment);
@@ -395,31 +413,49 @@ app
 		$scope.init = function(){
 		};
 	})
-	.controller('PrivateChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, PrivateChats, Comment, File, Speech, Share, Loading, Vibration, Header, Dataset, $controller, FireBaseService) {
+	.controller('PrivateChatCtrl', function($scope, $rootScope, $filter, $stateParams, $localStorage, $sessionStorage, $mdToast, ngAudio, PrivateChats, PrivateChat, Comment, File, Speech, Share, Loading, Vibration, Header, Dataset, $controller, FireBaseService) {
 		$controller('ChatCtrl', {$scope : $scope, $rootScope : $rootScope, $filter : $filter, $stateParams : $stateParams, $localStorage : $localStorage, $sessionStorage : $sessionStorage, $mdToast : $mdToast, ngAudio : ngAudio, Chat : PrivateChats, Comment : Comment, File : File, Speech : Speech, Share : Share, Loading : Loading, Vibration : Vibration, Header : Header});
 
 		var Chats = PrivateChats;
+		var Chat = PrivateChat;
 		var friend = {};
 		$scope.chat = {};
 
+		var reChat = function(friend){
+			Header.set(friend.name);
+			$scope.onDemand = true;
+			$scope.dataset = Dataset.get();
+			$scope.imageDataset = Dataset.getImage();
+			$scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
+			$scope.dataset._refresh($scope.chat.comments);
+			$scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : 'boolean'}, false);
+			$scope.imageDataset._refresh($scope.chat.images);
+			$scope.informUpdate();
+		};
+
 		$scope.addPrivateChat = function(uid) {
 
-			var record = {
-				name: $localStorage.user.name,
-				subTitle:$scope.subTitle ? $scope.subTitle : 'UNKNOWN',
-				category:$scope.category ? $scope.category : 'UNKNOWN',
-				comments: [],
-				date: Math.round( new Date().getTime() / 1000 ),
-				users :{}
-			};
-			record.users[$localStorage.user.uid] = true;
-			record.users[uid] = true;
+			$scope.chats = Chats.getNew();
+				$scope.chats.$loaded()
+	        		.then(function() {
+						var record = {
+							name: $localStorage.user.name,
+							subTitle:$scope.subTitle ? $scope.subTitle : 'UNKNOWN',
+							category:$scope.category ? $scope.category : 'UNKNOWN',
+							comments: [],
+							date: Math.round( new Date().getTime() / 1000 ),
+							users :{}
+						};
+						record.users[$localStorage.user.uid] = true;
+						record.users[uid] = true;
 
-			$scope.chats.$add(record).then(function(ref) {
-				var id = ref.key;
-				$scope.chats.$indexFor(id); // returns location in the array
-				$scope.title = null;
-			});
+						$scope.chats.$add(record).then(function(ref) {
+							var id = ref.key;
+							$scope.chats.$indexFor(id); // returns location in the array
+							$scope.title = null;
+							reChat(friend);
+						});
+        			});
 		};
 
 
@@ -429,18 +465,14 @@ app
 			friend.name = $stateParams.value ? $stateParams.value.name : $sessionStorage.toParams.value.name;
 
 			$scope.chats = Chats.get(friend.uid);
-			$scope.chats.$watch(function() {
-					$scope.chat = FireBaseService.formatFirst($scope.chats);
-					if($scope.chat.users){
-						Header.set(friend.name);
-						$scope.onDemand = true;
-						$scope.dataset = Dataset.get();
-						$scope.imageDataset = Dataset.getImage();
-						$scope.chat.comments = $filter('orderObjectBy')($scope.chat.comments,'date', true);
-						$scope.dataset._refresh($scope.chat.comments);
-						$scope.chat.images = $filter('find')($scope.chat.comments,{imageUrl : 'boolean'}, false);
-						$scope.imageDataset._refresh($scope.chat.images);
-						$scope.informUpdate();
+			$scope.chats.$loaded()
+        		.then(function() {
+					$scope._chat = FireBaseService.formatFirst($scope.chats);
+					if($scope._chat.users){
+						$scope.chat = Chat.get($scope._chat.$id);
+						$scope.chat.$watch(function() {
+							reChat(friend);
+						});
 					}else{
 						$scope.addPrivateChat(friend.uid);
 					}

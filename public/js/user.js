@@ -227,7 +227,7 @@ app
         .then(function(requests) {
           if (!_friendRequest.friends) _friendRequest.friends = {};
           _friendRequest.friends[$localStorage.user.uid] = false;
-          _requestHistories[uid] = true;
+          _requestHistories.frineds[uid] = true;
           _friendRequest.$save().then(function(ref) {
             $mdToast.show($mdToast.simple().content('Requested').position('bottom'));
           });

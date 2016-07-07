@@ -46,7 +46,7 @@ app
   })
   .factory('RequestHistories', function(FireBaseService, $firebaseObject, $firebaseArray) {
     var _this = {};
-    if (!FireBaseService.arrayRef.requestHistories) FireBaseService.setArrayRef('RequestHistories', 'RequestHistories');
+    if (!FireBaseService.arrayRef.requestHistories) FireBaseService.setArrayRef('requestHistories', 'requestHistories');
 
     _this.getById = function(uid) {
       var requestHistoriesRef = FireBaseService.arrayRef.requestHistories.child(uid);

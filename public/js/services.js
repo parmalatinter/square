@@ -233,7 +233,7 @@ app
 		return _this;
 	})
 
-	.factory('Dataset', function($localStorage) {
+	.factory('Dataset', function($localStorage, File) {
 		var _this = {};
 
 		_this.get = function(secound) {

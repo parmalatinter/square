@@ -4,7 +4,7 @@
 	<span ng-if="uploadFileType == 'image'"><img ng-src="{{uploadFileUrl}}" width="50px"/></span>
 </md-subheader>
 <input type="file" file-model="file" id="upload_photo" style="display:none">
-<md-tabs md-stretch-tabs="auto" ng-init="init()">
+<md-tabs md-dynamic-height ng-init="init()">
 	<md-tab label="Messages">
 		<md-tab-body>
 			<div layout="row" style="background-color:white;text-align:left">

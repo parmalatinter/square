@@ -101,7 +101,8 @@ app
 			var templateUrl = setting.templateUrl ? dir + setting.templateUrl : 'dialog.html';
 			var message = setting.message ? setting.message : '';
 			var ok = setting.ok ? setting.ok : 'OK';
-			var parentEl = angular.element('body');
+			var el = document.getElementsByTagName("body");
+			var parentEl = angular.element(el);
 			$mdDialog.show({
 				controller: controller,
 				controllerAs: 'ctrl',

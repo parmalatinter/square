@@ -245,7 +245,8 @@ app
 					}
 					Speech.play(text);
                     		$scope.chat.comments[0].isSpeeched = true;
-                    		angular.element('.md-virtual-repeat-scroller').scrollTop(0);
+                    		var el = document.getElementsByClassName('md-virtual-repeat-scroller')
+                    		angular.element(el).scrollTop(0);
 				}
 			}
 
@@ -324,7 +325,8 @@ app
 		};
 
 		$scope.getContainarSize = function(plusValue){
-			return {height: (angular.element('.main').height() - 62) + 'px'};
+			var el = document.getElementsByClassName('main')
+			return {height: (angular.element(el).height() - 62) + 'px'};
 		};
 
 		$scope.audioPlay = function(url){

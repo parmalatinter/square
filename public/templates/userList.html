@@ -1,91 +1,94 @@
 <md-tabs md-dynamic-height md-border-bottom>
-  <md-tab label="Serch">
-	<md-content class="md-padding">
-	  <md-list flex>
-		<md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ng-if="user.uid !== localStorage.user.uid" ui-sref="friend({ key: user.primaryKey, value:user })">
-			<span ng-if="user.photoURL">
-				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
-			</span>
-			<span ng-if="!user.photoURL">
-				<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
-			</span>
-			<div class="md-list-item-text" layout="column">
-				<h4>{{user.name}} ({{user.age}})</h4>
-				<h4>{{user.message}}</h4>
-		  	</div>
-		  <md-menu>
-			<!-- Trigger element is a md-button with an icon -->
-			<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-			  <i class="md-fab material-icons b">more_vert</i>
-			</md-button>
-			<md-menu-content>
-			  <md-menu-item>
-				<md-button ng-click="sendRequest(user.uid)"><i class="material-icons b">thumb_up</i></md-button>
-			  </md-menu-item>
-			</md-menu-content>
-		  </md-menu>
-		</md-list-item>
-	  </md-list>
-	</md-content>
-  </md-tab>
-   <md-tab label="Requests">
-	<md-content class="md-padding">
-	<md-list flex>
-	  <md-list-item class="md-3-line" ng-repeat="(userKey, user ) in requests.users" ng-if="user.uid !== localStorage.user.uid" ng-click="goFriend(userKey, user)">
-			<span ng-if="user.photoURL">
-				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
-			</span>
-			<span ng-if="!user.photoURL">
-				<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
-			</span>
-			<div class="md-list-item-text" layout="column">
-				<h4>{{user.name}} ({{user.age}})</h4>
-				<h4>{{user.message}}</h4>
-		  	</div>
-		  </div>
-		  <md-menu>
-			<!-- Trigger element is a md-button with an icon -->
-			<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-			  <i class="md-fab material-icons b">group_add</i>
-			</md-button>
-			<md-menu-content>
-			  <md-menu-item>
-				<md-button ng-click="sendApply(user.uid)"><i class="material-icons b">check</i></md-button>
-			  </md-menu-item>
-			</md-menu-content>
-		  </md-menu>
-		</md-list-item>
-	  </md-list-item>
-	</md-list>
-	</md-content>
-  </md-tab>
-	 <md-tab label="Friends">
-	 <md-content class="md-padding">
-	<md-list flex>
-	  <md-list-item class="md-3-line" ng-repeat="(userKey, user ) in friendList" ng-if="user.uid !== localStorage.user.uid" ng-click="goChat(userKey, user)">
-			<span ng-if="user.photoURL">
-				<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
-			</span>
-			<span ng-if="!user.photoURL">
-				<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
-			</span>
-			<div class="md-list-item-text" layout="column">
-				<h4>{{user.name}} ({{user.age}})</h4>
-				<h4>{{user.message}}</h4>
-		  	</div>
-		  <md-menu>
-			<!-- Trigger element is a md-button with an icon -->
-			<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-			  <i class="md-fab material-icons b">group_add</i>
-			</md-button>
-			<md-menu-content>
-			  <md-menu-item>
-				<md-button ng-click="sendApply(user.uid)"><i class="material-icons b">check</i></md-button>
-			  </md-menu-item>
-			</md-menu-content>
-		  </md-menu>
-		</md-list-item>
-	</md-list>
-	</md-content>
-  </md-tab>
+    <md-tab label="Friends">
+        <md-content class="md-padding">
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="(userKey, user ) in friendList" ng-if="user.uid !== localStorage.user.uid" ng-click="goChat(userKey, user)">
+                    <span ng-if="user.photoURL">
+						<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
+					</span>
+                    <span ng-if="!user.photoURL">
+						<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
+					</span>
+                    <div class="md-list-item-text" layout="column">
+                        <h4>{{user.name}} ({{user.age}})</h4>
+                        <h4>{{user.message}}</h4>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-tab>
+    <md-tab label="Requests">
+        <md-content class="md-padding">
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="(userKey, user ) in requests.users" ng-if="user.uid !== localStorage.user.uid && !user.uid" ng-click="goFriend(userKey, user)">
+                    <span ng-if="user.photoURL">
+						<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
+					</span>
+                    <span ng-if="!user.photoURL">
+						<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
+					</span>
+                    <div class="md-list-item-text" layout="column">
+                        <h4>{{user.name}} ({{user.age}})</h4>
+                        <h4>{{user.message}}</h4>
+                    </div>
+                    <md-menu>
+                        <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                            <i class="md-fab material-icons b">group_add</i>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button ng-click="sendApply(user.uid)"><i class="material-icons b">check</i></md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-tab>
+    <md-tab label="Requests History">
+        <md-content class="md-padding">
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="(userKey, user ) in requestHistories.users" ng-if="user.uid !== localStorage.user.uid && user.uid" ng-click="goFriend(userKey, user)">
+                    <span ng-if="user.photoURL">
+						<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
+					</span>
+                    <span ng-if="!user.photoURL">
+						<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
+					</span>
+                    <div class="md-list-item-text" layout="column">
+                        <h4>{{user.name}} ({{user.age}})</h4>
+                        <h4>{{user.message}}</h4>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-tab>
+    <md-tab label="Serch">
+        <md-content class="md-padding">
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="user in users | orderObjectBy:date:true" ng-if="user.uid !== localStorage.user.uid" ui-sref="friend({ key: user.primaryKey, value:user })">
+                    <span ng-if="user.photoURL">
+						<img alt="xxxxxxxxxxx" ng-src="{{user.photoURL}}?v={{setting.cache.number}}" class="md-avatar" />
+					</span>
+                    <span ng-if="!user.photoURL">
+						<img alt="unknown" ng-src="{{'images/user.png'}}?v={{setting.cache.number}}" class="md-avatar" />
+					</span>
+                    <div class="md-list-item-text" layout="column">
+                        <h4>{{user.name}} ({{user.age}})</h4>
+                        <h4>{{user.message}}</h4>
+                    </div>
+                    <md-menu>
+                        <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                            <i class="md-fab material-icons b">more_vert</i>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button ng-click="sendRequest(user.uid)"><i class="material-icons b">thumb_up</i></md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-tab>
 </md-tabs>
